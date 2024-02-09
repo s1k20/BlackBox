@@ -1,5 +1,6 @@
 public class Board {
-    //board is 9x9 but
+
+    //board is 9x9 but + 2 for allowing for ray marker positions
     public final int WIDTH = 11;
     public final int HEIGHT = 11;
 
@@ -42,7 +43,7 @@ public class Board {
 
     public void placeAtom(int x, int y){
         Atom newAtom = new Atom(x, y);
-        board[x][y] = newAtom;
+        board[y][x] = newAtom;
 
         placeCircleOfInfluence(newAtom);
 
@@ -52,26 +53,26 @@ public class Board {
         for(CircleOfInfluence c : a.circleOfInfluence){
 
             //check to make sure atom is not getting overridden
-            if(!(board[c.getXCo_ord()][c.getYCo_ord()] instanceof Atom) && !(board[c.getXCo_ord()][c.getYCo_ord()] instanceof emptyMarker)) {
+            if(!(board[c.getYCo_ord()][c.getXCo_ord()] instanceof Atom) && !(board[c.getYCo_ord()][c.getXCo_ord()] instanceof emptyMarker)) {
 
                 //in the case where one part of circle of influence intersects another part;
-                if(board[c.getXCo_ord()][c.getYCo_ord()] instanceof CircleOfInfluence){
+                if(board[c.getYCo_ord()][c.getXCo_ord()] instanceof CircleOfInfluence){
                     IntersectingCircleOfInfluence s = new IntersectingCircleOfInfluence();
 
-                    s.addPart((CircleOfInfluence) board[c.getXCo_ord()][c.getYCo_ord()]);
+                    s.addPart((CircleOfInfluence) board[c.getYCo_ord()][c.getXCo_ord()]);
                     s.addPart(c);
 
-                    board[c.getXCo_ord()][c.getYCo_ord()] = s;
+                    board[c.getYCo_ord()][c.getXCo_ord()] = s;
                 }
                 //in the case where one part of a circle of influence intersects and intersection of influences
-                else if(board[c.getXCo_ord()][c.getYCo_ord()] instanceof IntersectingCircleOfInfluence){
-                    IntersectingCircleOfInfluence s = (IntersectingCircleOfInfluence) board[c.getXCo_ord()][c.getYCo_ord()];
+                else if(board[c.getYCo_ord()][c.getXCo_ord()] instanceof IntersectingCircleOfInfluence){
+                    IntersectingCircleOfInfluence s = (IntersectingCircleOfInfluence) board[c.getYCo_ord()][c.getXCo_ord()];
 
                     s.addPart(c);
                 }
 
                 else{
-                    board[c.getXCo_ord()][c.getYCo_ord()] = c;
+                    board[c.getYCo_ord()][c.getXCo_ord()] = c;
                 }
             }
         }
@@ -81,22 +82,6 @@ public class Board {
             return i + j == 5 || i + j == 15 || (i == 0 && j >= 5) ||
                     (j == 10 && i < 6) || (i == 10 && j <= 5) || (j == 0 && i >= 5);
     }
-
-//        for(int i = 0; i < HEIGHT; i++){
-//            for(int j = 0; j < WIDTH; j++){
-//                if(board[i][j] instanceof nullHex){
-//                    System.out.print(" ");
-//                }
-//                else if(board[i][j] instanceof emptyMarker){
-//                    System.out.print("o");
-//                }
-//                else{
-//                    System.out.print("x");
-//                }
-//            }
-//            System.out.println();
-//        }
-
 
 
     private static class nullHex{
@@ -136,8 +121,6 @@ public class Board {
                     else{
                         System.out.print(ANSI_GREEN + "\\ " + ANSI_RESET);
                     }
-
-
 
                 }
                 else{
