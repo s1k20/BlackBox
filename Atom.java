@@ -14,11 +14,11 @@ public class Atom {
 //        if(xCo_ord != 1 && xCo_ord != 9 && yCo_ord != 1 && yCo_ord != 9
 //        && xCo_ord + yCo_ord != 14 && xCo_ord + yCo_ord != 6){
 
-            circleOfInfluence.add(new CircleOfInfluence(xCo_ord - 1, yCo_ord, 45));
-            circleOfInfluence.add(new CircleOfInfluence(xCo_ord, yCo_ord - 1, 90));
+            circleOfInfluence.add(new CircleOfInfluence(xCo_ord - 1, yCo_ord, 90));
+            circleOfInfluence.add(new CircleOfInfluence(xCo_ord, yCo_ord - 1, 45));
             circleOfInfluence.add(new CircleOfInfluence(xCo_ord + 1, yCo_ord - 1, 135));
-            circleOfInfluence.add(new CircleOfInfluence(xCo_ord + 1, yCo_ord, 45));
-            circleOfInfluence.add(new CircleOfInfluence(xCo_ord, yCo_ord + 1, 90));
+            circleOfInfluence.add(new CircleOfInfluence(xCo_ord + 1, yCo_ord, 90));
+            circleOfInfluence.add(new CircleOfInfluence(xCo_ord, yCo_ord + 1, 45));
             circleOfInfluence.add(new CircleOfInfluence(xCo_ord - 1, yCo_ord + 1, 135));
 
 
