@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Board {
 
     //board is 9x9 but + 2 for allowing for ray marker positions
@@ -48,6 +50,21 @@ public class Board {
 
         placeCircleOfInfluence(newAtom);
 
+    }
+
+    public void setAtom() {
+        int x, y;
+        int count = 1;
+        Scanner scanThis = new Scanner(System.in);
+        Player player = new Player();
+        for(int i = 0; i < 6; i++) {
+            System.out.println(player.getSetter()+": please input x co ord");
+            x=scanThis.nextInt();
+            System.out.println(player.getSetter()+": please input y co ord");
+            y=scanThis.nextInt();
+            placeAtom(x,y);
+            count++;
+        }
     }
 
     private void placeCircleOfInfluence(Atom a){
