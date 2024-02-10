@@ -37,7 +37,6 @@ public class Board {
                 }
             }
         }
-
     }
 
 
@@ -54,7 +53,7 @@ public class Board {
     private void placeCircleOfInfluence(Atom a){
         for(CircleOfInfluence c : a.circleOfInfluence){
 
-            //check to make sure atom is not getting overridden
+            //check to make sure atom is not getting overridden and not placing outside of main board
             if(!(board[c.getYCo_ord()][c.getXCo_ord()] instanceof Atom) && !(board[c.getYCo_ord()][c.getXCo_ord()] instanceof emptyMarker)) {
 
                 //in the case where one part of circle of influence intersects another part;
@@ -67,12 +66,10 @@ public class Board {
                     board[c.getYCo_ord()][c.getXCo_ord()] = s;
                 }
                 //in the case where one part of a circle of influence intersects and intersection of influences
-                else if(board[c.getYCo_ord()][c.getXCo_ord()] instanceof IntersectingCircleOfInfluence){
-                    IntersectingCircleOfInfluence s = (IntersectingCircleOfInfluence) board[c.getYCo_ord()][c.getXCo_ord()];
+                else if(board[c.getYCo_ord()][c.getXCo_ord()] instanceof IntersectingCircleOfInfluence s){
 
                     s.addPart(c);
                 }
-
                 else{
                     board[c.getYCo_ord()][c.getXCo_ord()] = c;
                 }
