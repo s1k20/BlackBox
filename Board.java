@@ -9,7 +9,6 @@ public class Board {
     //colour index to which is used to generate colours
     private int colourIndex = 31;
 
-
     //test colours
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -50,21 +49,6 @@ public class Board {
 
         placeCircleOfInfluence(newAtom);
 
-    }
-
-    public void setAtom() {
-        int x, y;
-        int count = 1;
-        Scanner scanThis = new Scanner(System.in);
-        Player player = new Player();
-        for(int i = 0; i < 6; i++) {
-            System.out.println(player.getSetter()+": please input x co ord");
-            x=scanThis.nextInt();
-            System.out.println(player.getSetter()+": please input y co ord");
-            y=scanThis.nextInt();
-            placeAtom(x,y);
-            count++;
-        }
     }
 
     private void placeCircleOfInfluence(Atom a){
