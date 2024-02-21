@@ -1,6 +1,8 @@
-import org.junit.Assert;
+package test;
+import model.*;
+import model.CircleOfInfluence;
 import org.junit.jupiter.api.Test;
-import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -82,7 +84,7 @@ public class TestAtom {
         Board b = new Board();
         b.placeAtom(5, 5);
 
-        (Atom) b.getBoardPosition(5, 5);
+        (model.Atom) b.getBoardPosition(5, 5);
     }*/
 
 

@@ -1,3 +1,5 @@
+package model;
+
 public class RayMarker {
 
     //ray marker co-ords on board

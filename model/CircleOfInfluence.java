@@ -1,3 +1,5 @@
+package model;
+
 public class CircleOfInfluence {
 
     //variables to track a single piece of circle of influences locations and orientation,

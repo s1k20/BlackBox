@@ -1,3 +1,5 @@
+package model;
+
 public class Board {
 
     //board is 9x9 but + 2 for allowing for ray marker positions

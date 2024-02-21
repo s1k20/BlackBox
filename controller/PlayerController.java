@@ -1,3 +1,4 @@
+package controller;
 import java.util.Scanner;
 
 //player controller class to follow mvc architecture
