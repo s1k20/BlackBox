@@ -21,6 +21,7 @@ public class Player {
     public void setSetter(){
         this.isSetter = true;
     }
+
     public void setExperimenter(){
         this.isSetter = false;
     }

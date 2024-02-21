@@ -1,23 +1,29 @@
-import com.sun.source.util.Plugin;
-
 public class Game {
 
+    //players objects which will hold necessary information about players
     private Player player1;
     private Player player2;
 
+    //board object which holds logic to create the game
     private final Board board;
 
+    //boolean to hold current game state; not done/done
     public boolean isDone;
 
-//    PlayerController playerIn;
+    //player controller class to allow game to get necessary user input
+    private final PlayerController playerIn;
 
+    //game constructor which inits all objects/variables
     public Game(){
         board = new Board();
+        playerIn = new PlayerController();
         isDone = false;
     }
 
 
     public static void main(String[] args) {
+
+        //create game object and call playGame function
         Game game = new Game();
         game.playGame();
     }
@@ -26,22 +32,25 @@ public class Game {
 
         //create players
         System.out.println("Player 1 - Please enter your name:");
-        player1 = new Player(PlayerController.inUserName(), true);
+        player1 = new Player(playerIn.inUserName(), true);
         System.out.println("Player 2 - Please enter your name:");
-        player2 = new Player(PlayerController.inUserName(), false);
+        player2 = new Player(playerIn.inUserName(), false);
 
 
         //main game loop
         while(!isDone){
             //first round player 1 is setter and player 2 is experimenter
 
+            //let setter place 6 atoms
             for(int i = 0; i < 6; i++){
                 System.out.print(getSetter().getPlayerName() + " - (Setter): ");
                 setAtom();
                 board.printTempBoard();
             }
-            isDone = true;
 
+
+
+            isDone = true;
         }
 
     }
@@ -51,7 +60,7 @@ public class Game {
         int[] co_ords;
 
         do{
-            co_ords = PlayerController.getAtomInput();
+            co_ords = playerIn.getAtomInput();
 
             if(board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom){
                 System.out.println(getSetter().getPlayerName() + " - You have already placed an atom in this position!");
@@ -62,13 +71,16 @@ public class Game {
         board.placeAtom(co_ords[0], co_ords[1]);
     }
 
+    //returns setter
     public Player getSetter(){
         return player1.isSetter() ? player1 : player2;
     }
 
+    //returns experimenter
     public Player getExperimenter(){
         return !player1.isSetter() ? player1 : player2;
     }
+
 
     //function to just swap who is setter and who is experimenter
     public void switchRoles(){
@@ -83,26 +95,5 @@ public class Game {
 
     }
 
-
 }
 
-//        public void SetPlayer() {
-//            int count = 1;
-//            System.out.println();
-//            System.out.println("Round number: "+count);
-//
-//            if(isExperimenter()) {
-//                setter=getPlayerTwo();
-//                playerChoice=getPlayerOne();
-//                System.out.println(getPlayerOne()+" is the experimenter");
-//                System.out.println(getPlayerTwo()+" is the setter");
-//                System.out.println();
-//            }
-//            else {
-//                setter=getPlayerOne();
-//                playerChoice=getPlayerOne();
-//                System.out.println(getPlayerOne()+" is the setter");
-//                System.out.println(getPlayerTwo()+" is the experimenter");
-//                System.out.println();
-//            }
-//        }

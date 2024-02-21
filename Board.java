@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Board {
 
     //board is 9x9 but + 2 for allowing for ray marker positions
@@ -14,7 +12,7 @@ public class Board {
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_GREEN = "\u001B[32m";
 
-
+    //object array which is the board of the game
     private final Object[][] board = new Object[HEIGHT][WIDTH];
 
     public Board(){
@@ -22,6 +20,7 @@ public class Board {
         initBoard();
     }
 
+    //function to init board and place empty ray markers in correct position and null hex in others
     private void initBoard() {
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
@@ -40,6 +39,7 @@ public class Board {
         }
     }
 
+    //getter for certain position on board
     public Object getBoardPosition(int x, int y){
         return this.board[y][x];
     }
@@ -48,17 +48,17 @@ public class Board {
     public void placeAtom(int x, int y){
         Atom newAtom = new Atom(x, y);
 
+        //places atom into the board
         //y and x inverted as x = j and y = i
         board[y][x] = newAtom;
 
-       // int x = newAtom.getXCo_ord();
-       // int y = newAtom.getYCo_ord();
-
+        //calls function which takes the new atom as argument and places its circle of
+        //influence around atom which has been worked out when atom was created
         placeCircleOfInfluence(newAtom);
-
     }
 
     public void placeCircleOfInfluence(Atom a){
+        //loop through all atom "a" circle of influence
         for(CircleOfInfluence c : a.circleOfInfluence){
 
             //check to make sure atom is not getting overridden and not placing outside of main board
@@ -66,19 +66,26 @@ public class Board {
 
                 //in the case where one part of circle of influence intersects another part;
                 if(board[c.getYCo_ord()][c.getXCo_ord()] instanceof CircleOfInfluence i){
+
+                    //create new intersectingcirc. object to place previous and new circle of influence
                     IntersectingCircleOfInfluence s = new IntersectingCircleOfInfluence();
 
+                    //add both parts to new object
                     s.addPart(i);
                     s.addPart(c);
 
+                    //place new object in place of intersecting circle of influences
                     board[c.getYCo_ord()][c.getXCo_ord()] = s;
                 }
+
                 //in the case where one part of a circle of influence intersects and intersection of influences
                 else if(board[c.getYCo_ord()][c.getXCo_ord()] instanceof IntersectingCircleOfInfluence s){
 
+                    //just add new part to old array list
                     s.addPart(c);
                 }
                 else{
+                    //blank hex then just add the circle of influence
                     board[c.getYCo_ord()][c.getXCo_ord()] = c;
                 }
             }
@@ -94,26 +101,30 @@ public class Board {
     }
 
     //TODO develop this
+    //TODO make it work for certain deflections/reflection and absorption
     public void placeRayMarker(int x, int y){
+
         //validation that position is valid ray marker position
         if(!checkRayMarker(y, x)){
             throw new IllegalArgumentException("Invalid Position for Ray Marker");
         }
 
+        //just creates a new ray marker in a certain position and creates a random colour for it
         RayMarker r = new RayMarker(x, y, generateColour());
 
+        //place new ray marker into board
         board[y][x] = r;
     }
 
-
-    //TODO create enums
+    //classes which have no functionality other than representing a position on board
+    //null hex is a position in the object array which cants be accessed in the game
+    //empty ray marker is the perimeter of the board; position which will hold ray markers for rays
     private static class nullHex{
     }
     private static class emptyMarker{
     }
 
     //function to create a different colour for each ray marker
-
     private String generateColour(){
         //TODO: fix this function so it generates the colour based on
         //TODO: - what kind of reflection ray takes
@@ -124,12 +135,15 @@ public class Board {
         }
 
         return "\u001B[" + this.colourIndex++ + "m";
-
     }
 
+
+    //function just prints text based board
+    //"view" part of our software for now but will eventually be replaced by a gui
     public void printTempBoard(){
         for(int i = 0; i < HEIGHT; i++){
             for(int j = 0; j < WIDTH; j++){
+
                 //space to create hexagon shape at the bottom left
                 if(i > 5 && j == 0){
                     for(int k = 5; k < i; k++){
@@ -137,7 +151,7 @@ public class Board {
                     }
                 }
 
-                //TODO tidy this with switch statements
+                //find out what kind of object at current co-ords to then print to display
                 if(board[i][j] instanceof nullHex){
                     System.out.print(" ");
                 }
@@ -151,15 +165,12 @@ public class Board {
                     System.out.print(ANSI_GREEN + "x " + ANSI_RESET);
                 }
                 else if(board[i][j] instanceof CircleOfInfluence c){
-                    //TODO more switch statements
-                    if(c.getOrientation() == 45){
-                        System.out.print(ANSI_GREEN + "/ " + ANSI_RESET);
-                    }
-                    else if(c.getOrientation() == 90){
-                        System.out.print(ANSI_GREEN + "| " + ANSI_RESET);
-                    }
-                    else{
-                        System.out.print(ANSI_GREEN + "\\ " + ANSI_RESET);
+
+                    //find out what orientation to then print correct character to terminal
+                    switch (c.getOrientation()) {
+                        case 45 -> System.out.print(ANSI_GREEN + "/ " + ANSI_RESET);
+                        case 90 -> System.out.print(ANSI_GREEN + "| " + ANSI_RESET);
+                        default -> System.out.print(ANSI_GREEN + "\\ " + ANSI_RESET);
                     }
 
                 }
@@ -171,16 +182,9 @@ public class Board {
                     System.out.print("x ");
                 }
             }
+
+            //new line to create hexagon visualisation
             System.out.println();
         }
     }
 }
-
-
-//    * * * *
-//   * * * * *
-//  * * * * * *
-// * * * * * * *
-//  * * * * * *
-//   * * * * *
-//    * * * *

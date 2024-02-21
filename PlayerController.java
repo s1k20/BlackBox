@@ -1,11 +1,17 @@
 import java.util.Scanner;
 
+//player controller class to follow mvc architecture
+//class will only receive input and in game class will update board(model)
 public class PlayerController {
+
+    //scanner to take in user input through different functions in the class
     private static final Scanner in = new Scanner(System.in);
 
-    public static String inUserName(){
-        String username = "";
+    //function which will return a username for a player
+    public String inUserName(){
+        String username;
 
+        //enter do-while loop to get valid username
         do{
             username = in.nextLine();
 
@@ -15,28 +21,42 @@ public class PlayerController {
 
         }while(username.equals(" ") || username.isEmpty());
 
+        //return valid username
         return username;
     }
 
-    public static int[] getAtomInput(){
+    //function to receive to numbers (x, y) and return them as an array of 2 numbers
+    //arr[0] = x, arr[1] = y
+    //will be called in game and then be passed to board (model)
+    public int[] getAtomInput(){
         int x, y;
 
+        //loop to insure inputs are valid in case user accidentally puts in invalid input
         do{
+
+            //taken in by the form of "x,y"
+            //input splits the string on the comma
             String input = in.nextLine();
             String[] token = input.split(",", 2);
 
+            //parse to integer as tokens are Strings
             x = Integer.parseInt(token[0]);
             y = Integer.parseInt(token[1]);
 
+            //passed to function which checks if input are invalid
+            //returning true if they are invalid
             if(checkInvalidInput(y, x)){
                 System.out.println("Invalid Co-ordinates! Please try again");
             }
 
         }while(checkInvalidInput(y, x));
 
+        //returns valid co-ordinates
         return new int[]{x, y};
     }
 
+    //function which makes sure the inputs are on the board and that they are not invalid
+    //0 and 10 invalid as that is position to hold ray marker
     private static boolean checkInvalidInput(int i, int j){
         return i + j <= 5 || i + j >= 15 || i <= 0 || j <= 0 || i >= 10 || j >= 10;
     }
