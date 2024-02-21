@@ -48,7 +48,16 @@ public class Game {
 
     public void setAtom(){
         System.out.println("Please enter an X Co-ordinate and a Y Co-ordinate (comma separated) in which to place an Atom:");
-        int[] co_ords = PlayerController.getAtomInput();
+        int[] co_ords;
+
+        do{
+            co_ords = PlayerController.getAtomInput();
+
+            if(board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom){
+                System.out.println(getSetter().getPlayerName() + " - You have already placed an atom in this position!");
+            }
+
+        }while(board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom);
 
         board.placeAtom(co_ords[0], co_ords[1]);
     }

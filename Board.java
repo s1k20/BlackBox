@@ -40,6 +40,10 @@ public class Board {
         }
     }
 
+    public Object getBoardPosition(int x, int y){
+        return this.board[y][x];
+    }
+
 
     public void placeAtom(int x, int y){
         Atom newAtom = new Atom(x, y);
@@ -47,11 +51,14 @@ public class Board {
         //y and x inverted as x = j and y = i
         board[y][x] = newAtom;
 
+       // int x = newAtom.getXCo_ord();
+       // int y = newAtom.getYCo_ord();
+
         placeCircleOfInfluence(newAtom);
 
     }
 
-    private void placeCircleOfInfluence(Atom a){
+    public void placeCircleOfInfluence(Atom a){
         for(CircleOfInfluence c : a.circleOfInfluence){
 
             //check to make sure atom is not getting overridden and not placing outside of main board

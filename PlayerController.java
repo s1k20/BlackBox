@@ -21,25 +21,23 @@ public class PlayerController {
     public static int[] getAtomInput(){
         int x, y;
 
-        //TODO someone please fix loop to make sure input is valid
-//        do{
-        String input = in.nextLine();
-        String[] token = input.split(",", 2);
+        do{
+            String input = in.nextLine();
+            String[] token = input.split(",", 2);
 
-        x = Integer.parseInt(token[0]);
-        y = Integer.parseInt(token[1]);
+            x = Integer.parseInt(token[0]);
+            y = Integer.parseInt(token[1]);
 
+            if(checkInvalidInput(y, x)){
+                System.out.println("Invalid Co-ordinates! Please try again");
+            }
 
-        //TODO someone please do this, i cba working it out
-//            if(x < 1 || x > 9){
-//                System.out.println("Invalid X Co-ordinate, please try again");
-//            }
-//            else if(y < 0 || y > 5){
-//                System.out.println("Invalid Y Co-ordinate, please try again");
-//            }
-
-//        }while(x < 5 || x > 9 || y < 0 || y > 6);
+        }while(checkInvalidInput(y, x));
 
         return new int[]{x, y};
+    }
+
+    private static boolean checkInvalidInput(int i, int j){
+        return i + j <= 5 || i + j >= 15 || i <= 0 || j <= 0 || i >= 10 || j >= 10;
     }
 }
