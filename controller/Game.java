@@ -60,7 +60,7 @@ public class Game {
     }
 
     public void setAtom(){
-        System.out.println("Please enter an X Co-ordinate and a Y Co-ordinate (comma separated) in which to place an model.Atom:");
+        System.out.println("Please enter an X Co-ordinate and a Y Co-ordinate (comma separated) in which to place an Atom:");
         int[] co_ords;
 
         do{

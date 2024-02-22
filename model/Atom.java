@@ -9,7 +9,7 @@ public class Atom {
 
     //array list of an atoms circle of influences
     //which are broken up into individual hexagon positions
-    ArrayList<CircleOfInfluence> circleOfInfluence = new ArrayList<>();
+    private final ArrayList<CircleOfInfluence> circleOfInfluence = new ArrayList<>();
 
     //atom constructor, automatically works out its circle of influence
     public Atom(int xCo_ord, int yCo_ord){
@@ -17,12 +17,12 @@ public class Atom {
 
         //adding circle of influence to atom array list of circle of influences
         //creating new circle of influence object
-        circleOfInfluence.add(new CircleOfInfluence(xCo_ord, yCo_ord - 1, 45));
-        circleOfInfluence.add(new CircleOfInfluence(xCo_ord, yCo_ord + 1, 45));
-        circleOfInfluence.add(new CircleOfInfluence(xCo_ord + 1, yCo_ord, 90));
+        circleOfInfluence.add(new CircleOfInfluence(xCo_ord, yCo_ord - 1, 60));
+        circleOfInfluence.add(new CircleOfInfluence(xCo_ord, yCo_ord + 1, 240));
+        circleOfInfluence.add(new CircleOfInfluence(xCo_ord + 1, yCo_ord, 270));
         circleOfInfluence.add(new CircleOfInfluence(xCo_ord - 1, yCo_ord, 90));
-        circleOfInfluence.add(new CircleOfInfluence(xCo_ord - 1, yCo_ord + 1, 135));
-        circleOfInfluence.add(new CircleOfInfluence(xCo_ord + 1, yCo_ord - 1, 135));
+        circleOfInfluence.add(new CircleOfInfluence(xCo_ord - 1, yCo_ord + 1, 300));
+        circleOfInfluence.add(new CircleOfInfluence(xCo_ord + 1, yCo_ord - 1, 120));
 
         this.xCo_ord = xCo_ord;
         this.yCo_ord = yCo_ord;
@@ -37,6 +37,7 @@ public class Atom {
         return this.yCo_ord;
     }
 
-
-
+    public ArrayList<CircleOfInfluence> getCircleOfInfluence(){
+        return this.circleOfInfluence;
+    }
 }

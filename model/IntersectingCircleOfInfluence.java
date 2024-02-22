@@ -28,4 +28,8 @@ public class IntersectingCircleOfInfluence {
     public CircleOfInfluence getCircleOfInfluence(int i){
         return circleOfInfluences.get(i);
     }
+
+    public ArrayList<CircleOfInfluence> getCircleOfInfluences(){
+        return this.circleOfInfluences;
+    }
 }

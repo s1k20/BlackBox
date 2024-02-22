@@ -45,6 +45,10 @@ public class Board {
 
 
     public void placeAtom(int x, int y){
+        if(checkInvalidInput(y, x)){
+            throw new IllegalArgumentException("Invalid position for atom");
+        }
+
         Atom newAtom = new Atom(x, y);
 
         //places atom into the board
@@ -58,7 +62,7 @@ public class Board {
 
     public void placeCircleOfInfluence(Atom a){
         //loop through all atom "a" circle of influence
-        for(CircleOfInfluence c : a.circleOfInfluence){
+        for(CircleOfInfluence c : a.getCircleOfInfluence()){
 
             //check to make sure atom is not getting overridden and not placing outside of main board
             if(!(board[c.getYCo_ord()][c.getXCo_ord()] instanceof Atom) && !(board[c.getYCo_ord()][c.getXCo_ord()] instanceof emptyMarker)) {
@@ -66,7 +70,7 @@ public class Board {
                 //in the case where one part of circle of influence intersects another part;
                 if(board[c.getYCo_ord()][c.getXCo_ord()] instanceof CircleOfInfluence i){
 
-                    //create new intersectingcirc. object to place previous and new circle of influence
+                    //create new intersecting circ. object to place previous and new circle of influence
                     IntersectingCircleOfInfluence s = new IntersectingCircleOfInfluence();
 
                     //add both parts to new object
@@ -129,11 +133,15 @@ public class Board {
         //TODO: - what kind of reflection ray takes
 
         //loop colours back to the start
-        if(this.colourIndex >= 37){
-            this.colourIndex = 31;
+        if(colourIndex >= 37){
+            colourIndex = 31;
         }
 
-        return "\u001B[" + this.colourIndex++ + "m";
+        return "\u001B[" + colourIndex++ + "m";
+    }
+
+    private static boolean checkInvalidInput(int i, int j){
+        return i + j <= 5 || i + j >= 15 || i <= 0 || j <= 0 || i >= 10 || j >= 10;
     }
 
 }
