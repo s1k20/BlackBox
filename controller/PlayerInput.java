@@ -1,9 +1,9 @@
 package controller;
 import java.util.Scanner;
 
-//player controller class to follow mvc architecture
+//player input class which is part of projects controller class.
 //class will only receive input and in game class will update board(model)
-public class PlayerController {
+public class PlayerInput {
 
     //scanner to take in user input through different functions in the class
     private static final Scanner in = new Scanner(System.in);

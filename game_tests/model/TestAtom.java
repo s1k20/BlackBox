@@ -1,6 +1,5 @@
-package test.model;
+package game_tests.model;
 import model.*;
-import controller.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,7 +1,9 @@
 package controller;
 import model.*;
-import controller.*;
+import view.*;
 
+//controller part of project which runs main logic
+//updates model and view
 public class Game {
 
     //players objects which will hold necessary information about players
@@ -11,21 +13,27 @@ public class Game {
     //board object which holds logic to create the game
     private final Board board;
 
-    //boolean to hold current game state; not done/done
-    public boolean isDone;
+    //variable to allow for two
+    private int gameNum;
+    private final int numGames = 2;
 
     //player controller class to allow game to get necessary user input
-    private final PlayerController playerIn;
+    private final PlayerInput playerIn;
+    private final GameView view;
+
+
 
     //game constructor which inits all objects/variables
     public Game(){
         board = new Board();
-        playerIn = new PlayerController();
-        isDone = false;
+        playerIn = new PlayerInput();
+        view = new GameView(board);
+
+        //set gameNum to 1 for the first game
+        gameNum = 1;
     }
 
     public void playGame(){
-
         //create players
         System.out.println("Player 1 - Please enter your name:");
         player1 = new Player(playerIn.inUserName(), true);
@@ -34,19 +42,19 @@ public class Game {
 
 
         //main game loop
-        while(!isDone){
+        while(gameNum <= numGames){
             //first round player 1 is setter and player 2 is experimenter
 
             //let setter place 6 atoms
             for(int i = 0; i < 6; i++){
                 System.out.print(getSetter().getPlayerName() + " - (Setter): ");
                 setAtom();
-                board.printTempBoard();
+                view.printEntireBoard();
             }
 
-
-
-            isDone = true;
+            //switch the roles and increase gameNum
+            switchRoles();
+            gameNum++;
         }
 
     }

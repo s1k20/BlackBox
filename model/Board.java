@@ -1,18 +1,11 @@
 package model;
 
+import static model.BoardConstants.*;
+
 public class Board {
 
-    //board is 9x9 but + 2 for allowing for ray marker positions
-    public final int WIDTH = 11;
-    public final int HEIGHT = 11;
-
     //colour index to which is used to generate colours
-    private int colourIndex = 31;
-
-    //test colours
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
+    private static int colourIndex = 31;
 
     //object array which is the board of the game
     private final Object[][] board = new Object[HEIGHT][WIDTH];
@@ -44,6 +37,10 @@ public class Board {
     //getter for certain position on board
     public Object getBoardPosition(int x, int y){
         return this.board[y][x];
+    }
+
+    public Object[][] getBoard(){
+        return this.board;
     }
 
 
@@ -121,9 +118,9 @@ public class Board {
     //classes which have no functionality other than representing a position on board
     //null hex is a position in the object array which cants be accessed in the game
     //empty ray marker is the perimeter of the board; position which will hold ray markers for rays
-    private static class nullHex{
+    public static class nullHex{
     }
-    private static class emptyMarker{
+    public static class emptyMarker{
     }
 
     //function to create a different colour for each ray marker
@@ -139,54 +136,4 @@ public class Board {
         return "\u001B[" + this.colourIndex++ + "m";
     }
 
-
-    //function just prints text based board
-    //"view" part of our software for now but will eventually be replaced by a gui
-    public void printTempBoard(){
-        for(int i = 0; i < HEIGHT; i++){
-            for(int j = 0; j < WIDTH; j++){
-
-                //space to create hexagon shape at the bottom left
-                if(i > 5 && j == 0){
-                    for(int k = 5; k < i; k++){
-                        System.out.print(" ");
-                    }
-                }
-
-                //find out what kind of object at current co-ords to then print to display
-                if(board[i][j] instanceof nullHex){
-                    System.out.print(" ");
-                }
-                else if(board[i][j] instanceof emptyMarker){
-                    System.out.print("- ");
-                }
-                else if(board[i][j] instanceof Atom){
-                    System.out.print(ANSI_RED + "o " + ANSI_RESET);
-                }
-                else if(board[i][j] instanceof IntersectingCircleOfInfluence){
-                    System.out.print(ANSI_GREEN + "x " + ANSI_RESET);
-                }
-                else if(board[i][j] instanceof CircleOfInfluence c){
-
-                    //find out what orientation to then print correct character to terminal
-                    switch (c.getOrientation()) {
-                        case 45 -> System.out.print(ANSI_GREEN + "/ " + ANSI_RESET);
-                        case 90 -> System.out.print(ANSI_GREEN + "| " + ANSI_RESET);
-                        default -> System.out.print(ANSI_GREEN + "\\ " + ANSI_RESET);
-                    }
-
-                }
-                else if(board[i][j] instanceof RayMarker r){
-
-                    System.out.print(r.getColour() + "+ " + ANSI_RESET);
-                }
-                else{
-                    System.out.print("x ");
-                }
-            }
-
-            //new line to create hexagon visualisation
-            System.out.println();
-        }
-    }
 }
