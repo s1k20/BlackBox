@@ -1,4 +1,4 @@
-package test;
+package test.model;
 import model.*;
 import model.CircleOfInfluence;
 import org.junit.jupiter.api.Test;

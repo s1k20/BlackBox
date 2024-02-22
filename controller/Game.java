@@ -1,3 +1,4 @@
+package controller;
 import model.*;
 import controller.*;
 
@@ -21,14 +22,6 @@ public class Game {
         board = new Board();
         playerIn = new PlayerController();
         isDone = false;
-    }
-
-
-    public static void main(String[] args) {
-
-        //create game object and call playGame function
-        Game game = new Game();
-        game.playGame();
     }
 
     public void playGame(){
