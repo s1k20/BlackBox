@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ArtifactsWorkspaceSettings">
-    <artifacts-to-build>
-      <artifact name="Software-Engineering-Project-2:jar" />
-    </artifacts-to-build>
-  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4576e0cc-369a-4145-900a-290dc17a3fc7" name="Changes" comment="tidy project structure and seperated constants into separate class">
-      <change beforePath="$PROJECT_DIR$/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/GameView.java" afterDir="false" />
-    </list>
+    <list default="true" id="c4ce90f9-2e3a-4526-acd3-804981b42309" name="Changes" comment="Created Ray class :)" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,168 +18,209 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;lloydwillis&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="b90c4b93-0b1f-4231-9567-645236ea9c9f" />
+        <option name="url" value="https://github.com/cian-boyle/Software-Engineering-Project-2.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 3
+  &quot;associatedIndex&quot;: 5
 }</component>
-  <component name="ProjectId" id="2c7rpZ9xARC6jrKjGe5cqbNrbIN" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="2bUIc5bWqOsEMphsYg16iEePnxN" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "jdk.selected.JAVA_MODULE": "openjdk-21",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "vue.rearranger.settings.migration": "true"
+    "git-widget-placeholder": "ray-development",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
   }
 }]]></component>
-  <component name="RunManager">
-    <configuration name="RunGame" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="Main" />
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\lloyd\IdeaProjects\Software-Engineering-Project-2\.idea" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.TestAtom.testAtomPlace">
+    <configuration name="TestAtom.TestPlaceRayMarker" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Software-Engineering-Project-2" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestAtom" />
+      <option name="METHOD_NAME" value="TestPlaceRayMarker" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestAtom.testAtomPlace" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Software-Engineering-Project-2" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestAtom" />
+      <option name="METHOD_NAME" value="testAtomPlace" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestAtom.testCircleOfInfluencePlace" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Software-Engineering-Project-2" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestAtom" />
+      <option name="METHOD_NAME" value="testCircleOfInfluencePlace" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestAtom.testInvalidPosition" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Software-Engineering-Project-2" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestAtom" />
+      <option name="METHOD_NAME" value="testInvalidPosition" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestAtom.testOrientation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Software-Engineering-Project-2" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestAtom" />
+      <option name="METHOD_NAME" value="testOrientation" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.TestAtom.testAtomPlace" />
+        <item itemvalue="JUnit.TestAtom.testInvalidPosition" />
+        <item itemvalue="JUnit.TestAtom.testOrientation" />
+        <item itemvalue="JUnit.TestAtom.testCircleOfInfluencePlace" />
+        <item itemvalue="JUnit.TestAtom.TestPlaceRayMarker" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="4576e0cc-369a-4145-900a-290dc17a3fc7" name="Changes" comment="" />
-      <created>1707473641261</created>
+      <changelist id="c4ce90f9-2e3a-4526-acd3-804981b42309" name="Changes" comment="" />
+      <created>1706263307522</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1707473641261</updated>
-      <workItem from="1707473642331" duration="1036000" />
-      <workItem from="1707474883704" duration="13029000" />
-      <workItem from="1707574705045" duration="6000" />
-      <workItem from="1707593608954" duration="15190000" />
-      <workItem from="1707657400112" duration="1295000" />
-      <workItem from="1707728769404" duration="987000" />
-      <workItem from="1707749844969" duration="11674000" />
-      <workItem from="1707816167463" duration="24840000" />
-      <workItem from="1707912935365" duration="1238000" />
-      <workItem from="1707918333784" duration="893000" />
-      <workItem from="1707922676343" duration="114000" />
-      <workItem from="1707922849730" duration="361000" />
-      <workItem from="1707930982609" duration="1080000" />
-      <workItem from="1708000640048" duration="2564000" />
-      <workItem from="1708088538846" duration="236000" />
-      <workItem from="1708180168226" duration="10555000" />
-      <workItem from="1708195380841" duration="1223000" />
-      <workItem from="1708205870053" duration="937000" />
-      <workItem from="1708219125989" duration="561000" />
-      <workItem from="1708219693902" duration="5000" />
-      <workItem from="1708286423621" duration="2673000" />
-      <workItem from="1708337672563" duration="2603000" />
-      <workItem from="1708434362911" duration="2544000" />
-      <workItem from="1708439184008" duration="2057000" />
-      <workItem from="1708472805684" duration="249000" />
-      <workItem from="1708474017858" duration="89000" />
-      <workItem from="1708525416239" duration="106000" />
-      <workItem from="1708525533581" duration="2090000" />
-      <workItem from="1708530261945" duration="8016000" />
-      <workItem from="1708540632475" duration="4064000" />
-      <workItem from="1708604621045" duration="9905000" />
+      <updated>1706263307522</updated>
     </task>
-    <task id="LOCAL-00001" summary="fixed bug">
+    <task id="LOCAL-00001" summary="Test 3.0">
       <option name="closed" value="true" />
-      <created>1707474141974</created>
+      <created>1706263570407</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1707474141974</updated>
+      <updated>1706263570407</updated>
     </task>
-    <task id="LOCAL-00002" summary="fixed x-y issue">
+    <task id="LOCAL-00002" summary="...">
       <option name="closed" value="true" />
-      <created>1707479972638</created>
+      <created>1707481016668</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1707479972638</updated>
+      <updated>1707481016668</updated>
     </task>
-    <task id="LOCAL-00003" summary="start ray marker (worked together in lab)">
+    <task id="LOCAL-00003" summary="player class">
       <option name="closed" value="true" />
-      <created>1707490479986</created>
+      <created>1707597207330</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1707490479986</updated>
+      <updated>1707597207330</updated>
     </task>
-    <task id="LOCAL-00004" summary="fixed small things">
+    <task id="LOCAL-00004" summary="player class">
       <option name="closed" value="true" />
-      <created>1707597019582</created>
+      <created>1707597303358</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1707597019582</updated>
+      <updated>1707597303358</updated>
     </task>
-    <task id="LOCAL-00005" summary="comments added">
+    <task id="LOCAL-00005" summary="player class added method">
       <option name="closed" value="true" />
-      <created>1708538452641</created>
+      <created>1707598591199</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1708538452641</updated>
+      <updated>1707598591199</updated>
     </task>
-    <task id="LOCAL-00006" summary="refactored into packages">
+    <task id="LOCAL-00006" summary="player class added method">
       <option name="closed" value="true" />
-      <created>1708541017140</created>
+      <created>1707598684159</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1708541017140</updated>
+      <updated>1707598684159</updated>
     </task>
-    <task id="LOCAL-00007" summary="minor refactoring">
+    <task id="LOCAL-00007" summary="added validation and unit testing">
       <option name="closed" value="true" />
-      <created>1708598647976</created>
+      <created>1708530957665</created>
       <option name="number" value="00007" />
       <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1708598647976</updated>
+      <updated>1708530957665</updated>
     </task>
-    <task id="LOCAL-00008" summary="added file">
+    <task id="LOCAL-00008" summary="added unit testing">
       <option name="closed" value="true" />
-      <created>1708599196424</created>
+      <created>1708538723239</created>
       <option name="number" value="00008" />
       <option name="presentableId" value="LOCAL-00008" />
       <option name="project" value="LOCAL" />
-      <updated>1708599196424</updated>
+      <updated>1708538723240</updated>
     </task>
-    <task id="LOCAL-00009" summary="tidy project structure and seperated constants into separate class">
+    <task id="LOCAL-00009" summary="added additional unit tests">
       <option name="closed" value="true" />
-      <created>1708614193495</created>
+      <created>1708541456458</created>
       <option name="number" value="00009" />
       <option name="presentableId" value="LOCAL-00009" />
       <option name="project" value="LOCAL" />
-      <updated>1708614193495</updated>
+      <updated>1708541456458</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Created Ray class :)">
+      <option name="closed" value="true" />
+      <created>1709476891939</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1709476891939</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -202,16 +234,14 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="fixed bug" />
-    <MESSAGE value="fixed x-y issue" />
-    <MESSAGE value="start ray marker (worked together in lab)" />
-    <MESSAGE value="fixed small things" />
-    <MESSAGE value="comments added" />
-    <MESSAGE value="refactored into packages" />
-    <MESSAGE value="minor refactoring" />
-    <MESSAGE value="added file" />
-    <MESSAGE value="tidy project structure and seperated constants into separate class" />
-    <option name="LAST_COMMIT_MESSAGE" value="tidy project structure and seperated constants into separate class" />
+    <MESSAGE value="Test 3.0" />
+    <MESSAGE value="..." />
+    <MESSAGE value="player class" />
+    <MESSAGE value="player class added method" />
+    <MESSAGE value="added validation and unit testing" />
+    <MESSAGE value="added unit testing" />
+    <MESSAGE value="added additional unit tests" />
+    <MESSAGE value="Created Ray class :)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created Ray class :)" />
   </component>
 </project>
