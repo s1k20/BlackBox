@@ -54,7 +54,7 @@ public class Game {
 
             //switch the roles and increase gameNum
             switchRoles();
-            gameNum++;
+            gameNum += 1;
         }
 
     }

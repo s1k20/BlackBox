@@ -1,7 +1,5 @@
 package model;
 
-import model.CircleOfInfluence;
-
 import java.util.ArrayList;
 
 public class IntersectingCircleOfInfluence {

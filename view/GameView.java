@@ -24,10 +24,10 @@ public class GameView {
                     }
                 }
                 //find out what kind of object at current co-ords to then print to display
-                if(board.getBoard()[i][j] instanceof Board.nullHex){
+                if(board.getBoard()[i][j] instanceof Board.NullHex){
                     System.out.print(" ");
                 }
-                else if(board.getBoard()[i][j] instanceof Board.emptyMarker){
+                else if(board.getBoard()[i][j] instanceof Board.EmptyMarker){
                     System.out.print("- ");
                 }
                 else if(board.getBoard()[i][j] instanceof Atom){
@@ -73,10 +73,10 @@ public class GameView {
                     }
                 }
 
-                if(board.getBoard()[i][j] instanceof Board.nullHex){
+                if(board.getBoard()[i][j] instanceof Board. NullHex){
                     System.out.print(" ");
                 }
-                else if(board.getBoard()[i][j] instanceof Board.emptyMarker){
+                else if(board.getBoard()[i][j] instanceof Board.EmptyMarker){
                     System.out.print("- ");
                 }
                 else if(board.getBoard()[i][j] instanceof RayMarker r){
