@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ArtifactsWorkspaceSettings">
-    <artifacts-to-build>
-      <artifact name="Software-Engineering-Project-2:jar" />
-    </artifacts-to-build>
-  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4576e0cc-369a-4145-900a-290dc17a3fc7" name="Changes" comment="added some extra tests">
-      <change afterPath="$PROJECT_DIR$/model/RayInputMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Software_Engineering_Project_2_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Software_Engineering_Project_2_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/IntersectingCircleOfInfluence.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/IntersectingCircleOfInfluence.java" afterDir="false" />
+    <list default="true" id="4a661b69-8851-4631-829f-6ba3cea94116" name="Changes" comment="PlayerController.java&#10;Game Logic Started">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/PlayerInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/PlayerInput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Atom.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Atom.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/workspace.xml" afterDir="false" />
     </list>
@@ -31,286 +23,150 @@
       </list>
     </option>
   </component>
+  <component name="Git.Pull.Settings">
+    <option name="OPTIONS">
+      <set>
+        <option value="REBASE" />
+      </set>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Cian Boyle &lt;cian.boyle@ucdconnect.ie&gt;" />
+      </list>
+    </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;s1k20&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="dac3acde-b342-495a-8d28-0227baf2e8bd" />
+        <option name="url" value="https://github.com/cian-boyle/Software-Engineering-Project-2.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 3
+  &quot;associatedIndex&quot;: 8
 }</component>
-  <component name="ProjectId" id="2c7rpZ9xARC6jrKjGe5cqbNrbIN" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="2bUIgCc71LbP7mpqjPkH1G4WUOI" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;ray-development&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.29616308&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "ray-development",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="Application.RunGame">
-    <configuration name="RunGame" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="Software-Engineering-Project-2" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestAtom.testCircleOfInfluenceList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Software-Engineering-Project-2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="game_tests.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="game_tests.model" />
-      <option name="MAIN_CLASS_NAME" value="game_tests.model.TestAtom" />
-      <option name="METHOD_NAME" value="testCircleOfInfluenceList" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestCircleOfInfluences.testCircleOfInfluencePlace" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Software-Engineering-Project-2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="game_tests.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="game_tests.model" />
-      <option name="MAIN_CLASS_NAME" value="game_tests.model.TestCircleOfInfluences" />
-      <option name="METHOD_NAME" value="testCircleOfInfluencePlace" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestCircleOfInfluences.testIntersectingCircleOfInfluence" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Software-Engineering-Project-2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="game_tests.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="game_tests.model" />
-      <option name="MAIN_CLASS_NAME" value="game_tests.model.TestCircleOfInfluences" />
-      <option name="METHOD_NAME" value="testIntersectingCircleOfInfluence" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <list>
-      <item itemvalue="Application.RunGame" />
-      <item itemvalue="JUnit.TestAtom.testCircleOfInfluenceList" />
-      <item itemvalue="JUnit.TestCircleOfInfluences.testCircleOfInfluencePlace" />
-      <item itemvalue="JUnit.TestCircleOfInfluences.testIntersectingCircleOfInfluence" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="JUnit.TestCircleOfInfluences.testIntersectingCircleOfInfluence" />
-        <item itemvalue="JUnit.TestCircleOfInfluences.testCircleOfInfluencePlace" />
-        <item itemvalue="JUnit.TestAtom.testCircleOfInfluenceList" />
-        <item itemvalue="JUnit.TestCircleOfInfluences.testIntersectingCircleOfInfluence" />
-        <item itemvalue="JUnit.TestCircleOfInfluences.testCircleOfInfluencePlace" />
-      </list>
-    </recent_temporary>
-  </component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="4576e0cc-369a-4145-900a-290dc17a3fc7" name="Changes" comment="" />
-      <created>1707473641261</created>
+      <changelist id="4a661b69-8851-4631-829f-6ba3cea94116" name="Changes" comment="" />
+      <created>1706263339821</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1707473641261</updated>
-      <workItem from="1707473642331" duration="1036000" />
-      <workItem from="1707474883704" duration="13029000" />
-      <workItem from="1707574705045" duration="6000" />
-      <workItem from="1707593608954" duration="15190000" />
-      <workItem from="1707657400112" duration="1295000" />
-      <workItem from="1707728769404" duration="987000" />
-      <workItem from="1707749844969" duration="11674000" />
-      <workItem from="1707816167463" duration="24840000" />
-      <workItem from="1707912935365" duration="1238000" />
-      <workItem from="1707918333784" duration="893000" />
-      <workItem from="1707922676343" duration="114000" />
-      <workItem from="1707922849730" duration="361000" />
-      <workItem from="1707930982609" duration="1080000" />
-      <workItem from="1708000640048" duration="2564000" />
-      <workItem from="1708088538846" duration="236000" />
-      <workItem from="1708180168226" duration="10555000" />
-      <workItem from="1708195380841" duration="1223000" />
-      <workItem from="1708205870053" duration="937000" />
-      <workItem from="1708219125989" duration="561000" />
-      <workItem from="1708219693902" duration="5000" />
-      <workItem from="1708286423621" duration="2673000" />
-      <workItem from="1708337672563" duration="2603000" />
-      <workItem from="1708434362911" duration="2544000" />
-      <workItem from="1708439184008" duration="2057000" />
-      <workItem from="1708472805684" duration="249000" />
-      <workItem from="1708474017858" duration="89000" />
-      <workItem from="1708525416239" duration="106000" />
-      <workItem from="1708525533581" duration="2090000" />
-      <workItem from="1708530261945" duration="8016000" />
-      <workItem from="1708540632475" duration="4064000" />
-      <workItem from="1708604621045" duration="9905000" />
-      <workItem from="1708622796779" duration="4072000" />
-      <workItem from="1708634375163" duration="75000" />
-      <workItem from="1708634454026" duration="1000" />
-      <workItem from="1708634465873" duration="1451000" />
-      <workItem from="1708640965705" duration="3206000" />
-      <workItem from="1708682734095" duration="2442000" />
-      <workItem from="1708685498319" duration="700000" />
-      <workItem from="1708791331513" duration="36000" />
-      <workItem from="1708791372434" duration="6279000" />
-      <workItem from="1709049542370" duration="4000" />
-      <workItem from="1709129331790" duration="1000" />
-      <workItem from="1709398037896" duration="18000" />
-      <workItem from="1709398083035" duration="1832000" />
-      <workItem from="1709472310148" duration="6000" />
-      <workItem from="1709472324584" duration="4099000" />
-      <workItem from="1709554830887" duration="329000" />
+      <updated>1706263339821</updated>
+      <workItem from="1706263340981" duration="947000" />
+      <workItem from="1706274774051" duration="101000" />
+      <workItem from="1706274883416" duration="2468000" />
+      <workItem from="1706520144479" duration="606000" />
+      <workItem from="1706563881748" duration="2528000" />
+      <workItem from="1707227175012" duration="2049000" />
+      <workItem from="1707405269216" duration="2271000" />
+      <workItem from="1707408374081" duration="2456000" />
+      <workItem from="1707476635339" duration="23371000" />
+      <workItem from="1707853576088" duration="660000" />
+      <workItem from="1708010473680" duration="632000" />
+      <workItem from="1708012455280" duration="621000" />
+      <workItem from="1708292862282" duration="13126000" />
+      <workItem from="1709137265407" duration="14047000" />
     </task>
-    <task id="LOCAL-00001" summary="fixed bug">
+    <task id="LOCAL-00001" summary="Test 2.0">
       <option name="closed" value="true" />
-      <created>1707474141974</created>
+      <created>1706263432872</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1707474141974</updated>
+      <updated>1706263432872</updated>
     </task>
-    <task id="LOCAL-00002" summary="fixed x-y issue">
+    <task id="LOCAL-00002" summary="Test 2.0">
       <option name="closed" value="true" />
-      <created>1707479972638</created>
+      <created>1707408302592</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1707479972638</updated>
+      <updated>1707408302592</updated>
     </task>
-    <task id="LOCAL-00003" summary="start ray marker (worked together in lab)">
+    <task id="LOCAL-00003" summary="Test 2.0">
       <option name="closed" value="true" />
-      <created>1707490479986</created>
+      <created>1707412277339</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1707490479986</updated>
+      <updated>1707412277339</updated>
     </task>
-    <task id="LOCAL-00004" summary="fixed small things">
+    <task id="LOCAL-00004" summary="start ray marker (worked together in lab)">
       <option name="closed" value="true" />
-      <created>1707597019582</created>
+      <created>1707645911420</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1707597019582</updated>
+      <updated>1707645911420</updated>
     </task>
-    <task id="LOCAL-00005" summary="comments added">
+    <task id="LOCAL-00005" summary="start ray marker (worked together in lab)">
       <option name="closed" value="true" />
-      <created>1708538452641</created>
+      <created>1707646004873</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1708538452641</updated>
+      <updated>1707646004873</updated>
     </task>
-    <task id="LOCAL-00006" summary="refactored into packages">
+    <task id="LOCAL-00006" summary="PlayerController.java&#10;Game Logic Started">
       <option name="closed" value="true" />
-      <created>1708541017140</created>
+      <created>1707750391494</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1708541017140</updated>
+      <updated>1707750391494</updated>
     </task>
-    <task id="LOCAL-00007" summary="minor refactoring">
-      <option name="closed" value="true" />
-      <created>1708598647976</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1708598647976</updated>
-    </task>
-    <task id="LOCAL-00008" summary="added file">
-      <option name="closed" value="true" />
-      <created>1708599196424</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1708599196424</updated>
-    </task>
-    <task id="LOCAL-00009" summary="tidy project structure and seperated constants into separate class">
-      <option name="closed" value="true" />
-      <created>1708614193495</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1708614193495</updated>
-    </task>
-    <task id="LOCAL-00010" summary="added some extra tests">
-      <option name="closed" value="true" />
-      <created>1708627391435</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1708627391435</updated>
-    </task>
-    <option name="localTasksCounter" value="11" />
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
   <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="fixed bug" />
-    <MESSAGE value="fixed x-y issue" />
+    <MESSAGE value="Test 2.0" />
     <MESSAGE value="start ray marker (worked together in lab)" />
-    <MESSAGE value="fixed small things" />
-    <MESSAGE value="comments added" />
-    <MESSAGE value="refactored into packages" />
-    <MESSAGE value="minor refactoring" />
-    <MESSAGE value="added file" />
-    <MESSAGE value="tidy project structure and seperated constants into separate class" />
-    <MESSAGE value="added some extra tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="added some extra tests" />
+    <MESSAGE value="PlayerController.java&#10;Game Logic Started" />
+    <option name="LAST_COMMIT_MESSAGE" value="PlayerController.java&#10;Game Logic Started" />
   </component>
 </project>

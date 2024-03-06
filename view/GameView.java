@@ -73,7 +73,7 @@ public class GameView {
                     }
                 }
 
-                if(board.getBoard()[i][j] instanceof Board. NullHex){
+                if(board.getBoard()[i][j] instanceof Board.NullHex){
                     System.out.print(" ");
                 }
                 else if(board.getBoard()[i][j] instanceof Board.EmptyMarker){

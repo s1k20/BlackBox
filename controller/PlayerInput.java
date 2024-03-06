@@ -26,7 +26,7 @@ public class PlayerInput {
         return username;
     }
 
-    //function to receive to numbers (x, y) and return them as an array of 2 numbers
+    //function to receive two numbers (x, y) and return them as an array of 2 numbers
     //arr[0] = x, arr[1] = y
     //will be called in game and then be passed to board (model)
     public int[] getAtomInput(){
@@ -55,6 +55,29 @@ public class PlayerInput {
         //returns valid co-ordinates
         return new int[]{x, y};
     }
+
+   public String getRayInput(){
+       String input = "";
+       int num;
+
+       do{
+           input = in.nextLine();
+
+           if(input.isEmpty()){
+               return input;
+           }
+           num = Integer.parseInt(input);
+
+           if(num < 1 || num > 54){
+               System.out.println("Invalid Ray input! Please try again");
+           }
+
+       }while(num < 1 || num > 54);
+
+       return input;
+   }
+
+
 
     //function which makes sure the inputs are on the board and that they are not invalid
     //0 and 10 invalid as that is position to hold ray marker

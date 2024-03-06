@@ -46,12 +46,10 @@ public class Game {
             //first round player 1 is setter and player 2 is experimenter
 
             //let setter place 6 atoms
-            for(int i = 0; i < 6; i++){
-                System.out.print(getSetter().getPlayerName() + " - (Setter): ");
-                setAtom();
-                view.printEntireBoard();
-            }
+            setAtoms();
 
+
+            sendRays();
             //switch the roles and increase gameNum
             switchRoles();
             gameNum += 1;
@@ -73,6 +71,30 @@ public class Game {
         }while(board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom);
 
         board.placeAtom(co_ords[0], co_ords[1]);
+    }
+
+    public void setAtoms(){
+        for(int i = 0; i < 1; i++){
+            System.out.print(getSetter().getPlayerName() + " - (Setter): ");
+            setAtom();
+            view.printEntireBoard();
+        }
+    }
+
+    public void sendRays(){
+        String input = "";
+
+        do{
+            System.out.println("Enter a number between 1 and 54 to send a ray or type 'finish' to stop:");
+            input = playerIn.getRayInput();
+            if(input.isEmpty()){
+                break;
+            }
+            board.sendRay(Integer.parseInt(input));
+            view.printEntireBoard();
+
+        }while(true);
+
     }
 
     //returns setter
