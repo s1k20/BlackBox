@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a661b69-8851-4631-829f-6ba3cea94116" name="Changes" comment="PlayerController.java&#10;Game Logic Started">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/PlayerInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/PlayerInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/Atom.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Atom.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="c4ce90f9-2e3a-4526-acd3-804981b42309" name="Changes" comment="Created Ray class :)">
+      <change beforePath="$PROJECT_DIR$/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Ray.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,37 +20,24 @@
       </list>
     </option>
   </component>
-  <component name="Git.Pull.Settings">
-    <option name="OPTIONS">
-      <set>
-        <option value="REBASE" />
-      </set>
-    </option>
-  </component>
   <component name="Git.Settings">
-    <option name="PREVIOUS_COMMIT_AUTHORS">
-      <list>
-        <option value="Cian Boyle &lt;cian.boyle@ucdconnect.ie&gt;" />
-      </list>
-    </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;s1k20&quot;
+    &quot;assignee&quot;: &quot;lloydwillis&quot;
   }
 }</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
-        <option name="accountId" value="dac3acde-b342-495a-8d28-0227baf2e8bd" />
+        <option name="accountId" value="b90c4b93-0b1f-4231-9567-645236ea9c9f" />
         <option name="url" value="https://github.com/cian-boyle/Software-Engineering-Project-2.git" />
       </UrlAndAccount>
     </option>
@@ -62,111 +46,235 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 8
+  &quot;associatedIndex&quot;: 5
 }</component>
-  <component name="ProjectId" id="2bUIgCc71LbP7mpqjPkH1G4WUOI" />
+  <component name="ProjectId" id="2bUIc5bWqOsEMphsYg16iEePnxN" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "ray-development",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;ray-development&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\lloyd\IdeaProjects\Software-Engineering-Project-2\.idea" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="TestRay.test60deflection" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Software-Engineering-Project-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game_tests.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="game_tests.model" />
+      <option name="MAIN_CLASS_NAME" value="game_tests.model.TestRay" />
+      <option name="METHOD_NAME" value="test60deflection" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestRay.testAbsorb" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Software-Engineering-Project-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game_tests.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="game_tests.model" />
+      <option name="MAIN_CLASS_NAME" value="game_tests.model.TestRay" />
+      <option name="METHOD_NAME" value="testAbsorb" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestRay.testAbsorption" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Software-Engineering-Project-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game_tests.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="game_tests.model" />
+      <option name="MAIN_CLASS_NAME" value="game_tests.model.TestRay" />
+      <option name="METHOD_NAME" value="testAbsorption" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestRay.testNoAtomDetected" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Software-Engineering-Project-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game_tests.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="game_tests.model" />
+      <option name="MAIN_CLASS_NAME" value="game_tests.model.TestRay" />
+      <option name="METHOD_NAME" value="testNoAtomDetected" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestRay.testRayMarkerColour" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Software-Engineering-Project-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game_tests.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="game_tests.model" />
+      <option name="MAIN_CLASS_NAME" value="game_tests.model.TestRay" />
+      <option name="METHOD_NAME" value="testRayMarkerColour" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.TestRay.testRayMarkerColour" />
+        <item itemvalue="JUnit.TestRay.test60deflection" />
+        <item itemvalue="JUnit.TestRay.testNoAtomDetected" />
+        <item itemvalue="JUnit.TestRay.testAbsorb" />
+        <item itemvalue="JUnit.TestRay.testAbsorption" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="4a661b69-8851-4631-829f-6ba3cea94116" name="Changes" comment="" />
-      <created>1706263339821</created>
+      <changelist id="c4ce90f9-2e3a-4526-acd3-804981b42309" name="Changes" comment="" />
+      <created>1706263307522</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1706263339821</updated>
-      <workItem from="1706263340981" duration="947000" />
-      <workItem from="1706274774051" duration="101000" />
-      <workItem from="1706274883416" duration="2468000" />
-      <workItem from="1706520144479" duration="606000" />
-      <workItem from="1706563881748" duration="2528000" />
-      <workItem from="1707227175012" duration="2049000" />
-      <workItem from="1707405269216" duration="2271000" />
-      <workItem from="1707408374081" duration="2456000" />
-      <workItem from="1707476635339" duration="23371000" />
-      <workItem from="1707853576088" duration="660000" />
-      <workItem from="1708010473680" duration="632000" />
-      <workItem from="1708012455280" duration="621000" />
-      <workItem from="1708292862282" duration="13126000" />
-      <workItem from="1709137265407" duration="14047000" />
+      <updated>1706263307522</updated>
     </task>
-    <task id="LOCAL-00001" summary="Test 2.0">
+    <task id="LOCAL-00001" summary="Test 3.0">
       <option name="closed" value="true" />
-      <created>1706263432872</created>
+      <created>1706263570407</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1706263432872</updated>
+      <updated>1706263570407</updated>
     </task>
-    <task id="LOCAL-00002" summary="Test 2.0">
+    <task id="LOCAL-00002" summary="...">
       <option name="closed" value="true" />
-      <created>1707408302592</created>
+      <created>1707481016668</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1707408302592</updated>
+      <updated>1707481016668</updated>
     </task>
-    <task id="LOCAL-00003" summary="Test 2.0">
+    <task id="LOCAL-00003" summary="player class">
       <option name="closed" value="true" />
-      <created>1707412277339</created>
+      <created>1707597207330</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1707412277339</updated>
+      <updated>1707597207330</updated>
     </task>
-    <task id="LOCAL-00004" summary="start ray marker (worked together in lab)">
+    <task id="LOCAL-00004" summary="player class">
       <option name="closed" value="true" />
-      <created>1707645911420</created>
+      <created>1707597303358</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1707645911420</updated>
+      <updated>1707597303358</updated>
     </task>
-    <task id="LOCAL-00005" summary="start ray marker (worked together in lab)">
+    <task id="LOCAL-00005" summary="player class added method">
       <option name="closed" value="true" />
-      <created>1707646004873</created>
+      <created>1707598591199</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1707646004873</updated>
+      <updated>1707598591199</updated>
     </task>
-    <task id="LOCAL-00006" summary="PlayerController.java&#10;Game Logic Started">
+    <task id="LOCAL-00006" summary="player class added method">
       <option name="closed" value="true" />
-      <created>1707750391494</created>
+      <created>1707598684159</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1707750391494</updated>
+      <updated>1707598684159</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="added validation and unit testing">
+      <option name="closed" value="true" />
+      <created>1708530957665</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1708530957665</updated>
+    </task>
+    <task id="LOCAL-00008" summary="added unit testing">
+      <option name="closed" value="true" />
+      <created>1708538723239</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1708538723240</updated>
+    </task>
+    <task id="LOCAL-00009" summary="added additional unit tests">
+      <option name="closed" value="true" />
+      <created>1708541456458</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1708541456458</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Created Ray class :)">
+      <option name="closed" value="true" />
+      <created>1709476891939</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1709476891939</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Test 2.0" />
-    <MESSAGE value="start ray marker (worked together in lab)" />
-    <MESSAGE value="PlayerController.java&#10;Game Logic Started" />
-    <option name="LAST_COMMIT_MESSAGE" value="PlayerController.java&#10;Game Logic Started" />
+    <MESSAGE value="Test 3.0" />
+    <MESSAGE value="..." />
+    <MESSAGE value="player class" />
+    <MESSAGE value="player class added method" />
+    <MESSAGE value="added validation and unit testing" />
+    <MESSAGE value="added unit testing" />
+    <MESSAGE value="added additional unit tests" />
+    <MESSAGE value="Created Ray class :)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created Ray class :)" />
   </component>
 </project>

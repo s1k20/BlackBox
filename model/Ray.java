@@ -3,6 +3,7 @@ package model;
 public class Ray {
 
     private final int input;
+    private int output;
     private int currXCo_ord;
     private int currYCo_ord;
     private int orientation;
@@ -15,6 +16,14 @@ public class Ray {
 
     public int getInput() {
         return this.input;
+    }
+
+    public int getOutput(){
+        return this.output;
+    }
+
+    public void setOutput(int output){
+        this.output = output;
     }
 
     public void setOrientation(int orientation) {

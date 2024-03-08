@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static model.BoardConstants.*;
@@ -15,6 +16,8 @@ public class Board {
 
     //TODO make private when testing done
     public final HashMap<Integer, RayInputMap> inputMapping = new HashMap<>();
+
+    private final ArrayList<Ray> sentRays = new ArrayList<>();
 
 
     public Board(){
@@ -49,6 +52,10 @@ public class Board {
 
     public Object[][] getBoard(){
         return this.board;
+    }
+
+    public ArrayList<Ray> getSentRays(){
+        return this.sentRays;
     }
 
 
@@ -261,6 +268,8 @@ public class Board {
         RayInputMap rMap = inputMapping.get(input);
 
         Ray r = new Ray(input);
+        sentRays.add(r);
+
         r.setCurrXCo_ord(rMap.x);
         r.setCurrYCo_ord(rMap.y);
         r.setOrientation(rMap.orientation);
@@ -276,11 +285,12 @@ public class Board {
             //TODO tidy this up, this if statement is only for an edge case if two rays are shot from the same place
             if(board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] instanceof Atom) {
                 start.setColour(ANSI_GREEN);
+                r.setOutput(-1);
                 return true;
             }
 
             //for testing
-//            System.out.println(r.getOrientation());
+         //   System.out.println(r.getOrientation());
 
             if(r.getOrientation() == 0){
                 r.move0();
@@ -305,9 +315,11 @@ public class Board {
             if(board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] instanceof RayMarker){
                 break;
             }
+
             if(placeRay(r.getCurrXCo_ord(), r.getCurrYCo_ord(), r.getOrientation(), r)){
                 start.setColour(ANSI_GREEN);
                 r.setDeflectionType(-1);
+                r.setOutput(-1);
                 return true;
             }
 
@@ -337,7 +349,10 @@ public class Board {
             m.y = r.getCurrYCo_ord();
             m.orientation = r.getOrientation() >= 180 ? r.getOrientation() - 180 : r.getOrientation() + 180;
 
-            System.out.println("Ray exited at " + findExit(m));
+            int exit = findExit(m);
+            r.setOutput(exit);
+
+            System.out.println("Ray exited at " + exit);
             board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] = new RayMarker(r.getCurrXCo_ord(), r.getCurrYCo_ord(), colour);
             return false;
         }
@@ -357,14 +372,14 @@ public class Board {
     }
 
     //will return true if ray is absorbed
-    private boolean placeRay(int x, int y, int orientation, Ray r){
+    public boolean placeRay(int x, int y, int orientation, Ray r){
         if(!(board[y][x] instanceof Atom || board[y][x] instanceof CircleOfInfluence ||
                 board[y][x] instanceof IntersectingCircleOfInfluence || board[y][x] instanceof EmptyMarker)){
             board[y][x] = new RayGraphic(orientation);
 
             //temporary to make cool graphic
-//            printTempBoard();
-//            try {
+     //      printTempBoard();
+    //        try {
 //                Thread.sleep(750);
 //            } catch (InterruptedException e) {
 //                // Handle the exception
