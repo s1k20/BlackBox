@@ -1,12 +1,19 @@
 package controller;
+import java.util.HashSet;
 import java.util.Scanner;
 
 //player input class which is part of projects controller class.
 //class will only receive input and in game class will update board(model)
 public class PlayerInput {
 
+    private final HashSet<Integer> sentRays;
+
     //scanner to take in user input through different functions in the class
     private static final Scanner in = new Scanner(System.in);
+
+    public PlayerInput(){
+        this.sentRays = new HashSet<>();
+    }
 
     //function which will return a username for a player
     public String inUserName(){
@@ -71,8 +78,15 @@ public class PlayerInput {
            if(num < 1 || num > 54){
                System.out.println("Invalid Ray input! Please try again");
            }
+           else if(sentRays.contains(num)){
+               System.out.println("You have already sent a ray from this location!");
+           }
+           else{
+               sentRays.add(num);
+               break;
+           }
 
-       }while(num < 1 || num > 54);
+       }while(num < 1 || num > 54 || sentRays.contains(num));
 
        return input;
    }
