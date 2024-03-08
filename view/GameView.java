@@ -46,6 +46,17 @@ public class GameView {
                     }
 
                 }
+                else if(board.getBoard()[i][j] instanceof Board.RayGraphic r){
+                    if(r.getOrientation() == 60 || r.getOrientation() == 240){
+                        System.out.print(ANSI_PINK + "/ " + ANSI_RESET);
+                    }
+                    else if(r.getOrientation() == 0 || r.getOrientation() == 180){
+                        System.out.print(ANSI_PINK + "- " + ANSI_RESET);
+                    }
+                    else{
+                        System.out.print(ANSI_PINK + "\\ " + ANSI_RESET);
+                    }
+                }
                 else if(board.getBoard()[i][j] instanceof RayMarker r){
 
                     System.out.print(r.getColour() + "+ " + ANSI_RESET);

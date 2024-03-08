@@ -90,6 +90,5 @@ public class TestAtom {
         Atom a3 = (Atom) b.getBoardPosition(1, 5);
         assertEquals(6, a3.getCircleOfInfluence().size());
     }
-
-
+    
 }

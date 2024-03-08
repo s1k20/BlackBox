@@ -11,15 +11,16 @@ public class Game {
     private Player player2;
 
     //board object which holds logic to create the game
-    private final Board board;
+    private Board board;
 
     //variable to allow for two
     private int gameNum;
     private final int numGames = 2;
+    private final int numAtoms = 6;
 
     //player controller class to allow game to get necessary user input
     private final PlayerInput playerIn;
-    private final GameView view;
+    private GameView view;
 
 
 
@@ -48,11 +49,15 @@ public class Game {
             //let setter place 6 atoms
             setAtoms();
 
-
+            //let experimenter send rays
             sendRays();
+
             //switch the roles and increase gameNum
             switchRoles();
             gameNum += 1;
+
+            board = new Board();
+            view = new GameView(board);
         }
 
     }
@@ -74,6 +79,7 @@ public class Game {
     }
 
     public void setAtoms(){
+        //TODO change to numAtoms
         for(int i = 0; i < 1; i++){
             System.out.print(getSetter().getPlayerName() + " - (Setter): ");
             setAtom();
@@ -85,7 +91,8 @@ public class Game {
         String input = "";
 
         do{
-            System.out.println("Enter a number between 1 and 54 to send a ray or type 'finish' to stop:");
+            System.out.print(getExperimenter().getPlayerName() + " - (Experimenter): ");
+            System.out.println("Enter a number between 1 and 54 to send a ray or hit 'ENTER' to stop:");
             input = playerIn.getRayInput();
             if(input.isEmpty()){
                 break;
