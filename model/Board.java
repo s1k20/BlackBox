@@ -454,12 +454,15 @@ public class Board {
         return false;
     }
 
-    private static class RayGraphic{
-        int orientation;
+    public static class RayGraphic{
+        private final int orientation;
         private RayGraphic(int orientation){
             this.orientation = orientation;
         }
 
+        public int getOrientation() {
+            return this.orientation;
+        }
     }
 
 }
