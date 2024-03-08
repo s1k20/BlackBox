@@ -11,15 +11,16 @@ public class Game {
     private Player player2;
 
     //board object which holds logic to create the game
-    private final Board board;
+    private Board board;
 
     //variable to allow for two
     private int gameNum;
     private final int numGames = 2;
+    private final int numAtoms = 6;
 
     //player controller class to allow game to get necessary user input
     private final PlayerInput playerIn;
-    private final GameView view;
+    private GameView view;
 
 
 
@@ -46,15 +47,17 @@ public class Game {
             //first round player 1 is setter and player 2 is experimenter
 
             //let setter place 6 atoms
-            for(int i = 0; i < 6; i++){
-                System.out.print(getSetter().getPlayerName() + " - (Setter): ");
-                setAtom();
-                view.printEntireBoard();
-            }
+            setAtoms();
+
+            //let experimenter send rays
+            sendRays();
 
             //switch the roles and increase gameNum
             switchRoles();
-            gameNum++;
+            gameNum += 1;
+
+            board = new Board();
+            view = new GameView(board);
         }
 
     }
@@ -73,6 +76,31 @@ public class Game {
         }while(board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom);
 
         board.placeAtom(co_ords[0], co_ords[1]);
+    }
+
+    public void setAtoms(){
+        for(int i = 0; i < numAtoms; i++){
+            System.out.print(getSetter().getPlayerName() + " - (Setter): ");
+            setAtom();
+            view.printEntireBoard();
+        }
+    }
+
+    public void sendRays(){
+        String input = "";
+
+        do{
+            System.out.print(getExperimenter().getPlayerName() + " - (Experimenter): ");
+            System.out.println("Enter a number between 1 and 54 to send a ray or hit 'ENTER' to stop:");
+            input = playerIn.getRayInput();
+            if(input.isEmpty()){
+                break;
+            }
+            board.sendRay(Integer.parseInt(input));
+            view.printEntireBoard();
+
+        }while(true);
+
     }
 
     //returns setter

@@ -8,7 +8,7 @@ public class RayMarker {
 
     //string which will hold ansi code for text-based interface to show colour
     //TODO will be developed when working on gui
-    private final String colour;
+    private String colour;
 
     //constructor to create ray marker
     public RayMarker(int x, int y, String colour){
@@ -28,6 +28,10 @@ public class RayMarker {
 
     public String getColour(){
         return this.colour;
+    }
+
+    public void setColour(String colour){
+        this.colour = colour;
     }
 
 }

@@ -14,7 +14,6 @@ public class Atom {
     //atom constructor, automatically works out its circle of influence
     public Atom(int xCo_ord, int yCo_ord){
 
-
         //adding circle of influence to atom array list of circle of influences
         //creating new circle of influence object
         circleOfInfluence.add(new CircleOfInfluence(xCo_ord, yCo_ord - 1, 60));
