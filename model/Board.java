@@ -282,6 +282,7 @@ public class Board {
             if(board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] instanceof Atom) {
                 start.setColour(ANSI_GREEN);
                 r.setOutput(-1);
+                System.out.println("Ray absorbed!");
                 return true;
             }
 
@@ -313,6 +314,7 @@ public class Board {
                 start.setColour(ANSI_GREEN);
                 r.setDeflectionType(-1);
                 r.setOutput(-1);
+                System.out.println("Ray absorbed!");
                 return true;
             }
 
