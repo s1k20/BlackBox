@@ -153,22 +153,57 @@ public class TestRay {
         Board b = new Board();
         b.sendRay(2);
         String red = "\u001B[31m";
-        RayMarker a = (RayMarker) b.getBoardPosition(4,1);
-        assertEquals(red,a.getColour());
+        RayMarker r = (RayMarker) b.getBoardPosition(4,1);
+        assertEquals(red,r.getColour());
 
         b.placeAtom(3,8);
         b.sendRay(24);
         String green = "\u001B[32m";
-       // RayMarker c2 = new RayMarker(3,10,green);
-        RayMarker a2 = (RayMarker) b.getBoardPosition(3,10);
-        assertEquals(green,a2.getColour());
+        RayMarker r2 = (RayMarker) b.getBoardPosition(3,10);
+        assertEquals(green,r2.getColour());
 
         Board b2 = new Board();
         b2.placeAtom(6,4);
         b2.sendRay(32);
         String blue = "\u001B[33m";
-        RayMarker a3 = (RayMarker) b2.getBoardPosition(10,1);
-        assertEquals(blue,a3.getColour());
+        RayMarker r3 = (RayMarker) b2.getBoardPosition(10,1);
+        assertEquals(blue,r3.getColour());
+    }
+
+    @Test
+    void testOrientation() {
+        Board b = new Board();
+        b.placeAtom(5,5);
+        b.sendRay(10);
+        b.sendRay(37);
+        b.sendRay(28);
+        b.sendRay(19);
+        b.sendRay(46);
+        b.sendRay(1);
+
+        Ray ray = b.getSentRays().get(0);
+        assertEquals(ray.getInput(), 10);
+        assertEquals(ray.getOutput(), -1);
+
+        Ray ray2 = b.getSentRays().get(1);
+        assertEquals(ray2.getInput(), 37);
+        assertEquals(ray2.getOutput(), -1);
+
+        Ray ray3 = b.getSentRays().get(2);
+        assertEquals(ray3.getInput(), 28);
+        assertEquals(ray3.getOutput(), -1);
+
+        Ray ray4 = b.getSentRays().get(3);
+        assertEquals(ray4.getInput(), 19);
+        assertEquals(ray4.getOutput(), -1);
+
+        Ray ray5 = b.getSentRays().get(4);
+        assertEquals(ray5.getInput(), 46);
+        assertEquals(ray5.getOutput(), -1);
+
+        Ray ray6 = b.getSentRays().get(5);
+        assertEquals(ray6.getInput(), 1);
+        assertEquals(ray6.getOutput(), -1);
     }
 
 
