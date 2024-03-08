@@ -1,6 +1,5 @@
 package model;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,8 +13,8 @@ public class Board {
     //object array which is the board of the game
     private final Object[][] board = new Object[HEIGHT][WIDTH];
 
-    //TODO make private when testing done
-    public final HashMap<Integer, RayInputMap> inputMapping = new HashMap<>();
+    //mapping of numbers from 1 to 54 to valid ray coordinates and orientation
+    private final HashMap<Integer, RayInputMap> inputMapping = new HashMap<>();
 
     private final ArrayList<Ray> sentRays = new ArrayList<>();
 
@@ -260,9 +259,6 @@ public class Board {
         }
     }
 
-
-
-    //TODO finish function
     public boolean sendRay(int input){
         System.out.println("Ray entered at " + input);
         RayInputMap rMap = inputMapping.get(input);
@@ -288,9 +284,6 @@ public class Board {
                 r.setOutput(-1);
                 return true;
             }
-
-            //for testing
-         //   System.out.println(r.getOrientation());
 
             if(r.getOrientation() == 0){
                 r.move0();
@@ -377,31 +370,20 @@ public class Board {
                 board[y][x] instanceof IntersectingCircleOfInfluence || board[y][x] instanceof EmptyMarker)){
             board[y][x] = new RayGraphic(orientation);
 
-            //temporary to make cool graphic
-     //      printTempBoard();
-    //        try {
-//                Thread.sleep(750);
-//            } catch (InterruptedException e) {
-//                // Handle the exception
-//            }
-
             return false;
         }
         else if(board[y][x] instanceof CircleOfInfluence c){
 
-            //-- ray logic --
+            //ray logic
             //absorption
             if(orientation - c.getOrientation() == 90 || orientation - c.getOrientation() == -90
                     || orientation + c.getOrientation() == 360){
-                //for testing
-//                System.out.println(orientation + " " + c.getOrientation());
-
-//                board[y][x] = new RayGraphic(orientation);
                 return true;
             }
             else{
 
                 //TODO tidy this up
+                //60 degree reflections of all possible combinations
                 if(c.getOrientation() != 270 && c.getOrientation() != 240 && c.getOrientation() != 120){
                     if(r.getOrientation() == 0 && c.getOrientation() == 300){
                         r.setOrientation(360);
@@ -411,7 +393,6 @@ public class Board {
                     }
                     else{
                         r.setOrientation(r.getOrientation() + 60);
-//                        System.out.println(r.getOrientation());
                         if(r.getOrientation() == 360){
                             r.setOrientation(0);
                         }
@@ -444,7 +425,6 @@ public class Board {
                         r.setOrientation(r.getOrientation() + 60);
                     }
                 }
-//                System.out.println(r.getOrientation());
                 if(r.getDeflectionType() != 120){
                     r.setDeflectionType(60);
                 }

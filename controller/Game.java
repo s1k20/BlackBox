@@ -79,8 +79,7 @@ public class Game {
     }
 
     public void setAtoms(){
-        //TODO change to numAtoms
-        for(int i = 0; i < 1; i++){
+        for(int i = 0; i < numAtoms; i++){
             System.out.print(getSetter().getPlayerName() + " - (Setter): ");
             setAtom();
             view.printEntireBoard();
