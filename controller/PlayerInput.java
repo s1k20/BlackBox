@@ -7,13 +7,17 @@ import java.util.Scanner;
 public class PlayerInput {
 
     //TODO clear after round
-    private final HashSet<Integer> sentRays;
+    private HashSet<Integer> sentRays;
 
     //scanner to take in user input through different functions in the class
     private static final Scanner in = new Scanner(System.in);
 
     public PlayerInput(){
         this.sentRays = new HashSet<>();
+    }
+
+    public void resetSentRays() {
+        sentRays = new HashSet<>();
     }
 
     public int getPlayerOption() {

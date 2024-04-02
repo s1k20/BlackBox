@@ -29,7 +29,7 @@ public class Game {
     //game constructor which inits all objects/variables
     public Game(){
         board = new Board();
-        view = new GameView(board);
+        view = new GameView(this);
 
         playerIn = new PlayerInput();
 
@@ -55,12 +55,16 @@ public class Game {
 
     public void testGame() {
         board = new Board();
-        view = new GameView(board);
+        view = new GameView(this);
 
         board.placeAtom(1, 7);
 //        board.placeAtom(4, 6);
-        board.sendRay(16);
+        board.sendRay(23);
         view.printEntireBoard();
+    }
+
+    public Board getBoard() {
+         return this.board;
     }
 
     public void play2PlayerGame(){
@@ -83,14 +87,14 @@ public class Game {
 
             //let experimenter guess atoms locations
             guessAtoms();
-//            System.out.println(getExperimenter().getPlayerName() + " score: " + getExperimenter().getScore());
 
             //switch the roles and increase gameNum
             switchRoles();
             gameNum += 1;
 
+            playerIn.resetSentRays();
             board = new Board();
-            view = new GameView(board);
+            view = new GameView(this);
         }
         Player winner = getWinner();
         view.printStats(player1, player2, winner);

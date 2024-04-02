@@ -363,7 +363,7 @@ public class Board {
 //
 //            return false;
 //        }
-        if (board[y][x] instanceof NullHex || board[y][x] instanceof RayTrail) {
+        if (board[y][x] == null || board[y][x] instanceof RayTrail) {
             board[y][x] = new RayTrail(orientation);
             return false;
         }

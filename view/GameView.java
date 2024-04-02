@@ -1,14 +1,20 @@
 package view;
 
+import controller.Game;
 import model.*;
+
+import java.sql.SQLOutput;
+
 import static model.BoardConstants.*;
 
 public class GameView {
 
+    Game game;
     Board board;
 
-    public GameView(Board board){
-        this.board = board;
+    public GameView(Game game){
+        this.game = game;
+        this.board = game.getBoard();
     }
 
     public void printStart() {
@@ -154,12 +160,15 @@ public class GameView {
     }
 
     public void printRound(int roundNum) {
-        int length = 20;
+        int length = 10;
         String round = "Round " + roundNum;
-        printLine('+', round.length() + length + length);
-        for (int i = 0; i < length; i++) System.out.print(" ");
+        String roundMessage = "Setter: " + game.getSetter().getPlayerName() + " | Experimenter: " + game.getExperimenter().getPlayerName();
+        System.out.print(ANSI_BLUE); printLine('+', roundMessage.length() + length + length); System.out.print(ANSI_RESET);
+        for (int i = 0; i < length + (roundMessage.length() / 2) - (round.length() / 2); i++) System.out.print(" ");
         System.out.println(round);
-        printLine('+', round.length() + length + length);
+        for (int i = 0; i < length; i++) System.out.print(" ");
+        System.out.print(ANSI_YELLOW); System.out.println(roundMessage); System.out.print(ANSI_RESET);
+        System.out.print(ANSI_BLUE); printLine('+', roundMessage.length() + length + length); System.out.print(ANSI_RESET);
     }
 
 }
