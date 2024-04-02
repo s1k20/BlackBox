@@ -2,6 +2,8 @@ package controller;
 import model.*;
 import view.*;
 
+import java.util.Random;
+
 //controller part of project which runs main logic
 //updates model and view
 public class Game {
@@ -16,7 +18,7 @@ public class Game {
     //variable to allow for two
     private int gameNum;
     private final int numGames = 2;
-    private final int numAtoms = 6;
+    private final int numAtoms = 1;
 
     //player controller class to allow game to get necessary user input
     private final PlayerInput playerIn;
@@ -27,14 +29,41 @@ public class Game {
     //game constructor which inits all objects/variables
     public Game(){
         board = new Board();
-        playerIn = new PlayerInput();
         view = new GameView(board);
+
+        playerIn = new PlayerInput();
 
         //set gameNum to 1 for the first game
         gameNum = 1;
     }
 
-    public void playGame(){
+    public void playGame() {
+        view.printStart();
+        int choice;
+
+        do {
+            choice = playerIn.getPlayerOption();
+            switch (choice) {
+                case 1 -> playSinglePlayerGame();
+                case 2 -> play2PlayerGame();
+                case 3 -> System.out.println("insert rules");
+                case 4 -> System.out.println("lolol");
+            }
+        } while (choice != 5);
+
+    }
+
+    public void testGame() {
+        board = new Board();
+        view = new GameView(board);
+
+        board.placeAtom(1, 7);
+//        board.placeAtom(4, 6);
+        board.sendRay(16);
+        view.printEntireBoard();
+    }
+
+    public void play2PlayerGame(){
         //create players
         System.out.println("Player 1 - Please enter your name:");
         player1 = new Player(playerIn.inUserName(), true);
@@ -45,12 +74,16 @@ public class Game {
         //main game loop
         while(gameNum <= numGames){
             //first round player 1 is setter and player 2 is experimenter
-
+            view.printRound(gameNum);
             //let setter place 6 atoms
             setAtoms();
 
             //let experimenter send rays
             sendRays();
+
+            //let experimenter guess atoms locations
+            guessAtoms();
+//            System.out.println(getExperimenter().getPlayerName() + " score: " + getExperimenter().getScore());
 
             //switch the roles and increase gameNum
             switchRoles();
@@ -59,30 +92,63 @@ public class Game {
             board = new Board();
             view = new GameView(board);
         }
+        Player winner = getWinner();
+        view.printStats(player1, player2, winner);
+    }
+
+    public void playSinglePlayerGame() {
+        System.out.println("Please enter your name:");
+        player1 = new Player(playerIn.inUserName(), false);
+        singlePlayerSetAtoms();
 
     }
 
-    public void setAtom(){
-        System.out.println("Please enter an X Co-ordinate and a Y Co-ordinate (comma separated) in which to place an Atom:");
+    public void setAtom(boolean isSetter){
+        if (isSetter) System.out.println("Please enter an X Co-ordinate and a Y Co-ordinate (comma separated) in which to PLACE an Atom:");
+        else System.out.println("Please enter an X Co-ordinate and a Y Co-ordinate (comma separated) in which to GUESS an Atom:");
         int[] co_ords;
 
         do{
             co_ords = playerIn.getAtomInput();
 
-            if(board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom){
+            if(isSetter && board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom){
                 System.out.println(getSetter().getPlayerName() + " - You have already placed an atom in this position!");
             }
 
-        }while(board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom);
+        }while(isSetter && board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom);
 
-        board.placeAtom(co_ords[0], co_ords[1]);
+        if (isSetter) board.placeAtom(co_ords[0], co_ords[1]);
+        else if (!(board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom)) getExperimenter().updateScore(5);
+        else getExperimenter().correctAtom();
     }
 
     public void setAtoms(){
         for(int i = 0; i < numAtoms; i++){
             System.out.print(getSetter().getPlayerName() + " - (Setter): ");
-            setAtom();
+            setAtom(true);
             view.printEntireBoard();
+        }
+    }
+
+    public void singlePlayerSetAtoms() {
+        Random random = new Random();
+
+        for (int i = 0; i < numAtoms; i++) {
+            int x;
+            int y;
+            do {
+                x = random.nextInt(9) + 1;
+                y = random.nextInt(9) + 1;
+            } while (board.checkInvalidInput(x, y) || board.getBoardPosition(x, y) instanceof Atom);
+            board.placeAtom(x, y);
+            view.printEntireBoard();
+        }
+    }
+
+    public void guessAtoms() {
+        for(int i = 0; i < numAtoms; i++){
+            System.out.print(getExperimenter().getPlayerName() + " - (Experimenter): ");
+            setAtom(false);
         }
     }
 
@@ -96,8 +162,15 @@ public class Game {
             if(input.isEmpty()){
                 break;
             }
-            board.sendRay(Integer.parseInt(input));
-            view.printEntireBoard();
+            if (board.sendRay(Integer.parseInt(input))) {
+                getExperimenter().updateScore(1);
+            }
+            else {
+                getExperimenter().updateScore(2);
+            }
+
+            view.printLiveBoard();
+            getExperimenter().raySent();
 
         }while(true);
 
@@ -124,7 +197,12 @@ public class Game {
             player1.setSetter();
             player2.setExperimenter();
         }
+    }
 
+    public Player getWinner() {
+        if (player1.getScore() < player2.getScore()) return player1;
+        else if (player2.getScore() < player1.getScore()) return player2;
+        else return null;
     }
 
 }

@@ -6,6 +6,7 @@ import java.util.Scanner;
 //class will only receive input and in game class will update board(model)
 public class PlayerInput {
 
+    //TODO clear after round
     private final HashSet<Integer> sentRays;
 
     //scanner to take in user input through different functions in the class
@@ -13,6 +14,20 @@ public class PlayerInput {
 
     public PlayerInput(){
         this.sentRays = new HashSet<>();
+    }
+
+    public int getPlayerOption() {
+        int number;
+
+        do {
+            number = in.nextInt();
+
+            if (number <= 0 || number > 5) {
+                System.out.println("Invalid option, please try again");
+            }
+        } while (number <= 0 || number > 5);
+        in.nextLine();
+        return number;
     }
 
     //function which will return a username for a player

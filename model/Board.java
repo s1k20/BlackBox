@@ -7,9 +7,6 @@ import static model.BoardConstants.*;
 
 public class Board {
 
-    //colour index to which is used to generate colours
-    private static int colourIndex = 31;
-
     //object array which is the board of the game
     private final Object[][] board = new Object[HEIGHT][WIDTH];
 
@@ -117,21 +114,21 @@ public class Board {
                     (j == 10 && i < 6) || (i == 10 && j <= 5) || (j == 0 && i >= 5);
     }
 
-    //TODO develop this
+    //TODO develop this (probably dont need this)
     //TODO make it work for certain deflections/reflection and absorption
-    public void placeRayMarker(int x, int y){
-
-        //validation that position is valid ray marker position
-        if(!checkRayMarker(y, x)){
-            throw new IllegalArgumentException("Invalid Position for Ray Marker");
-        }
-
-        //just creates a new ray marker in a certain position and creates a random colour for it
-        RayMarker r = new RayMarker(x, y, generateColour());
-
-        //place new ray marker into board
-        board[y][x] = r;
-    }
+//    public void placeRayMarker(int x, int y){
+//
+//        //validation that position is valid ray marker position
+//        if(!checkRayMarker(y, x)){
+//            throw new IllegalArgumentException("Invalid Position for Ray Marker");
+//        }
+//
+//        //just creates a new ray marker in a certain position and creates a random colour for it
+//        RayMarker r = new RayMarker(x, y, generateColour());
+//
+//        //place new ray marker into board
+//        board[y][x] = r;
+//    }
 
     //classes which have no functionality other than representing a position on board
     //null hex is a position in the object array which cants be accessed in the game
@@ -141,20 +138,21 @@ public class Board {
     public static class EmptyMarker{
     }
 
+    //TODO: (probably dont need this)
     //function to create a different colour for each ray marker
-    private String generateColour(){
-        //TODO: fix this function so it generates the colour based on
-        //TODO: - what kind of reflection ray takes
+//    private String generateColour(){
+//        //TODO: fix this function so it generates the colour based on
+//        //TODO: - what kind of reflection ray takes
+//
+//        //loop colours back to the start
+//        if(colourIndex >= 37){
+//            colourIndex = 31;
+//        }
+//
+//        return "\u001B[" + colourIndex++ + "m";
+//    }
 
-        //loop colours back to the start
-        if(colourIndex >= 37){
-            colourIndex = 31;
-        }
-
-        return "\u001B[" + colourIndex++ + "m";
-    }
-
-    private static boolean checkInvalidInput(int i, int j){
+    public boolean checkInvalidInput(int i, int j){
         return i + j <= 5 || i + j >= 15 || i <= 0 || j <= 0 || i >= 10 || j >= 10;
     }
 
@@ -168,18 +166,18 @@ public class Board {
         int y = 0;
 
         for(int i = 1; i <= SET_LENGTH; i++){
-            RayInputMap r = new RayInputMap();
+            RayInputMap rayInputMap = new RayInputMap();
 
             if(i <= 18){
-                r.x = x;
-                r.y = y;
+                rayInputMap.x = x;
+                rayInputMap.y = y;
                 if(i < 10){
 
                     if(i % 2 == 0){
-                        r.orientation = 0;
+                        rayInputMap.orientation = 0;
                     }
                     else{
-                        r.orientation = 300;
+                        rayInputMap.orientation = 300;
                         x--;
                         y++;
                     }
@@ -188,28 +186,28 @@ public class Board {
                 else{
 
                     if(i % 2 == 0){
-                        r.orientation = 0;
+                        rayInputMap.orientation = 0;
                         y++;
                     }
                     else{
-                        r.orientation = 60;
+                        rayInputMap.orientation = 60;
                     }
 
 
                 }
-                inputMapping.put(i, r);
+                inputMapping.put(i, rayInputMap);
             }
             else if(i <= 28){
-                r.x = x;
-                r.y = y;
+                rayInputMap.x = x;
+                rayInputMap.y = y;
                 if(i % 2 == 0){
-                    r.orientation = 120;
+                    rayInputMap.orientation = 120;
                 }
                 else{
-                    r.orientation = 60;
+                    rayInputMap.orientation = 60;
                     x++;
                 }
-                inputMapping.put(i, r);
+                inputMapping.put(i, rayInputMap);
 
             }
             else if(i <= 45){
@@ -217,44 +215,44 @@ public class Board {
                     x++;
                     y--;
                 }
-                r.x = x;
-                r.y = y;
+                rayInputMap.x = x;
+                rayInputMap.y = y;
                 if(i < 37){
 
                     if(i % 2 == 0){
-                        r.orientation = 120;
+                        rayInputMap.orientation = 120;
                         x++;
                         y--;
                     }
                     else{
-                        r.orientation = 180;
+                        rayInputMap.orientation = 180;
                     }
 
                 }
                 else{
                     if(i % 2 == 0){
-                        r.orientation = 240;
+                        rayInputMap.orientation = 240;
                     }
                     else{
-                        r.orientation = 180;
+                        rayInputMap.orientation = 180;
                         y--;
                     }
 
 
                 }
-                inputMapping.put(i, r);
+                inputMapping.put(i, rayInputMap);
             }
             else{
-                r.x = x;
-                r.y = y;
+                rayInputMap.x = x;
+                rayInputMap.y = y;
                 if(i % 2 == 0){
-                    r.orientation = 240;
+                    rayInputMap.orientation = 240;
                     x--;
                 }
                 else{
-                    r.orientation = 300;
+                    rayInputMap.orientation = 300;
                 }
-                inputMapping.put(i, r);
+                inputMapping.put(i, rayInputMap);
             }
         }
     }
@@ -272,13 +270,12 @@ public class Board {
 
         boolean absorbed = false;
 
-        String colour = generateColour();
+        String colour = "";
 
         RayMarker start = new RayMarker(rMap.x, rMap.y, colour);
         board[rMap.y][rMap.x] = start;
 
         while(!(board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] instanceof EmptyMarker) && !absorbed){
-            //TODO tidy this up, this if statement is only for an edge case if two rays are shot from the same place
             if(board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] instanceof Atom) {
                 start.setColour(ANSI_GREEN);
                 r.setOutput(-1);
@@ -286,23 +283,14 @@ public class Board {
                 return true;
             }
 
-            if(r.getOrientation() == 0){
-                r.move0();
-            }
-            else if(r.getOrientation() == 60){
-                r.move60();
-            }
-            else if(r.getOrientation() == 120){
-                r.move120();
-            }
-            else if(r.getOrientation() == 180){
-                r.move180();
-            }
-            else if(r.getOrientation() == 240){
-                r.move240();
-            }
-            else if(r.getOrientation() == 300){
-                r.move300();
+            switch (r.getOrientation()) {
+                case 0 -> r.move0();
+                case 60 -> r.move60();
+                case 120 -> r.move120();
+                case 180 -> r.move180();
+                case 240 -> r.move240();
+                case 300 -> r.move300();
+                default -> System.out.println("invalid ray movement");
             }
 
             //exit loop if when ray has moved it has met a pre-placed ray marker
@@ -346,8 +334,9 @@ public class Board {
 
             int exit = findExit(m);
             r.setOutput(exit);
+            if (r.getDeflectionType() == 180) System.out.println("Deflected!");
+            else System.out.println("Ray exited at " + exit);
 
-            System.out.println("Ray exited at " + exit);
             board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] = new RayMarker(r.getCurrXCo_ord(), r.getCurrYCo_ord(), colour);
             return false;
         }
@@ -368,77 +357,30 @@ public class Board {
 
     //will return true if ray is absorbed
     public boolean placeRay(int x, int y, int orientation, Ray r){
-        if(!(board[y][x] instanceof Atom || board[y][x] instanceof CircleOfInfluence ||
-                board[y][x] instanceof IntersectingCircleOfInfluence || board[y][x] instanceof EmptyMarker)){
-            board[y][x] = new RayGraphic(orientation);
-
+//        if(!(board[y][x] instanceof Atom || board[y][x] instanceof CircleOfInfluence ||
+//                board[y][x] instanceof IntersectingCircleOfInfluence || board[y][x] instanceof EmptyMarker)){
+//            board[y][x] = new RayTrail(orientation);
+//
+//            return false;
+//        }
+        if (board[y][x] instanceof NullHex || board[y][x] instanceof RayTrail) {
+            board[y][x] = new RayTrail(orientation);
             return false;
         }
         else if(board[y][x] instanceof CircleOfInfluence c){
-
-            //ray logic
-            //absorption
-            if(orientation - c.getOrientation() == 90 || orientation - c.getOrientation() == -90
-                    || orientation + c.getOrientation() == 360){
-                return true;
-            }
-            else{
-
-                //TODO tidy this up
-                //60 degree reflections of all possible combinations
-                if(c.getOrientation() != 270 && c.getOrientation() != 240 && c.getOrientation() != 120){
-                    if(r.getOrientation() == 0 && c.getOrientation() == 300){
-                        r.setOrientation(360);
-                    }
-                    if(r.getOrientation() >= c.getOrientation()){
-                        r.setOrientation(r.getOrientation() - 60);
-                    }
-                    else{
-                        r.setOrientation(r.getOrientation() + 60);
-                        if(r.getOrientation() == 360){
-                            r.setOrientation(0);
-                        }
-                    }
-                }
-                else if(c.getOrientation() == 240){
-                    if(r.getOrientation() == 60){
-                        r.setOrientation(r.getOrientation() - 60);
-                    }
-                    else{
-                        r.setOrientation(r.getOrientation() + 60);
-                    }
-                }
-                else if(c.getOrientation() == 120){
-                    if(r.getOrientation() == 180){
-                        r.setOrientation(r.getOrientation() - 60);
-                    }
-                    else{
-                        r.setOrientation(r.getOrientation() + 60);
-                        if(r.getOrientation() == 360){
-                            r.setOrientation(0);
-                        }
-                    }
-                }
-                else{
-                    if(r.getOrientation() == 120){
-                        r.setOrientation(r.getOrientation() - 60);
-                    }
-                    else{
-                        r.setOrientation(r.getOrientation() + 60);
-                    }
-                }
-                if(r.getDeflectionType() != 120){
-                    r.setDeflectionType(60);
-                }
-                return false;
-            }
+            return r.deflectionLogic_CircleOfInfluence(c.getOrientation());
+        }
+        else if(board[y][x] instanceof IntersectingCircleOfInfluence i) {
+            return r.deflectionLogic_IntersectingCircleOfInfluence(i);
         }
         return false;
     }
 
-    public static class RayGraphic{
+
+
+    public static class RayTrail{
         private final int orientation;
-        private RayGraphic(int orientation){
+        private RayTrail(int orientation){
             this.orientation = orientation;
         }
 

@@ -9,11 +9,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4576e0cc-369a-4145-900a-290dc17a3fc7" name="Changes" comment="worked on rays and deflections handled">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="4576e0cc-369a-4145-900a-290dc17a3fc7" name="Changes" comment="game says if ray is absorbed">
+      <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_tests/model/TestAtom.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_tests/model/TestAtom.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/BoardConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/BoardConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_tests/model/TestRay.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_tests/model/TestRay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/IntersectingCircleOfInfluence.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/IntersectingCircleOfInfluence.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Ray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/GameView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,27 +54,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "ray-development",
-    "jdk.selected.JAVA_MODULE": "openjdk-21",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.29616308",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Further-Ray-Development&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.29616308&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Application.RunGame">
     <configuration name="RunGame" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main" />
@@ -152,10 +156,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TestAtom.testRayMarkerColour" />
         <item itemvalue="JUnit.TestCircleOfInfluences.testIntersectingCircleOfInfluence" />
         <item itemvalue="JUnit.TestCircleOfInfluences.testCircleOfInfluencePlace" />
         <item itemvalue="JUnit.TestAtom.testCircleOfInfluenceList" />
+        <item itemvalue="JUnit.TestAtom.testRayMarkerColour" />
         <item itemvalue="JUnit.TestCircleOfInfluences.testIntersectingCircleOfInfluence" />
       </list>
     </recent_temporary>
@@ -221,7 +225,8 @@
       <workItem from="1709651838475" duration="3905000" />
       <workItem from="1709744483796" duration="787000" />
       <workItem from="1709828280085" duration="1988000" />
-      <workItem from="1709830279290" duration="4991000" />
+      <workItem from="1709830279290" duration="9597000" />
+      <workItem from="1711804768514" duration="13655000" />
     </task>
     <task id="LOCAL-00001" summary="fixed bug">
       <option name="closed" value="true" />
@@ -311,7 +316,47 @@
       <option name="project" value="LOCAL" />
       <updated>1709565777359</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="worked on rays and deflections handled">
+      <option name="closed" value="true" />
+      <created>1709894560393</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1709894560393</updated>
+    </task>
+    <task id="LOCAL-00013" summary="added getter for ray graphic">
+      <option name="closed" value="true" />
+      <created>1709894746618</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1709894746618</updated>
+    </task>
+    <task id="LOCAL-00014" summary="added invalid input for ray">
+      <option name="closed" value="true" />
+      <created>1709897202560</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1709897202560</updated>
+    </task>
+    <task id="LOCAL-00015" summary="small changes to file">
+      <option name="closed" value="true" />
+      <created>1709898074342</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1709898074342</updated>
+    </task>
+    <task id="LOCAL-00016" summary="game says if ray is absorbed">
+      <option name="closed" value="true" />
+      <created>1709899155395</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1709899155395</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -341,6 +386,10 @@
     <MESSAGE value="tidy project structure and seperated constants into separate class" />
     <MESSAGE value="added some extra tests" />
     <MESSAGE value="worked on rays and deflections handled" />
-    <option name="LAST_COMMIT_MESSAGE" value="worked on rays and deflections handled" />
+    <MESSAGE value="added getter for ray graphic" />
+    <MESSAGE value="added invalid input for ray" />
+    <MESSAGE value="small changes to file" />
+    <MESSAGE value="game says if ray is absorbed" />
+    <option name="LAST_COMMIT_MESSAGE" value="game says if ray is absorbed" />
   </component>
 </project>
