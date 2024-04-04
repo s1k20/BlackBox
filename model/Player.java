@@ -39,7 +39,6 @@ public class Player {
     }
 
     public void correctAtom() {
-        System.out.println("wfyteiowre");
         this.numCorrectAtoms += 1;
     }
 

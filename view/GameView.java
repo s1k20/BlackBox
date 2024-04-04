@@ -27,9 +27,7 @@ public class GameView {
         printLine('-', title.length());
         System.out.println("1. Play single player game");
         System.out.println("2. Play 2 player game");
-        System.out.println("3. Rules");
-        System.out.println("4. Settings");
-        System.out.println("5. Quit");
+        System.out.println("3. Quit");
     }
 
     public void printLine(char c, int length) {
@@ -157,6 +155,24 @@ public class GameView {
         printLine('-', length);
         System.out.println(p2Stat);
         printLine('-', length);
+
+        for (int i = 0; i < 3; i++) System.out.println();
+    }
+
+    public void printStats_SinglePlayer(Player player) {
+        String p1Stat = "Player - " + player.getPlayerName() + " | " + player.getNumSentRays() + " rays sent | " + player.getNumCorrectAtoms() + " correctly guessed atoms";
+
+        int length = p1Stat.length();
+
+        printLine('=', length);
+        System.out.println("Final Score: " + player.getScore());
+        printLine('=', length);
+        System.out.println("Statistics: ");
+        printLine('*', length);
+        System.out.println(p1Stat);
+        printLine('-', length);
+
+        for (int i = 0; i < 3; i++) System.out.println();
     }
 
     public void printRound(int roundNum) {

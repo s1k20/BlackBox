@@ -45,8 +45,8 @@ public class IntersectingCircleOfInfluence {
     }
 
     public boolean diagonalReflection(){
-        return (orientations.contains(270) && orientations.contains(300)) || (orientations.contains(90) && orientations.contains(240))
-                || (orientations.contains(270) && orientations.contains(60)) || (orientations.contains(90) && orientations.contains(120));
+        return (orientations.contains(270) && (orientations.contains(300) || orientations.contains(60)))
+                || (orientations.contains(90) && (orientations.contains(240) || orientations.contains(120)));
     }
 
     public CircleOfInfluence getCircleOfInfluence(int i){

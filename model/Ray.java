@@ -93,13 +93,9 @@ public class Ray {
     }
 
     public boolean deflectionLogic_CircleOfInfluence(int coiOrientation){
-        if(this.orientation - coiOrientation == 90 || this.orientation - coiOrientation == -90
-                || this.orientation + coiOrientation == 360){
-            return true;
-        }
-        else if (coiOrientation == 60 && (this.orientation == coiOrientation || this.orientation == 180)) flipOrientation();
-        else if (coiOrientation == 90 && (this.orientation == 120 || this.orientation == 240)) flipOrientation();
-        else if (coiOrientation == 300 && (this.orientation == coiOrientation || this.orientation == 180)) flipOrientation();
+        if(absorption(coiOrientation)) return true;
+        else if (reflection(coiOrientation)) flipOrientation();
+
         else{
             //TODO tidy this up
             if(coiOrientation != 270 && coiOrientation != 240 && coiOrientation != 120){
@@ -153,6 +149,23 @@ public class Ray {
         return false;
     }
 
+    private boolean absorption(int coiOrientation) {
+        return this.orientation - coiOrientation == 90 || this.orientation - coiOrientation == -90
+                || this.orientation + coiOrientation == 360;
+    }
+
+    private boolean reflection(int coiOrientation) {
+        if (this.orientation == coiOrientation) return true;
+
+        return switch (this.orientation) {
+            case 0 -> coiOrientation == 60 || coiOrientation == 300;
+            case 60, 300 -> coiOrientation == 270;
+            case 120, 240 -> coiOrientation == 90;
+            case 180 -> coiOrientation == 120 || coiOrientation == 240;
+            default -> false;
+        };
+    }
+
     public boolean deflectionLogic_IntersectingCircleOfInfluence(IntersectingCircleOfInfluence intersectingCircleOfInfluence) {
         //if ray is going straight across, conditions for reflecting is that it incounters intersecting
         //circle of influences which are like / and \
@@ -160,61 +173,52 @@ public class Ray {
             //horizontal reflection
             //function which checks to make sure conditions of horizontal reflection can take place
             //function just checks if two parts of circle of influence add to 360 which leads to horizontal reflection
-            if (intersectingCircleOfInfluence.horizontalReflection()) {
-                if (this.getOrientation() == 0) {
-                    this.setOrientation(180);
-                } else {
-                    this.setOrientation(0);
-                }
-            }
+            if (intersectingCircleOfInfluence.horizontalReflection()) flipOrientation();
+
             //horizontal 120
             else {
 
                 if (this.getOrientation() == 180 && intersectingCircleOfInfluence.getOrientations().contains(120)) {
-                    this.setOrientation(60);
+                    minus120();
                 } else if (this.getOrientation() == 180 && intersectingCircleOfInfluence.getOrientations().contains(240)) {
-                    this.setOrientation(300);
+                    plus120();
                 } else if (this.getOrientation() == 0 && intersectingCircleOfInfluence.getOrientations().contains(60)) {
-                    this.setOrientation(120);
+                    plus120();
                 } else if (this.getOrientation() == 0 && intersectingCircleOfInfluence.getOrientations().contains(300)) {
-                    this.setOrientation(240);
+                    minus120();
                 }
 
             }
         }
-        //if ray is going NOT straight across, conditions for reflecting is that it incounters intersecting
+        //if ray is going NOT straight across, conditions for reflecting is that it encounters intersecting
         //circle of influences which are like / and | or \ and |
         else {
             //diagonal reflection
             //just checking if either circle of influence is straight like "|"
-            if (intersectingCircleOfInfluence.diagonalReflection()) {
-                if (this.getOrientation() >= 180) {
-                    this.setOrientation(this.getOrientation() - 180);
-                } else {
-                    this.setOrientation(this.getOrientation() + 180);
-                }
-
-            }
+            if (intersectingCircleOfInfluence.diagonalReflection()) flipOrientation();
             //diagonal 120
             else {
-                //voodoo code that works lol
                 if (!intersectingCircleOfInfluence.getOrientations().contains(90) && !intersectingCircleOfInfluence.getOrientations().contains(270)) {
+
                     if (this.getOrientation() == intersectingCircleOfInfluence.getCircleOfInfluence(0).getOrientation() + 180 ||
                             this.getOrientation() == intersectingCircleOfInfluence.getCircleOfInfluence(0).getOrientation() - 180) {
                         this.setOrientation(intersectingCircleOfInfluence.getCircleOfInfluence(1).getOrientation());
                     } else {
                         this.setOrientation(intersectingCircleOfInfluence.getCircleOfInfluence(0).getOrientation());
                     }
+
                 } else {
+
                     if (this.getOrientation() == 120) {
-                        this.setOrientation(0);
+                        minus120();
                     } else if (this.getOrientation() == 60) {
-                        this.setOrientation(180);
+                        plus120();
                     } else if (this.getOrientation() == 300) {
-                        this.setOrientation(180);
+                        minus120();
                     } else if (this.getOrientation() == 240) {
-                        this.setOrientation(0);
+                        plus120();
                     }
+
                 }
 
             }
@@ -222,6 +226,20 @@ public class Ray {
         }
         this.setDeflectionType(120);
         return false;
+    }
+
+    private void minus120() {
+        if (this.orientation < 120) {
+            this.orientation += 360;
+        }
+        this.orientation -= 120;
+    }
+
+    private void plus120() {
+        if (this.orientation >= 360 - 120) {
+            this.orientation -= 360;
+        }
+        this.orientation += 120;
     }
 }
 

@@ -17,7 +17,7 @@ public class Game {
 
     //variable to allow for two
     private int gameNum;
-    private final int numGames = 1;
+    private final int numGames = 2;
     private final int numAtoms = 6;
 
     //player controller class to allow game to get necessary user input
@@ -43,18 +43,16 @@ public class Game {
 
 
     public void playGame() {
-        view.printStart();
         int choice;
 
         do {
+            view.printStart();
             choice = playerIn.getPlayerOption();
             switch (choice) {
                 case 1 -> playSinglePlayerGame();
                 case 2 -> play2PlayerGame();
-                case 3 -> System.out.println("insert rules");
-                case 4 -> System.out.println("lolol");
             }
-        } while (choice != 5);
+        } while (choice != 3);
 
     }
 
@@ -62,9 +60,10 @@ public class Game {
         board = new Board();
         view = new GameView(this);
 
-        board.placeAtom(1, 7);
-//        board.placeAtom(4, 6);
-        board.sendRay(23);
+        board.placeAtom(5, 6);
+        board.placeAtom(6, 4);
+        board.sendRay(37);
+        board.sendRay(10);
         view.printEntireBoard();
     }
 
@@ -93,6 +92,8 @@ public class Game {
             //let experimenter guess atoms locations
             guessAtoms();
 
+            view.printEntireBoard();
+
             //switch the roles and increase gameNum
             switchRoles();
             gameNum += 1;
@@ -110,6 +111,13 @@ public class Game {
         player1 = new Player(playerIn.inUserName(), false);
         singlePlayerSetAtoms();
 
+        sendRays();
+
+        guessAtoms();
+
+        view.printEntireBoard();
+
+        view.printStats_SinglePlayer(player1);
     }
 
     public void setAtom(boolean isSetter){
@@ -150,7 +158,7 @@ public class Game {
             } while (board.checkInvalidInput(x, y) || board.getBoardPosition(x, y) instanceof Atom);
 
             board.placeAtom(x, y);
-            view.printEntireBoard();
+//            view.printEntireBoard();
         }
     }
 

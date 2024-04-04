@@ -26,10 +26,10 @@ public class PlayerInput {
         do {
             number = in.nextInt();
 
-            if (number <= 0 || number > 5) {
+            if (number <= 0 || number > 3) {
                 System.out.println("Invalid option, please try again");
             }
-        } while (number <= 0 || number > 5);
+        } while (number <= 0 || number > 3);
         in.nextLine();
         return number;
     }
