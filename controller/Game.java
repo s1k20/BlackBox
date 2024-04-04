@@ -17,11 +17,11 @@ public class Game {
 
     //variable to allow for two
     private int gameNum;
-    private final int numGames = 2;
-    private final int numAtoms = 1;
+    private final int numGames = 1;
+    private final int numAtoms = 6;
 
     //player controller class to allow game to get necessary user input
-    private final PlayerInput playerIn;
+    private PlayerInput playerIn;
     private GameView view;
 
 
@@ -30,12 +30,17 @@ public class Game {
     public Game(){
         board = new Board();
         view = new GameView(this);
-
         playerIn = new PlayerInput();
 
         //set gameNum to 1 for the first game
         gameNum = 1;
     }
+
+    public Game(Player player) {
+        board = new Board();
+        this.player1 = player;
+    }
+
 
     public void playGame() {
         view.printStart();
@@ -122,8 +127,7 @@ public class Game {
         }while(isSetter && board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom);
 
         if (isSetter) board.placeAtom(co_ords[0], co_ords[1]);
-        else if (!(board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom)) getExperimenter().updateScore(5);
-        else getExperimenter().correctAtom();
+        else guessAtom(co_ords[0], co_ords[1]);
     }
 
     public void setAtoms(){
@@ -144,6 +148,7 @@ public class Game {
                 x = random.nextInt(9) + 1;
                 y = random.nextInt(9) + 1;
             } while (board.checkInvalidInput(x, y) || board.getBoardPosition(x, y) instanceof Atom);
+
             board.placeAtom(x, y);
             view.printEntireBoard();
         }
@@ -156,6 +161,11 @@ public class Game {
         }
     }
 
+    public void guessAtom(int x, int y) {
+        if (!(board.getBoardPosition(x, y) instanceof Atom)) getExperimenter().updateScore(5);
+        else getExperimenter().correctAtom();
+    }
+
     public void sendRays(){
         String input = "";
 
@@ -166,12 +176,7 @@ public class Game {
             if(input.isEmpty()){
                 break;
             }
-            if (board.sendRay(Integer.parseInt(input))) {
-                getExperimenter().updateScore(1);
-            }
-            else {
-                getExperimenter().updateScore(2);
-            }
+            sendRay(Integer.parseInt(input));
 
             view.printLiveBoard();
             getExperimenter().raySent();
@@ -179,6 +184,16 @@ public class Game {
         }while(true);
 
     }
+
+    public void sendRay(int input) {
+        if (board.sendRay(input)) {
+            getExperimenter().updateScore(1);
+        }
+        else {
+            getExperimenter().updateScore(2);
+        }
+    }
+
 
     //returns setter
     public Player getSetter(){

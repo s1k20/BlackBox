@@ -165,9 +165,19 @@ public class TestRay {
         Board b2 = new Board();
         b2.placeAtom(6,4);
         b2.sendRay(32);
-        String blue = "\u001B[33m";
+        String blue = "\u001B[34m";
         RayMarker r3 = (RayMarker) b2.getBoardPosition(10,1);
         assertEquals(blue,r3.getColour());
+
+        Board b3 = new Board();
+        b3.placeAtom(4,5);
+        b3.placeAtom(5,5);
+        b3.sendRay(19);
+        String pink = "\u001B[38;5;206m";
+        RayMarker r4 = (RayMarker) b3.getBoardPosition(4,10);
+        assertEquals(pink,r4.getColour());
+
+      //  b3.placeAtom();
     }
 
     @Test
@@ -204,6 +214,140 @@ public class TestRay {
         Ray ray6 = b.getSentRays().get(5);
         assertEquals(ray6.getInput(), 1);
         assertEquals(ray6.getOutput(), -1);
+    }
+
+    @Test
+    void test120deflection() {
+        Board b = new Board();
+        b.placeAtom(3,5);
+        b.placeAtom(4,5);
+        b.placeAtom(5,4);
+        b.placeAtom(6,4);
+        b.placeAtom(6,6);
+        b.placeAtom(7,6);
+        b.sendRay(24);
+        b.sendRay(53);
+        b.sendRay(30);
+
+        Ray ray = b.getSentRays().get(0);
+        assertEquals(ray.getInput(), 24);
+        assertEquals(ray.getOutput(), 17);
+        assertEquals(ray.getDeflectionType(),120);
+
+        Ray ray2 = b.getSentRays().get(1);
+        assertEquals(ray2.getInput(), 53);
+        assertEquals(ray2.getOutput(), 48);
+        assertEquals(ray2.getDeflectionType(),120);
+
+        Ray ray3 = b.getSentRays().get(2);
+        assertEquals(ray3.getInput(), 30);
+        assertEquals(ray3.getOutput(), 25);
+        assertEquals(ray3.getDeflectionType(),120);
+    }
+
+    @Test
+    void test180deflection() {
+        Board b = new Board();
+        b.placeAtom(9,1);
+        b.placeAtom(5,2);
+        b.placeAtom(6,5);
+        b.placeAtom(4,4);
+        b.placeAtom(1,9);
+        b.placeAtom(5,7);
+
+        b.sendRay(12);
+        b.sendRay(6);
+        b.sendRay(35);
+        b.sendRay(41);
+
+        Ray ray = b.getSentRays().get(0);
+        assertEquals(ray.getInput(), 12);
+        assertEquals(ray.getOutput(), 12);
+        assertEquals(ray.getDeflectionType(),180);
+
+        Ray ray2 = b.getSentRays().get(1);
+        assertEquals(ray2.getInput(), 6);
+        assertEquals(ray2.getOutput(), 6);
+        assertEquals(ray2.getDeflectionType(),180);
+
+        Ray ray3 = b.getSentRays().get(2);
+        assertEquals(ray3.getInput(), 35);
+        assertEquals(ray3.getOutput(), 35);
+        assertEquals(ray3.getDeflectionType(),180);
+
+        Ray ray4 = b.getSentRays().get(0);
+        assertEquals(ray4.getInput(), 12);
+        assertEquals(ray4.getOutput(), 12);
+        assertEquals(ray4.getDeflectionType(),180);
+    }
+
+    @Test
+    void testAdvancedRayPath() {
+        Board b = new Board();
+        b.placeAtom(5,3);
+        b.placeAtom(7,3);
+        b.placeAtom(6,5);
+        b.placeAtom(7,5);
+        b.placeAtom(2,8);
+        b.placeAtom(4,9);
+
+        b.sendRay(48);
+        b.sendRay(14);
+        b.sendRay(30);
+
+        Ray ray = b.getSentRays().get(0);
+        assertEquals(ray.getInput(), 48);
+        assertEquals(ray.getOutput(), 53);
+
+        Ray ray2 = b.getSentRays().get(1);
+        assertEquals(ray2.getInput(), 14);
+        assertEquals(ray2.getOutput(), 14);
+
+        Ray ray3 = b.getSentRays().get(2);
+        assertEquals(ray3.getInput(), 30);
+        assertEquals(ray3.getOutput(), -1);
+    }
+
+    @Test
+    void testAtomEdgeOfBox() {
+        Board b = new Board();
+        b.placeAtom(2,4);
+        b.placeAtom(9,4);
+        b.placeAtom(5,1);
+        b.placeAtom(9,1);
+        b.placeAtom(5,9);
+        b.placeAtom(1,9);
+
+        b.sendRay(6);
+        b.sendRay(41);
+        b.sendRay(3);
+        b.sendRay(44);
+        b.sendRay(26);
+        b.sendRay(17);
+
+        Ray ray = b.getSentRays().get(0);
+        assertEquals(ray.getInput(), 6);
+        assertEquals(ray.getOutput(), 6);
+
+        Ray ray2 = b.getSentRays().get(1);
+        assertEquals(ray2.getInput(), 41);
+        assertEquals(ray2.getOutput(), 41);
+
+        Ray ray3 = b.getSentRays().get(2);
+        assertEquals(ray3.getInput(), 3);
+        assertEquals(ray3.getOutput(), 3);
+
+        Ray ray4 = b.getSentRays().get(3);
+        assertEquals(ray4.getInput(), 44);
+        assertEquals(ray4.getOutput(), 44);
+
+        Ray ray5 = b.getSentRays().get(4);
+        assertEquals(ray5.getInput(), 26);
+        assertEquals(ray5.getOutput(), 26);
+
+        Ray ray6 = b.getSentRays().get(5);
+        assertEquals(ray6.getInput(), 17);
+        assertEquals(ray6.getOutput(), 17);
     }
 
 

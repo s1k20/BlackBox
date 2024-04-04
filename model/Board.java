@@ -15,11 +15,14 @@ public class Board {
 
     private final ArrayList<Ray> sentRays = new ArrayList<>();
 
+    private int numAtomsPlaced;
+
 
     public Board(){
         //initialise board
         initBoard();
         setInputMapping();
+        numAtomsPlaced = 0;
     }
 
     //function to init board and place empty ray markers in correct position and null hex in others
@@ -50,6 +53,10 @@ public class Board {
         return this.board;
     }
 
+    public int getNumAtomsPlaced() {
+        return this.numAtomsPlaced;
+    }
+
     public ArrayList<Ray> getSentRays(){
         return this.sentRays;
     }
@@ -69,6 +76,8 @@ public class Board {
         //calls function which takes the new atom as argument and places its circle of
         //influence around atom which has been worked out when atom was created
         placeCircleOfInfluence(newAtom);
+
+        numAtomsPlaced++;
     }
 
     public void placeCircleOfInfluence(Atom a){
@@ -310,16 +319,16 @@ public class Board {
         if(!absorbed){
             //if ray is reflected, set colour purple
             if(start.getXCo_ord() == r.getCurrXCo_ord() && start.getYCo_ord() == r.getCurrYCo_ord()){
-                colour = "\u001B[35m";
+                colour = "\u001B[35m"; //purple
                 start.setColour(colour);
                 r.setDeflectionType(180);
             }
             else if(r.getDeflectionType() == 120){
-                colour = "\u001B[35m";
+                colour = "\u001B[38;5;206m"; //pink
                 start.setColour(colour);
             }
             else if(r.getDeflectionType() == 60){
-                colour = "\u001B[33m";
+                colour = "\u001B[34m";
                 start.setColour(colour);
             }
             else if(r.getDeflectionType() == 0){
