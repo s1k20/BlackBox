@@ -225,6 +225,7 @@ public class TestRay {
         b.placeAtom(6,4);
         b.placeAtom(6,6);
         b.placeAtom(7,6);
+
         b.sendRay(24);
         b.sendRay(53);
         b.sendRay(30);
