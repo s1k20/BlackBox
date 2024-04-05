@@ -310,7 +310,54 @@ public class TestRay {
     }
 
     @Test
-    void testAtomEdgeOfBox() {
+    void testAdvancedRayPath2() {
+        Board b = new Board();
+        b.placeAtom(4,3);
+        b.placeAtom(5,4);
+        b.placeAtom(6,4);
+        b.placeAtom(3,5);
+        b.placeAtom(4,5);
+        b.placeAtom(9,4);
+
+        b.sendRay(8);
+        b.sendRay(2);
+        b.sendRay(10);
+        b.sendRay(41);
+        b.sendRay(32);
+        b.sendRay(28);
+        b.sendRay(17);
+
+
+        Ray ray = b.getSentRays().get(0);
+        assertEquals(ray.getInput(), 8);
+        assertEquals(ray.getOutput(), 8);
+        assertEquals(ray.getDeflectionType(),180);
+
+        Ray ray2 = b.getSentRays().get(3);
+        assertEquals(ray2.getInput(), 41);
+        assertEquals(ray2.getOutput(), 41);
+        assertEquals(ray2.getDeflectionType(),180);
+
+        Ray ray3 = b.getSentRays().get(4);
+        assertEquals(ray3.getInput(), 32);
+        assertEquals(ray3.getOutput(), 44);
+        assertEquals(ray3.getDeflectionType(),60);
+
+        Ray ray4 = b.getSentRays().get(5);
+        assertEquals(ray4.getInput(), 28);
+        assertEquals(ray4.getOutput(), 28);
+        assertEquals(ray4.getDeflectionType(),180);
+
+        Ray ray5 = b.getSentRays().get(6);
+        assertEquals(ray5.getInput(), 17);
+        assertEquals(ray5.getOutput(), 24);
+        assertEquals(ray5.getDeflectionType(),120);
+
+
+    }
+
+    @Test
+    void testAtomEdge() {
         Board b = new Board();
         b.placeAtom(2,4);
         b.placeAtom(9,4);

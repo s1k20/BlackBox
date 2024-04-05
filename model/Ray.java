@@ -158,10 +158,10 @@ public class Ray {
         if (this.orientation == coiOrientation) return true;
 
         return switch (this.orientation) {
-            case 0 -> coiOrientation == 60 || coiOrientation == 300;
+            case 0 -> coiOrientation == 120 || coiOrientation == 240;
             case 60, 300 -> coiOrientation == 270;
             case 120, 240 -> coiOrientation == 90;
-            case 180 -> coiOrientation == 120 || coiOrientation == 240;
+            case 180 -> coiOrientation == 60 || coiOrientation == 300;
             default -> false;
         };
     }
