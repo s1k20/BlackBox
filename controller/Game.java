@@ -2,6 +2,8 @@ package controller;
 import model.*;
 import view.*;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 //controller part of project which runs main logic
@@ -24,7 +26,8 @@ public class Game {
     private PlayerInput playerIn;
     private GameView view;
 
-
+    //track the experimenters previously guessed atoms
+    private ArrayList<Point> guessedAtoms;
 
     //game constructor which inits all objects/variables
     public Game(){
@@ -86,9 +89,9 @@ public class Game {
         System.out.println("Player 2 - Please enter your name:");
         player2 = new Player(playerIn.inUserName(), false);
 
-
         //main game loop
         while(gameNum <= numGames){
+            guessedAtoms = new ArrayList<>();
             //first round player 1 is setter and player 2 is experimenter
             view.printRound(gameNum);
             //let setter place 6 atoms
@@ -117,6 +120,7 @@ public class Game {
     public void playSinglePlayerGame() {
         System.out.println("Please enter your name:");
         player1 = new Player(playerIn.inUserName(), false);
+        guessedAtoms = new ArrayList<>();
         singlePlayerSetAtoms();
 
         sendRays();
@@ -132,15 +136,19 @@ public class Game {
         if (isSetter) System.out.println("Please enter an X Co-ordinate and a Y Co-ordinate (comma separated) in which to PLACE an Atom:");
         else System.out.println("Please enter an X Co-ordinate and a Y Co-ordinate (comma separated) in which to GUESS an Atom:");
         int[] co_ords;
+        Point p;
 
         do{
             co_ords = playerIn.getAtomInput();
 
+            p = new Point(co_ords[1], co_ords[0]);
+
             if(isSetter && board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom){
                 System.out.println(getSetter().getPlayerName() + " - You have already placed an atom in this position!");
             }
+            if (!isSetter && guessedAtoms.contains(p)) System.out.println(getExperimenter().getPlayerName() + " - You have already guessed this position!");
 
-        }while(isSetter && board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom);
+        }while((isSetter && board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom) || (!isSetter && guessedAtoms.contains(p)));
 
         if (isSetter) board.placeAtom(co_ords[0], co_ords[1]);
         else guessAtom(co_ords[0], co_ords[1]);
@@ -166,7 +174,6 @@ public class Game {
             } while (board.checkInvalidInput(x, y) || board.getBoardPosition(x, y) instanceof Atom);
 
             board.placeAtom(x, y);
-//            view.printEntireBoard();
         }
     }
 
@@ -178,6 +185,8 @@ public class Game {
     }
 
     public void guessAtom(int x, int y) {
+        Point p = new Point(x, y);
+        guessedAtoms.add(p);
         if (!(board.getBoardPosition(x, y) instanceof Atom)) getExperimenter().updateScore(5);
         else getExperimenter().correctAtom();
     }
