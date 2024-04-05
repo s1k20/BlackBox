@@ -33,6 +33,7 @@ public class TestScore {
         game.guessAtom(6, 1);
 
         assertEquals(game.getExperimenter().getScore(), 30);
+
     }
 
     @Test
