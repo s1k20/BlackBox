@@ -252,6 +252,44 @@ public class TestRay {
     }
 
     @Test
+    void test120deflection2() {
+        Board b = new Board();
+        GameView view = new GameView(b);
+
+        b.placeAtom(6,3);
+        b.placeAtom(5,5);
+        b.placeAtom(5,4);
+        b.placeAtom(6,4);
+
+        b.sendRay(37);
+        b.sendRay(17);
+        b.sendRay(6);
+        b.sendRay(46);
+
+        Ray ray = b.getSentRays().get(0);
+        assertEquals(ray.getInput(), 37);
+        assertEquals(ray.getOutput(), 30);
+        assertEquals(ray.getDeflectionType(),120);
+
+        Ray ray2 = b.getSentRays().get(1);
+        assertEquals(ray2.getInput(), 17);
+        assertEquals(ray2.getOutput(), 10);
+        assertEquals(ray2.getDeflectionType(),120);
+
+        Ray ray3 = b.getSentRays().get(2);
+        assertEquals(ray3.getInput(), 6);
+        assertEquals(ray3.getOutput(), 1);
+        assertEquals(ray3.getDeflectionType(),120);
+
+        Ray ray4 = b.getSentRays().get(3);
+        assertEquals(ray4.getInput(), 46);
+        assertEquals(ray4.getOutput(), 41);
+        assertEquals(ray4.getDeflectionType(),120);
+
+        view.printEntireBoard();
+    }
+
+    @Test
     void test180deflection() {
         Board b = new Board();
         GameView view = new GameView(b);
@@ -286,6 +324,47 @@ public class TestRay {
         Ray ray4 = b.getSentRays().get(0);
         assertEquals(ray4.getInput(), 12);
         assertEquals(ray4.getOutput(), 12);
+        assertEquals(ray4.getDeflectionType(),180);
+
+        view.printEntireBoard();
+    }
+
+    @Test
+    void test180deflection2() {
+        Board b = new Board();
+        GameView view = new GameView(b);
+
+        b.placeAtom(5,4);
+        b.placeAtom(3,5);
+        b.placeAtom(6,5);
+        b.placeAtom(3,8);
+        b.placeAtom(2,7);
+        b.placeAtom(5,7);
+
+
+        b.sendRay(19);
+        b.sendRay(26);
+        b.sendRay(46);
+        b.sendRay(3);
+
+        Ray ray = b.getSentRays().get(0);
+        assertEquals(ray.getInput(), 19);
+        assertEquals(ray.getOutput(), 19);
+        assertEquals(ray.getDeflectionType(),180);
+
+        Ray ray2 = b.getSentRays().get(1);
+        assertEquals(ray2.getInput(), 26);
+        assertEquals(ray2.getOutput(), 26);
+        assertEquals(ray2.getDeflectionType(),180);
+
+        Ray ray3 = b.getSentRays().get(2);
+        assertEquals(ray3.getInput(), 46);
+        assertEquals(ray3.getOutput(), 46);
+        assertEquals(ray3.getDeflectionType(),180);
+
+        Ray ray4 = b.getSentRays().get(3);
+        assertEquals(ray4.getInput(), 3);
+        assertEquals(ray4.getOutput(), 3);
         assertEquals(ray4.getDeflectionType(),180);
 
         view.printEntireBoard();
@@ -410,6 +489,4 @@ public class TestRay {
 
         view.printEntireBoard();
     }
-
-
 }

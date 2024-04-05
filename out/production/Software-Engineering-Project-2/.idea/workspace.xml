@@ -4,18 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c4ce90f9-2e3a-4526-acd3-804981b42309" name="Changes" comment="Added more tests">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
+    <list default="true" id="c4ce90f9-2e3a-4526-acd3-804981b42309" name="Changes" comment="Additional tests ;)">
       <change beforePath="$PROJECT_DIR$/game_tests/model/TestRay.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_tests/model/TestRay.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/BoardConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/BoardConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/game_tests/model/TestRay.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/game_tests/model/TestRay.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Board.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/BoardConstants.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/BoardConstants.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,21 +74,6 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="TestRay" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Software-Engineering-Project-2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="game_tests.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="game_tests.model" />
-      <option name="MAIN_CLASS_NAME" value="game_tests.model.TestRay" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="TestRay.test120deflection" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Software-Engineering-Project-2" />
       <extension name="coverage">
@@ -113,7 +90,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestRay.test180deflection" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestRay.testAbsorb" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Software-Engineering-Project-2" />
       <extension name="coverage">
         <pattern>
@@ -123,7 +100,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="game_tests.model" />
       <option name="MAIN_CLASS_NAME" value="game_tests.model.TestRay" />
-      <option name="METHOD_NAME" value="test180deflection" />
+      <option name="METHOD_NAME" value="testAbsorb" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -145,7 +122,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestRay.testRayMarkerColour" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestRay.testAdvancedRayPath2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Software-Engineering-Project-2" />
       <extension name="coverage">
         <pattern>
@@ -155,7 +132,23 @@
       </extension>
       <option name="PACKAGE_NAME" value="game_tests.model" />
       <option name="MAIN_CLASS_NAME" value="game_tests.model.TestRay" />
-      <option name="METHOD_NAME" value="testRayMarkerColour" />
+      <option name="METHOD_NAME" value="testAdvancedRayPath2" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestRay.testAtomEdgeOfBox" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Software-Engineering-Project-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game_tests.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="game_tests.model" />
+      <option name="MAIN_CLASS_NAME" value="game_tests.model.TestRay" />
+      <option name="METHOD_NAME" value="testAtomEdgeOfBox" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -163,10 +156,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TestRay" />
+        <item itemvalue="JUnit.TestRay.testAdvancedRayPath2" />
+        <item itemvalue="JUnit.TestRay.testAtomEdgeOfBox" />
         <item itemvalue="JUnit.TestRay.testAdvancedRayPath" />
-        <item itemvalue="JUnit.TestRay.test180deflection" />
-        <item itemvalue="JUnit.TestRay.testRayMarkerColour" />
+        <item itemvalue="JUnit.TestRay.testAbsorb" />
         <item itemvalue="JUnit.TestRay.test120deflection" />
       </list>
     </recent_temporary>
@@ -276,7 +269,23 @@
       <option name="project" value="LOCAL" />
       <updated>1709895010502</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Small changes">
+      <option name="closed" value="true" />
+      <created>1712243780289</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1712243780289</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Additional tests ;)">
+      <option name="closed" value="true" />
+      <created>1712258187336</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1712258187336</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -301,6 +310,8 @@
     <MESSAGE value="Created Ray class :)" />
     <MESSAGE value="Added tests for rays" />
     <MESSAGE value="Added more tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added more tests" />
+    <MESSAGE value="Small changes" />
+    <MESSAGE value="Additional tests ;)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Additional tests ;)" />
   </component>
 </project>
