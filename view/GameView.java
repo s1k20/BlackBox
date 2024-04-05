@@ -3,8 +3,6 @@ package view;
 import controller.Game;
 import model.*;
 
-import java.sql.SQLOutput;
-
 import static model.BoardConstants.*;
 
 public class GameView {
@@ -15,6 +13,10 @@ public class GameView {
     public GameView(Game game){
         this.game = game;
         this.board = game.getBoard();
+    }
+
+    public GameView(Board board) {
+        this.board = board;
     }
 
     public void printStart() {

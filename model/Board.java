@@ -366,12 +366,6 @@ public class Board {
 
     //will return true if ray is absorbed
     public boolean placeRay(int x, int y, int orientation, Ray r){
-//        if(!(board[y][x] instanceof Atom || board[y][x] instanceof CircleOfInfluence ||
-//                board[y][x] instanceof IntersectingCircleOfInfluence || board[y][x] instanceof EmptyMarker)){
-//            board[y][x] = new RayTrail(orientation);
-//
-//            return false;
-//        }
         if (board[y][x] == null || board[y][x] instanceof RayTrail) {
             board[y][x] = new RayTrail(orientation);
             return false;

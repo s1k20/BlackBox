@@ -1,6 +1,8 @@
 package game_tests.model;
+import controller.Game;
 import model.*;
 import org.junit.jupiter.api.Test;
+import view.GameView;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -219,6 +221,7 @@ public class TestRay {
     @Test
     void test120deflection() {
         Board b = new Board();
+        GameView view = new GameView(b);
         b.placeAtom(3,5);
         b.placeAtom(4,5);
         b.placeAtom(5,4);
@@ -244,11 +247,15 @@ public class TestRay {
         assertEquals(ray3.getInput(), 30);
         assertEquals(ray3.getOutput(), 25);
         assertEquals(ray3.getDeflectionType(),120);
+        view.printEntireBoard();
+
     }
 
     @Test
     void test180deflection() {
         Board b = new Board();
+        GameView view = new GameView(b);
+
         b.placeAtom(9,1);
         b.placeAtom(5,2);
         b.placeAtom(6,5);
@@ -280,6 +287,8 @@ public class TestRay {
         assertEquals(ray4.getInput(), 12);
         assertEquals(ray4.getOutput(), 12);
         assertEquals(ray4.getDeflectionType(),180);
+
+        view.printEntireBoard();
     }
 
     @Test
@@ -359,6 +368,8 @@ public class TestRay {
     @Test
     void testAtomEdge() {
         Board b = new Board();
+        GameView view = new GameView(b);
+
         b.placeAtom(2,4);
         b.placeAtom(9,4);
         b.placeAtom(5,1);
@@ -396,6 +407,8 @@ public class TestRay {
         Ray ray6 = b.getSentRays().get(5);
         assertEquals(ray6.getInput(), 17);
         assertEquals(ray6.getOutput(), 17);
+
+        view.printEntireBoard();
     }
 
 

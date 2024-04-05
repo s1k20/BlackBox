@@ -60,10 +60,18 @@ public class Game {
         board = new Board();
         view = new GameView(this);
 
-        board.placeAtom(5, 6);
-        board.placeAtom(6, 4);
-        board.sendRay(37);
-        board.sendRay(10);
+        board.placeAtom(5,3);
+        board.placeAtom(7,3);
+        board.placeAtom(6,5);
+        board.placeAtom(7,5);
+        board.placeAtom(2,8);
+        board.placeAtom(4,9);
+        view.printEntireBoard();
+
+
+        board.sendRay(48);
+        board.sendRay(14);
+        board.sendRay(30);
         view.printEntireBoard();
     }
 
