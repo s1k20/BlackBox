@@ -185,6 +185,7 @@ public class TestRay {
     @Test
     void testOrientation() {
         Board b = new Board();
+
         b.placeAtom(5,5);
         b.sendRay(10);
         b.sendRay(37);
@@ -222,6 +223,7 @@ public class TestRay {
     void test120deflection() {
         Board b = new Board();
         GameView view = new GameView(b);
+
         b.placeAtom(3,5);
         b.placeAtom(4,5);
         b.placeAtom(5,4);
@@ -247,8 +249,8 @@ public class TestRay {
         assertEquals(ray3.getInput(), 30);
         assertEquals(ray3.getOutput(), 25);
         assertEquals(ray3.getDeflectionType(),120);
-        view.printEntireBoard();
 
+        view.printEntireBoard();
     }
 
     @Test
@@ -373,6 +375,8 @@ public class TestRay {
     @Test
     void testAdvancedRayPath() {
         Board b = new Board();
+        GameView view = new GameView(b);
+
         b.placeAtom(5,3);
         b.placeAtom(7,3);
         b.placeAtom(6,5);
@@ -395,11 +399,15 @@ public class TestRay {
         Ray ray3 = b.getSentRays().get(2);
         assertEquals(ray3.getInput(), 30);
         assertEquals(ray3.getOutput(), -1);
+
+        view.printEntireBoard();
     }
 
     @Test
     void testAdvancedRayPath2() {
         Board b = new Board();
+        GameView view = new GameView(b);
+
         b.placeAtom(4,3);
         b.placeAtom(5,4);
         b.placeAtom(6,4);
@@ -441,7 +449,7 @@ public class TestRay {
         assertEquals(ray5.getOutput(), 24);
         assertEquals(ray5.getDeflectionType(),120);
 
-
+        view.printEntireBoard();
     }
 
     @Test
