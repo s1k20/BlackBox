@@ -1,14 +1,42 @@
 package view;
 
+import controller.Game;
 import model.*;
+
 import static model.BoardConstants.*;
 
 public class GameView {
 
+    Game game;
     Board board;
 
-    public GameView(Board board){
+    public GameView(Game game){
+        this.game = game;
+        this.board = game.getBoard();
+    }
+
+    public GameView(Board board) {
         this.board = board;
+    }
+
+    public void printStart() {
+        String title = "Welcome to Black Box Plus by Cian, Lloyd and Shlok (demo version v3 - (terminal))";
+        System.out.print(ANSI_BLUE); printLine('=', title.length()); System.out.print(ANSI_RESET);
+        System.out.println(title);
+        System.out.print(ANSI_BLUE); printLine('=', title.length());System.out.print(ANSI_RESET);
+
+        System.out.println("Please input a number to select an option from the list below:");
+        printLine('-', title.length());
+        System.out.println("1. Play single player game");
+        System.out.println("2. Play 2 player game");
+        System.out.println("3. Quit");
+    }
+
+    public void printLine(char c, int length) {
+        for (int i = 0; i < length; i++) {
+            System.out.print(c);
+        }
+        System.out.println();
     }
 
     //function just prints text based board
@@ -46,11 +74,11 @@ public class GameView {
                     }
 
                 }
-                else if(board.getBoard()[i][j] instanceof Board.RayGraphic r){
-                    if(r.getOrientation() == 60 || r.getOrientation() == 240){
+                else if(board.getBoard()[i][j] instanceof Board.RayTrail rayTrail){
+                    if(rayTrail.getOrientation() == 60 || rayTrail.getOrientation() == 240){
                         System.out.print(ANSI_PINK + "/ " + ANSI_RESET);
                     }
-                    else if(r.getOrientation() == 0 || r.getOrientation() == 180){
+                    else if(rayTrail.getOrientation() == 0 || rayTrail.getOrientation() == 180){
                         System.out.print(ANSI_PINK + "- " + ANSI_RESET);
                     }
                     else{
@@ -104,5 +132,61 @@ public class GameView {
         }
     }
 
+    public void printWinner(Player winner, int length) {
+        printLine('=', length);
+        if (winner != null) System.out.println(winner.getPlayerName() + " won!");
+        else System.out.println("Draw!");
+    }
+
+    public void printStats(Player p1, Player p2, Player winner) {
+
+        String scores = "Final scores - " + p1.getPlayerName() + ": " + p1.getScore() + " | " + p2.getPlayerName() + ": " + p2.getScore();
+        String p1Stat = "Player 1 - " + p1.getPlayerName() + " | " + p1.getNumSentRays() + " rays sent | " + p1.getNumCorrectAtoms() + " correctly guessed atoms";
+        String p2Stat = "Player 2 - " + p2.getPlayerName() + " | " + p2.getNumSentRays() + " rays sent | " + p2.getNumCorrectAtoms() + " correctly guessed atoms";
+
+        int length = Math.max(scores.length(), p1Stat.length());
+        length = Math.max(length, p2Stat.length());
+        printWinner(winner, length);
+
+        printLine('=', length);
+        System.out.println(scores);
+        printLine('=', length);
+        System.out.println("Statistics: ");
+        printLine('*', length);
+        System.out.println(p1Stat);
+        printLine('-', length);
+        System.out.println(p2Stat);
+        printLine('-', length);
+
+        for (int i = 0; i < 3; i++) System.out.println();
+    }
+
+    public void printStats_SinglePlayer(Player player) {
+        String p1Stat = "Player - " + player.getPlayerName() + " | " + player.getNumSentRays() + " rays sent | " + player.getNumCorrectAtoms() + " correctly guessed atoms";
+
+        int length = p1Stat.length();
+
+        printLine('=', length);
+        System.out.println("Final Score: " + player.getScore());
+        printLine('=', length);
+        System.out.println("Statistics: ");
+        printLine('*', length);
+        System.out.println(p1Stat);
+        printLine('-', length);
+
+        for (int i = 0; i < 3; i++) System.out.println();
+    }
+
+    public void printRound(int roundNum) {
+        int length = 10;
+        String round = "Round " + roundNum;
+        String roundMessage = "Setter: " + game.getSetter().getPlayerName() + " | Experimenter: " + game.getExperimenter().getPlayerName();
+        System.out.print(ANSI_BLUE); printLine('+', roundMessage.length() + length + length); System.out.print(ANSI_RESET);
+        for (int i = 0; i < length + (roundMessage.length() / 2) - (round.length() / 2); i++) System.out.print(" ");
+        System.out.println(round);
+        for (int i = 0; i < length; i++) System.out.print(" ");
+        System.out.print(ANSI_YELLOW); System.out.println(roundMessage); System.out.print(ANSI_RESET);
+        System.out.print(ANSI_BLUE); printLine('+', roundMessage.length() + length + length); System.out.print(ANSI_RESET);
+    }
 
 }

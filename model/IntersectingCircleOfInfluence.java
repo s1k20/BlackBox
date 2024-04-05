@@ -7,22 +7,48 @@ public class IntersectingCircleOfInfluence {
     //TODO change this so that it also contains atoms which might be intersected
     //TODO but will only show atom if atom is contained in array list
     //TODO  (more so for gui)
-
-    //array list of pieces of circle of influence which intersect each other
-    //all put into one array list so that we can track what parts are intersect each other
     private final ArrayList<CircleOfInfluence> circleOfInfluences;
+    private final ArrayList<Integer> orientations;
 
-    //constructor to just create arraylist object
     public IntersectingCircleOfInfluence() {
         this.circleOfInfluences = new ArrayList<>();
+        this.orientations = new ArrayList<>();
     }
 
-    //mutator which will add a new circle of influence to the array list
     public void addPart(CircleOfInfluence c){
         circleOfInfluences.add(c);
+        orientations.add(c.getOrientation());
     }
 
-    //accessor which can return individual piece of intersecting circle of influences
+    public ArrayList<Integer> getOrientations(){
+        return this.orientations;
+    }
+
+    private boolean containsOrientation(int orientation){
+        for(CircleOfInfluence c : circleOfInfluences){
+            if(c.getOrientation() == orientation){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean horizontalReflection(){
+        for(int i = 0; i < circleOfInfluences.size() - 1; i++){
+            for(int j = i + 1; j < circleOfInfluences.size(); j++){
+                if(circleOfInfluences.get(i).getOrientation() + circleOfInfluences.get(j).getOrientation() == 360){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean diagonalReflection(){
+        return (orientations.contains(270) && (orientations.contains(300) || orientations.contains(60)))
+                || (orientations.contains(90) && (orientations.contains(240) || orientations.contains(120)));
+    }
+
     public CircleOfInfluence getCircleOfInfluence(int i){
         return circleOfInfluences.get(i);
     }
@@ -30,4 +56,5 @@ public class IntersectingCircleOfInfluence {
     public ArrayList<CircleOfInfluence> getCircleOfInfluences(){
         return this.circleOfInfluences;
     }
+
 }
