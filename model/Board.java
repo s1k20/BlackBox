@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,10 +13,13 @@ public class Board {
 
     //mapping of numbers from 1 to 54 to valid ray coordinates and orientation
     private final HashMap<Integer, RayInputMap> inputMapping = new HashMap<>();
+    public final HashMap<RayOutputPoint, Integer> numberOut = new HashMap<>();
 
     private final ArrayList<Ray> sentRays = new ArrayList<>();
+    public Ray currentRay;
 
     private int numAtomsPlaced;
+    public int numRaysSent;
 
 
     public Board(){
@@ -23,6 +27,8 @@ public class Board {
         initBoard();
         setInputMapping();
         numAtomsPlaced = 0;
+        numRaysSent = 0;
+        currentRay = new Ray(-1);
     }
 
     //function to init board and place empty ray markers in correct position and null hex in others
@@ -78,6 +84,10 @@ public class Board {
         placeCircleOfInfluence(newAtom);
 
         numAtomsPlaced++;
+    }
+
+    public void removeAtom(int x, int y) {
+        //TODO
     }
 
     public void placeCircleOfInfluence(Atom a){
@@ -169,24 +179,26 @@ public class Board {
     public void setInputMapping(){
 
         //TODO try not hard code this, will try later on
-        int SET_LENGTH = 54;
+        int SETLENGTH = 54;
 
         int x = 5;
         int y = 0;
 
-        for(int i = 1; i <= SET_LENGTH; i++){
-            RayInputMap rayInputMap = new RayInputMap();
+        for(int i = 1; i <= SETLENGTH; i++){
+            RayInputMap r = new RayInputMap();
 
             if(i <= 18){
-                rayInputMap.x = x;
-                rayInputMap.y = y;
+                r.x = x;
+                r.y = y;
                 if(i < 10){
 
                     if(i % 2 == 0){
-                        rayInputMap.orientation = 0;
+                        r.orientation = 0;
+                        numberOut.put(new RayOutputPoint(x, y, true), i);
                     }
                     else{
-                        rayInputMap.orientation = 300;
+                        r.orientation = 300;
+                        numberOut.put(new RayOutputPoint(x, y, false), i);
                         x--;
                         y++;
                     }
@@ -195,28 +207,32 @@ public class Board {
                 else{
 
                     if(i % 2 == 0){
-                        rayInputMap.orientation = 0;
+                        r.orientation = 0;
+                        numberOut.put(new RayOutputPoint(x, y, false), i);
                         y++;
                     }
                     else{
-                        rayInputMap.orientation = 60;
+                        numberOut.put(new RayOutputPoint(x, y, true), i);
+                        r.orientation = 60;
                     }
 
 
                 }
-                inputMapping.put(i, rayInputMap);
+                inputMapping.put(i, r);
             }
             else if(i <= 28){
-                rayInputMap.x = x;
-                rayInputMap.y = y;
+                r.x = x;
+                r.y = y;
                 if(i % 2 == 0){
-                    rayInputMap.orientation = 120;
+                    r.orientation = 120;
+                    numberOut.put(new RayOutputPoint(x, y, true), i);
                 }
                 else{
-                    rayInputMap.orientation = 60;
+                    r.orientation = 60;
+                    numberOut.put(new RayOutputPoint(x, y, false), i);
                     x++;
                 }
-                inputMapping.put(i, rayInputMap);
+                inputMapping.put(i, r);
 
             }
             else if(i <= 45){
@@ -224,44 +240,50 @@ public class Board {
                     x++;
                     y--;
                 }
-                rayInputMap.x = x;
-                rayInputMap.y = y;
+                r.x = x;
+                r.y = y;
                 if(i < 37){
 
                     if(i % 2 == 0){
-                        rayInputMap.orientation = 120;
+                        r.orientation = 120;
+                        numberOut.put(new RayOutputPoint(x, y, false), i);
                         x++;
                         y--;
                     }
                     else{
-                        rayInputMap.orientation = 180;
+                        r.orientation = 180;
+                        numberOut.put(new RayOutputPoint(x, y, true), i);
                     }
 
                 }
                 else{
                     if(i % 2 == 0){
-                        rayInputMap.orientation = 240;
+                        r.orientation = 240;
+                        numberOut.put(new RayOutputPoint(x, y, true), i);
                     }
                     else{
-                        rayInputMap.orientation = 180;
+                        r.orientation = 180;
+                        numberOut.put(new RayOutputPoint(x, y, false), i);
                         y--;
                     }
 
 
                 }
-                inputMapping.put(i, rayInputMap);
+                inputMapping.put(i, r);
             }
             else{
-                rayInputMap.x = x;
-                rayInputMap.y = y;
+                r.x = x;
+                r.y = y;
                 if(i % 2 == 0){
-                    rayInputMap.orientation = 240;
+                    r.orientation = 240;
+                    numberOut.put(new RayOutputPoint(x, y, false), i);
                     x--;
                 }
                 else{
-                    rayInputMap.orientation = 300;
+                    r.orientation = 300;
+                    numberOut.put(new RayOutputPoint(x, y, true), i);
                 }
-                inputMapping.put(i, rayInputMap);
+                inputMapping.put(i, r);
             }
         }
     }
@@ -280,8 +302,9 @@ public class Board {
         boolean absorbed = false;
 
         String colour = "";
+        Color guiColour = Color.WHITE;
 
-        RayMarker start = new RayMarker(rMap.x, rMap.y, colour);
+        RayMarker start = new RayMarker(rMap.x, rMap.y, colour, guiColour);
         board[rMap.y][rMap.x] = start;
 
         while(!(board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] instanceof EmptyMarker) && !absorbed){
@@ -346,7 +369,7 @@ public class Board {
             if (r.getDeflectionType() == 180) System.out.println("Deflected!");
             else System.out.println("Ray exited at " + exit);
 
-            board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] = new RayMarker(r.getCurrXCo_ord(), r.getCurrYCo_ord(), colour);
+            board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] = new RayMarker(r.getCurrXCo_ord(), r.getCurrYCo_ord(), colour, guiColour);
             return false;
         }
 

@@ -39,7 +39,7 @@ public class TestScore {
     @Test
     void testSinglePlayer() {
         Game game = new Game();
-        game.singlePlayerSetAtoms();
+//        game.singlePlayerSetAtoms();
         assertEquals(game.getBoard().getNumAtomsPlaced(), 6);
     }
 }

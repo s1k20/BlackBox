@@ -2,6 +2,7 @@ package controller;
 import model.*;
 import view.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -25,6 +26,8 @@ public class Game {
     //player controller class to allow game to get necessary user input
     private PlayerInput playerIn;
     private GameView view;
+
+    GameState state;
 
     //track the experimenters previously guessed atoms
     private ArrayList<Point> guessedAtoms;
@@ -95,12 +98,26 @@ public class Game {
             //first round player 1 is setter and player 2 is experimenter
             view.printRound(gameNum);
             //let setter place 6 atoms
+
+            SwingUtilities.invokeLater(() -> {
+                JFrame frame = new JFrame("Black Box Plus by Cian, Lloyd and Shlok");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.add(new GUIGameBoard(this));
+                frame.pack();
+                frame.setLocationRelativeTo(null); // Center on screen
+                frame.setVisible(true);
+            });
+
+
+            state = GameState.SettingAtoms;
             setAtoms();
 
             //let experimenter send rays
+            state = GameState.SendingRays;
             sendRays();
 
             //let experimenter guess atoms locations
+            state = GameState.GuessingAtoms;
             guessAtoms();
 
             view.printEntireBoard();
@@ -121,7 +138,8 @@ public class Game {
         System.out.println("Please enter your name:");
         player1 = new Player(playerIn.inUserName(), false);
         guessedAtoms = new ArrayList<>();
-        singlePlayerSetAtoms();
+
+//        singlePlayerSetAtoms();
 
         sendRays();
 
@@ -162,20 +180,6 @@ public class Game {
         }
     }
 
-    public void singlePlayerSetAtoms() {
-        Random random = new Random();
-
-        for (int i = 0; i < numAtoms; i++) {
-            int x;
-            int y;
-            do {
-                x = random.nextInt(9) + 1;
-                y = random.nextInt(9) + 1;
-            } while (board.checkInvalidInput(x, y) || board.getBoardPosition(x, y) instanceof Atom);
-
-            board.placeAtom(x, y);
-        }
-    }
 
     public void guessAtoms() {
         for(int i = 0; i < numAtoms; i++){
@@ -208,6 +212,14 @@ public class Game {
 
         }while(true);
 
+    }
+
+    public void placeAtom(int x, int y) {
+        board.placeAtom(x, y);
+    }
+
+    public void removeAtom(int x, int y) {
+        board.removeAtom(x, y);
     }
 
     public void sendRay(int input) {
