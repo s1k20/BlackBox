@@ -7,6 +7,7 @@ import static model.BoardConstants.*;
 
 public class GameView {
 
+
     Game game;
     Board board;
 
@@ -25,6 +26,7 @@ public class GameView {
         System.out.println(title);
         System.out.print(ANSI_BLUE); printLine('=', title.length());System.out.print(ANSI_RESET);
 
+//        MenuGUI.createAndShowGUI();
         System.out.println("Please input a number to select an option from the list below:");
         printLine('-', title.length());
         System.out.println("1. Play single player game");

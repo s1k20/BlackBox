@@ -5,6 +5,10 @@ import view.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
 //controller part of project which runs main logic
@@ -33,7 +37,7 @@ public class Game {
     private ArrayList<Point> guessedAtoms;
 
     //game constructor which inits all objects/variables
-    public Game(){
+    public Game() {
         board = new Board();
         view = new GameView(this);
         playerIn = new PlayerInput();
@@ -49,16 +53,16 @@ public class Game {
 
 
     public void playGame() {
-        int choice;
-
-        do {
-            view.printStart();
-            choice = playerIn.getPlayerOption();
-            switch (choice) {
-                case 1 -> playSinglePlayerGame();
-                case 2 -> play2PlayerGame();
-            }
-        } while (choice != 3);
+//        int choice;
+        GUIMenu.createAndShowGUI();
+//        do {
+//            view.printStart();
+//            choice = playerIn.getPlayerOption();
+//            switch (choice) {
+//                case 1 -> playSinglePlayerGame();
+//                case 2 -> play2PlayerGame();
+//            }
+//        } while (choice != 3);
 
     }
 
@@ -66,12 +70,12 @@ public class Game {
         board = new Board();
         view = new GameView(this);
 
-        board.placeAtom(5,3);
-        board.placeAtom(7,3);
-        board.placeAtom(6,5);
-        board.placeAtom(7,5);
-        board.placeAtom(2,8);
-        board.placeAtom(4,9);
+        board.placeAtom(5, 3);
+        board.placeAtom(7, 3);
+        board.placeAtom(6, 5);
+        board.placeAtom(7, 5);
+        board.placeAtom(2, 8);
+        board.placeAtom(4, 9);
         view.printEntireBoard();
 
 
@@ -82,18 +86,30 @@ public class Game {
     }
 
     public Board getBoard() {
-         return this.board;
+        return this.board;
     }
 
-    public void play2PlayerGame(){
+    public void play2PlayerGame() {
         //create players
-        System.out.println("Player 1 - Please enter your name:");
-        player1 = new Player(playerIn.inUserName(), true);
-        System.out.println("Player 2 - Please enter your name:");
-        player2 = new Player(playerIn.inUserName(), false);
+
+        String name1 = GUI_UserInput.askForPlayerName("Player 1 - Enter Name");
+        if (name1 != null && !name1.trim().isEmpty()) {
+            player1 = new Player(name1, true);
+        } else {
+            // Handle cancellation or empty input
+            return; // Optionally, loop back or exit
+        }
+
+        String name2 = GUI_UserInput.askForPlayerName("Player 2 - Enter Name");
+        if (name2 != null && !name2.trim().isEmpty()) {
+            player2 = new Player(name2, false);
+        } else {
+            // Handle cancellation or empty input
+            return; // Optionally, loop back or exit
+        }
 
         //main game loop
-        while(gameNum <= numGames){
+        while (gameNum <= numGames) {
             guessedAtoms = new ArrayList<>();
             //first round player 1 is setter and player 2 is experimenter
             view.printRound(gameNum);
@@ -135,45 +151,65 @@ public class Game {
     }
 
     public void playSinglePlayerGame() {
-        System.out.println("Please enter your name:");
-        player1 = new Player(playerIn.inUserName(), false);
-        guessedAtoms = new ArrayList<>();
+        String name1 = GUI_UserInput.askForPlayerName("Player 1 - Enter Name");
+        if (name1 != null && !name1.trim().isEmpty()) {
+            player1 = new Player(name1, false);
+        } else {
+            // Handle cancellation or empty input
+            return; // Optionally, loop back or exit
+        }
+
 
 //        singlePlayerSetAtoms();
+    while (gameNum <= numGames) {
+        guessedAtoms = new ArrayList<>();
 
-        sendRays();
+    SwingUtilities.invokeLater(() -> {
+        JFrame frame = new JFrame("Black Box Plus by Cian, Lloyd and Shlok");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(new GUIGameBoard(this));
+        frame.pack();
+        frame.setLocationRelativeTo(null); // Center on screen
+        frame.setVisible(true);
+    });
 
-        guessAtoms();
+    sendRays();
+
+    guessAtoms();
+}
 
         view.printEntireBoard();
 
         view.printStats_SinglePlayer(player1);
     }
 
-    public void setAtom(boolean isSetter){
-        if (isSetter) System.out.println("Please enter an X Co-ordinate and a Y Co-ordinate (comma separated) in which to PLACE an Atom:");
-        else System.out.println("Please enter an X Co-ordinate and a Y Co-ordinate (comma separated) in which to GUESS an Atom:");
+    public void setAtom(boolean isSetter) {
+        if (isSetter)
+            System.out.println("Please enter an X Co-ordinate and a Y Co-ordinate (comma separated) in which to PLACE an Atom:");
+        else
+            System.out.println("Please enter an X Co-ordinate and a Y Co-ordinate (comma separated) in which to GUESS an Atom:");
         int[] co_ords;
         Point p;
 
-        do{
+        do {
             co_ords = playerIn.getAtomInput();
 
             p = new Point(co_ords[1], co_ords[0]);
 
-            if(isSetter && board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom){
+            if (isSetter && board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom) {
                 System.out.println(getSetter().getPlayerName() + " - You have already placed an atom in this position!");
             }
-            if (!isSetter && guessedAtoms.contains(p)) System.out.println(getExperimenter().getPlayerName() + " - You have already guessed this position!");
+            if (!isSetter && guessedAtoms.contains(p))
+                System.out.println(getExperimenter().getPlayerName() + " - You have already guessed this position!");
 
-        }while((isSetter && board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom) || (!isSetter && guessedAtoms.contains(p)));
+        } while ((isSetter && board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom) || (!isSetter && guessedAtoms.contains(p)));
 
         if (isSetter) board.placeAtom(co_ords[0], co_ords[1]);
         else guessAtom(co_ords[0], co_ords[1]);
     }
 
-    public void setAtoms(){
-        for(int i = 0; i < numAtoms; i++){
+    public void setAtoms() {
+        for (int i = 0; i < numAtoms; i++) {
             System.out.print(getSetter().getPlayerName() + " - (Setter): ");
             setAtom(true);
             view.printEntireBoard();
@@ -182,7 +218,7 @@ public class Game {
 
 
     public void guessAtoms() {
-        for(int i = 0; i < numAtoms; i++){
+        for (int i = 0; i < numAtoms; i++) {
             System.out.print(getExperimenter().getPlayerName() + " - (Experimenter): ");
             setAtom(false);
         }
@@ -195,14 +231,14 @@ public class Game {
         else getExperimenter().correctAtom();
     }
 
-    public void sendRays(){
+    public void sendRays() {
         String input = "";
 
-        do{
+        do {
             System.out.print(getExperimenter().getPlayerName() + " - (Experimenter): ");
             System.out.println("Enter a number between 1 and 54 to send a ray or hit 'ENTER' to stop:");
             input = playerIn.getRayInput();
-            if(input.isEmpty()){
+            if (input.isEmpty()) {
                 break;
             }
             sendRay(Integer.parseInt(input));
@@ -210,7 +246,7 @@ public class Game {
             view.printLiveBoard();
             getExperimenter().raySent();
 
-        }while(true);
+        } while (true);
 
     }
 
@@ -225,31 +261,29 @@ public class Game {
     public void sendRay(int input) {
         if (board.sendRay(input)) {
             getExperimenter().updateScore(1);
-        }
-        else {
+        } else {
             getExperimenter().updateScore(2);
         }
     }
 
 
     //returns setter
-    public Player getSetter(){
+    public Player getSetter() {
         return player1.isSetter() ? player1 : player2;
     }
 
     //returns experimenter
-    public Player getExperimenter(){
+    public Player getExperimenter() {
         return !player1.isSetter() ? player1 : player2;
     }
 
 
     //function to just swap who is setter and who is experimenter
-    public void switchRoles(){
-        if(player1.isSetter()){
+    public void switchRoles() {
+        if (player1.isSetter()) {
             player1.setExperimenter();
             player2.setSetter();
-        }
-        else{
+        } else {
             player1.setSetter();
             player2.setExperimenter();
         }
@@ -262,4 +296,3 @@ public class Game {
     }
 
 }
-

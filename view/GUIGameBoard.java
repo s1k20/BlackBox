@@ -29,6 +29,7 @@ public class GUIGameBoard extends JPanel {
 
     boolean isVisible;
     private Rectangle printButtonBounds;
+    private Rectangle QuitButton;
 
     private NumberArea hoveredNumberArea = null;
 
@@ -76,6 +77,17 @@ public class GUIGameBoard extends JPanel {
             @Override
             public void mouseMoved(MouseEvent e) {
                 handleHover(e.getPoint());
+            }
+        });
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                handleBoardClick(e.getPoint());
+
+
+                if (QuitButton.contains(e.getPoint())) {
+                    System.exit(0);
+                }
             }
         });
     }
@@ -498,7 +510,8 @@ public class GUIGameBoard extends JPanel {
         //testing hitbox
 //        for (NumberArea area : numberAreas) {
 //            g2.setColor(Color.RED); // Set a high-contrast color
-//            g2.draw(area.bounds); // Draw the bounds for visual inspection
+//            g2.fill(area.bounds);
+//            // Draw the bounds for visual inspection
 //        }
 
         if(game.getBoard().currentRay.getInput() != -1){
@@ -523,14 +536,24 @@ public class GUIGameBoard extends JPanel {
         int buttonHeight = 30;
         int xB = getWidth() - buttonWidth - 5; // Adjusted for the current width
         int yB = getHeight() - buttonHeight - 30; // Adjusted for the current height
-        printButtonBounds = new Rectangle(xB, yB, buttonWidth, buttonHeight);
+        printButtonBounds = new Rectangle(xB - 50, yB, buttonWidth + 120 , buttonHeight);
+        Color Gold = new Color(51, 51, 51);
 
         // Now draw the button with updated bounds
-        g2.setColor(Color.WHITE); // Use a more visible color
+        g2.setColor(Gold); // Use a more visible color
         g2.fillRect(printButtonBounds.x, printButtonBounds.y, printButtonBounds.width, printButtonBounds.height);
-        g2.setColor(Color.BLACK); // Ensure text is visible
-        g.setFont(new Font("Monospaced", Font.BOLD, 15));
-        g2.drawString("Show/hide board", printButtonBounds.x + 10, printButtonBounds.y + 20);
+        g2.setColor(Color.WHITE); // Ensure text is visible
+        g.setFont(new Font("Monospaced", Font.BOLD, 20));
+        g2.drawString("Show/hide board", printButtonBounds.x + 15, printButtonBounds.y + 22);
+
+        QuitButton = new Rectangle(0, yB, buttonWidth - 60, buttonHeight);
+
+
+        g2.setColor(Gold); // Use a more visible color
+        g2.fillRect(QuitButton.x, QuitButton.y, QuitButton.width, QuitButton.height);
+        g2.setColor(Color.WHITE); // Ensure text is visible
+        g.setFont(new Font("Monospaced", Font.BOLD, 20));
+        g2.drawString("Quit", QuitButton.x + 20, QuitButton.y + 22);
 
     }
 
