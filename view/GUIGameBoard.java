@@ -1,6 +1,8 @@
 package view;
 
+import controller.BoardInputListener;
 import controller.Game;
+import controller.GameState;
 import model.*;
 
 import javax.imageio.ImageIO;
@@ -22,6 +24,9 @@ public class GUIGameBoard extends JPanel {
     private final int side = 40; // Side length of the hexagon
 
     Game game;
+    BoardInputListener listener;
+
+    private JFrame frame;
 
     private List<HexagonPath> hexagonPaths = new ArrayList<>(); // Store hexagon paths with their row and col
     private ArrayList<NumberPath> numberPaths = new ArrayList<>();
@@ -52,8 +57,8 @@ public class GUIGameBoard extends JPanel {
 
         isVisible = true;
 
+        this.listener = game;
         this.game = game;
-
 
         loadImages();
         initMouseListener();
@@ -80,30 +85,60 @@ public class GUIGameBoard extends JPanel {
         });
     }
 
+    public void showBoard() {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Black Box Plus by Cian, Lloyd and Shlok");
+            this.frame = frame;
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.add(new GUIGameBoard(this.game));
+            frame.pack();
+            frame.setLocationRelativeTo(null); // Center on screen
+            frame.setVisible(true);
+        });
+    }
+
 
 
     private void handleBoardClick(Point clickedPoint) {
-        if (printButtonBounds.contains(clickedPoint)) {
-            isVisible = !isVisible;
-            if (isVisible) System.out.println("Board is visible");
-            else System.out.println("Board is hidden");
-            repaint();
+        if (game.getCurrentState() == GameState.SendingRays && printButtonBounds.contains(clickedPoint)) {
+            listener.onFinishRays();
         }
 
-        if(game.getBoard().getNumAtomsPlaced() < 6){
+        if(game.getCurrentState() == GameState.SettingAtoms && game.getBoard().getNumAtomsPlaced() < 6){
             hexagonPaths.forEach(hexPath -> {
                 if (hexPath.path.contains(clickedPoint)) {
                     System.out.println("Hexagon clicked at row " + hexPath.row + " and col " + hexPath.col);
                     if (game.getBoard().getBoardPosition(hexPath.col, hexPath.row) instanceof Atom) {
-                        game.removeAtom(hexPath.col, hexPath.row);
+                        listener.onAtomRemoved(hexPath.col, hexPath.row);
                     } else {
-                        game.placeAtom(hexPath.col, hexPath.row);
+                        listener.onAtomPlaced(hexPath.col, hexPath.row);
                     }
                     repaint();
                 }
             });
+
+            if (game.getBoard().getNumAtomsPlaced() == 6) {
+                boardVisible_DISABLE();
+            }
         }
-        if (BacktoMenuButton.contains(clickedPoint)) {
+        else if (game.getCurrentState() == GameState.GuessingAtoms && game.getGuessingBoard().getNumAtomsPlaced() < 6) {
+            boardVisible_ENABLE();
+            hexagonPaths.forEach(hexPath -> {
+                if (hexPath.path.contains(clickedPoint)) {
+                    System.out.println("Hexagon clicked at row " + hexPath.row + " and col " + hexPath.col);
+                    if (game.getGuessingBoard().getBoardPosition(hexPath.col, hexPath.row) instanceof Atom) {
+                        listener.onAtomRemoved(hexPath.col, hexPath.row);
+                    } else {
+                        listener.onAtomGuess(hexPath.col, hexPath.row);
+                    }
+                    repaint();
+                }
+            });
+            if (game.getGuessingBoard().getNumAtomsPlaced() == 6) {
+
+            }
+        }
+        else if (BacktoMenuButton.contains(clickedPoint)) {
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
             if (frame != null) {
                 frame.dispose(); // Close the current frame
@@ -111,12 +146,12 @@ public class GUIGameBoard extends JPanel {
             GUIMenu.showMenu(); // Show the initial menu
         }
         else{
-
             for (NumberArea area : numberAreas) {
                 if (area.contains(clickedPoint)) {
                     // Clicked within the bounds of a number
                     System.out.println("Clicked number: " + area.number + " at row " + area.row + " and col " + area.col);
-                    game.getBoard().sendRay(Integer.parseInt(area.number));
+//                    game.getBoard().sendRay(Integer.parseInt(area.number));
+                    listener.onRaySent(Integer.parseInt(area.number));
                     repaint();
                     // Execute any associated action here
                     break; // Assuming only one number can be clicked at a time
@@ -134,28 +169,54 @@ public class GUIGameBoard extends JPanel {
         }
 
 
-//                if(game.getBoard().numAtomsPlaced >= 6){
+                if(game.getBoard().getNumAtomsPlaced() >= 6) {
 
-        boolean foundHover = false;
-        for (NumberArea area : numberAreas) {
-            if (area.bounds.contains(hover)) {
-                setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                // Mouse is hovering over this NumberArea
-                if (hoveredNumberArea != area) {
-                    hoveredNumberArea = area;
-                    repaint(); // Only repaint if hover state changes
+                    boolean foundHover = false;
+                    for (NumberArea area : numberAreas) {
+                        if (area.bounds.contains(hover)) {
+                            setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                            // Mouse is hovering over this NumberArea
+                            if (hoveredNumberArea != area) {
+                                hoveredNumberArea = area;
+                                repaint(); // Only repaint if hover state changes
+                            }
+                            foundHover = true;
+                            break; // Exit loop since we found the hover target
+                        }
+                    }
+                    if (!foundHover && hoveredNumberArea != null) {
+                        hoveredNumberArea = null; // Clear hover state if not over a NumberArea
+                        setCursor(Cursor.getDefaultCursor());
+                        repaint(); // Repaint to remove hover effect
+                    }
                 }
-                foundHover = true;
-                break; // Exit loop since we found the hover target
-            }
-        }
-        if (!foundHover && hoveredNumberArea != null) {
-            hoveredNumberArea = null; // Clear hover state if not over a NumberArea
-            setCursor(Cursor.getDefaultCursor());
-            repaint(); // Repaint to remove hover effect
-        }
 
     }
+
+    public void refreshBoard() {
+        repaint();
+    }
+
+    public void disposeBoard() {
+        SwingUtilities.invokeLater(() -> {
+            frame.dispose();
+        });
+    }
+
+    public void boardVisible_ENABLE() {
+        SwingUtilities.invokeLater(() -> {
+            this.isVisible = true;
+            this.repaint();
+        });
+    }
+
+    public void boardVisible_DISABLE() {
+        SwingUtilities.invokeLater(() -> {
+            this.isVisible = false;
+            this.repaint();
+        });
+    }
+
 
     private void loadImages() {
         try {
@@ -230,6 +291,10 @@ public class GUIGameBoard extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        Board currentBoard;
+        if (game.getCurrentState() != GameState.GuessingAtoms) currentBoard = game.getBoard();
+        else currentBoard = game.getGuessingBoard();
+
         Graphics2D g2 = (Graphics2D) g;
         hexagonPaths.clear(); // Clear the list to avoid duplicate entries on repaint
         int counter = 1;
@@ -245,35 +310,43 @@ public class GUIGameBoard extends JPanel {
 
 
 
-//        if(game.getBoard().numAtomsPlaced < 6){
-//            String displayString = game.getSetter().getPlayerName() + " - Please place " + (6 - game.getBoard().numAtomsPlaced)
-//                    + " more atoms";
-//            int textWidth = metrics.stringWidth(displayString);
-//
-//            g.drawString(displayString, 30, 75);
-//        }
-//        else{
-        if(hoveredNumberArea != null){
+        if(currentBoard.getNumAtomsPlaced() < 6){
+            String displayString = game.getSetter().getPlayerName() + " - Please place " + (6 - currentBoard.getNumAtomsPlaced())
+                    + " more atoms";
+            int textWidth = metrics.stringWidth(displayString);
+
+            g.drawString(displayString, 30, 75);
+        }
+        else if (game.getCurrentState() != GameState.GameOver){
+            if(hoveredNumberArea != null){
+                // Example hover effect: draw a highlighted border around the NumberArea
+                String displayString = "Send ray at: " + hoveredNumberArea.number;
+                int textWidth = metrics.stringWidth(displayString);
+                int x = ((getWidth() - metrics.stringWidth(displayString)) / 2) - 115;
+
+                g.drawString(displayString.toUpperCase(), x, 60);
+
+            }
+            else{
+                g.setFont(new Font("Monospaced", Font.BOLD, 25));
+                String displayString = game.getExperimenter().getPlayerName() + " - Please click a number in which to send a ray";
+                int textWidth = metrics.stringWidth(displayString);
+                g.drawString(displayString.toUpperCase(), ((this.getWidth() - textWidth) / 2) - 215, 60);
+            }
+        }
+        else {
             // Example hover effect: draw a highlighted border around the NumberArea
-            String displayString = "Send ray at: " + hoveredNumberArea.number;
+            String displayString = "Full Game Picture";
             int textWidth = metrics.stringWidth(displayString);
             int x = ((getWidth() - metrics.stringWidth(displayString)) / 2) - 115;
 
             g.drawString(displayString.toUpperCase(), x, 60);
-
         }
-        else{
-            g.setFont(new Font("Monospaced", Font.BOLD, 25));
-            String displayString = game.getExperimenter().getPlayerName() + " - Please click a number in which to send a ray";
-            int textWidth = metrics.stringWidth(displayString);
-            g.drawString(displayString.toUpperCase(), ((this.getWidth() - textWidth) / 2) - 215, 60);
-        }
-//        }
 
 
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
-                if (game.getBoard().getBoardPosition(col, row) instanceof Board.NullHex) {
+                if (currentBoard.getBoardPosition(col, row) instanceof Board.NullHex) {
                     continue;
                 }
 
@@ -284,14 +357,14 @@ public class GUIGameBoard extends JPanel {
 
                 double y = (double) ((row * 1.16) * Math.sqrt(3) * side * 3) / 4;
 
-                if(game.getBoard().getBoardPosition(col, row) instanceof RayMarker r){
+                if(currentBoard.getBoardPosition(col, row) instanceof RayMarker r){
                     g2.setColor(Color.WHITE);
                     g2.fillOval((int) x + 113, (int) y + 73, 55, 55);
                     g2.setColor(r.getGuiColour());
                     g2.fillOval((int) x + 115, (int) y + 75, 50, 50);
 
                 }
-                else if(game.getBoard().getBoardPosition(col, row) instanceof Board.EmptyMarker){
+                else if(currentBoard.getBoardPosition(col, row) instanceof Board.EmptyMarker){
                     g.setFont(new Font("Roboto", Font.BOLD, 16));
                     g.setColor(Color.white);
 
@@ -302,8 +375,8 @@ public class GUIGameBoard extends JPanel {
                     RayOutputPoint p1 = new RayOutputPoint(col, row, true);
                     RayOutputPoint p2 = new RayOutputPoint(col, row, false);
 
-                    String num1 = String.valueOf(game.getBoard().numberOut.get(new RayOutputPoint(col, row, true)));
-                    String num2 = String.valueOf(game.getBoard().numberOut.get(new RayOutputPoint(col, row, false)));
+                    String num1 = String.valueOf(currentBoard.numberOut.get(new RayOutputPoint(col, row, true)));
+                    String num2 = String.valueOf(currentBoard.numberOut.get(new RayOutputPoint(col, row, false)));
 
                     metrics = g.getFontMetrics();
 
@@ -433,7 +506,7 @@ public class GUIGameBoard extends JPanel {
                     int circleRadius = side / 4; // Adjust the radius as needed
 
                     // Your existing logic for drawing atoms remains unchanged
-                    if (game.getBoard().getBoardPosition(col, row) instanceof Atom && isVisible) {
+                    if (currentBoard.getBoardPosition(col, row) instanceof Atom && isVisible) {
 
 //                    g2.setColor(Color.RED); // Set color for the circle
 //                    g2.fillOval((int) (centerX - circleRadius), (int) (centerY - circleRadius), 4 * circleRadius, 4 * circleRadius);
@@ -453,7 +526,7 @@ public class GUIGameBoard extends JPanel {
                         // Draw the image
                         g2.drawImage(scaledImage, imageX + 10, imageY + 7, this);
                     }
-                    else if(game.getBoard().getBoardPosition(col, row) instanceof Board.RayTrail r && isVisible){
+                    else if(currentBoard.getBoardPosition(col, row) instanceof Board.RayTrail r && isVisible){
                         double scale = 0.3;
 
                         if(r.getOrientation() == 60 || r.getOrientation() == 240){
@@ -492,10 +565,10 @@ public class GUIGameBoard extends JPanel {
 
                         }
                     }
-                    else if(game.getBoard().getBoardPosition(col, row) instanceof CircleOfInfluence c && isVisible){
+                    else if(currentBoard.getBoardPosition(col, row) instanceof CircleOfInfluence c && isVisible){
                         printCircleOfInfluence(c, g2, x, y);
                     }
-                    else if (game.getBoard().getBoardPosition(col, row) instanceof IntersectingCircleOfInfluence is && isVisible){
+                    else if (currentBoard.getBoardPosition(col, row) instanceof IntersectingCircleOfInfluence is && isVisible){
                         for(int i = 0; i < is.getCircleOfInfluences().size(); i++){
                             printCircleOfInfluence(is.getCircleOfInfluence(i), g2, x, y);
                         }
@@ -511,7 +584,7 @@ public class GUIGameBoard extends JPanel {
 //            // Draw the bounds for visual inspection
 //        }
 
-        if(game.getBoard().currentRay.getInput() != -1){
+        if(game.getBoard().currentRay.getInput() != -1 && game.getCurrentState() != GameState.GuessingAtoms && game.getCurrentState() != GameState.GameOver){
             g.setFont(new Font("Monospaced", Font.BOLD, 20));
             String displayString;
 
@@ -537,11 +610,14 @@ public class GUIGameBoard extends JPanel {
         Color Gold = new Color(51, 51, 51);
 
         // Now draw the button with updated bounds
-        g2.setColor(Gold); // Use a more visible color
-        g2.fillRect(printButtonBounds.x, printButtonBounds.y, printButtonBounds.width, printButtonBounds.height);
-        g2.setColor(Color.WHITE); // Ensure text is visible
-        g.setFont(new Font("Monospaced", Font.BOLD, 20));
-        g2.drawString("Show/hide board", printButtonBounds.x + 15, printButtonBounds.y + 22);
+        if (game.getCurrentState() == GameState.SendingRays) {
+            g2.setColor(Gold); // Use a more visible color
+            g2.fillRect(printButtonBounds.x, printButtonBounds.y, printButtonBounds.width, printButtonBounds.height);
+            g2.setColor(Color.WHITE); // Ensure text is visible
+            g.setFont(new Font("Monospaced", Font.BOLD, 20));
+            g2.drawString("Finish Rays", printButtonBounds.x + 15, printButtonBounds.y + 22);
+        }
+
 
         BacktoMenuButton = new Rectangle(0, yB, buttonWidth - 60, buttonHeight);
 

@@ -293,6 +293,7 @@ public class Board {
         RayInputMap rMap = inputMapping.get(input);
 
         Ray r = new Ray(input);
+        currentRay = r;
         sentRays.add(r);
 
         r.setCurrXCo_ord(rMap.x);
@@ -332,9 +333,9 @@ public class Board {
 
             if(placeRay(r.getCurrXCo_ord(), r.getCurrYCo_ord(), r.getOrientation(), r)){
                 start.setColour(ANSI_GREEN);
+                start.setGuiColour(Color.green);
                 r.setDeflectionType(-1);
                 r.setOutput(-1);
-                System.out.println("Ray absorbed!");
                 return true;
             }
 
@@ -342,20 +343,28 @@ public class Board {
         if(!absorbed){
             //if ray is reflected, set colour purple
             if(start.getXCo_ord() == r.getCurrXCo_ord() && start.getYCo_ord() == r.getCurrYCo_ord()){
-                colour = "\u001B[35m"; //purple
+                colour = "\u001B[35m";
+                guiColour = new Color(191, 0, 255);
+                start.setGuiColour(guiColour);
                 start.setColour(colour);
                 r.setDeflectionType(180);
             }
             else if(r.getDeflectionType() == 120){
-                colour = "\u001B[38;5;206m"; //pink
+                colour = "\u001B[35m";
+                guiColour = new Color(255, 234, 0);
+                start.setGuiColour(guiColour);
                 start.setColour(colour);
             }
             else if(r.getDeflectionType() == 60){
-                colour = "\u001B[34m";
+                colour = "\u001B[33m";
+                guiColour = new Color(0, 13, 255);
+                start.setGuiColour(guiColour);
                 start.setColour(colour);
             }
             else if(r.getDeflectionType() == 0){
                 colour = "\u001B[31m";
+                guiColour = new Color(255, 0, 0);
+                start.setGuiColour(guiColour);
                 start.setColour(colour);
             }
 

@@ -42,4 +42,8 @@ public class RayMarker {
         this.colour = colour;
     }
 
+    public void setGuiColour(Color colour) {
+        this.guiColour = colour;
+    }
+
 }

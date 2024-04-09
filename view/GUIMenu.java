@@ -25,7 +25,7 @@ public class GUIMenu {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon icon = new ImageIcon("/Users/shlokpatel/Desktop/College/Java Projects/Software-Engineering-Project-2/view/coolbackground.jpg"); // Load the image
+                ImageIcon icon = new ImageIcon("view/coolbackground.jpg"); // Load the image
                 g.drawImage(icon.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
             }
         };

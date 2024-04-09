@@ -3,5 +3,6 @@ package controller;
 public enum GameState {
     SettingAtoms,
     SendingRays,
-    GuessingAtoms
+    GuessingAtoms,
+    GameOver
 }

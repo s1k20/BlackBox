@@ -11,7 +11,7 @@ public class GUI_UserInput {
         final String[] playerName = {null}; // To hold the player's name
 
         // Load the background image
-        ImageIcon background = new ImageIcon("/Users/shlokpatel/Desktop/College/Java Projects/Software-Engineering-Project-2/view/coolbackground.jpg");
+        ImageIcon background = new ImageIcon("view/coolbackground.jpg");
         Image img = background.getImage();
 
         // Create the dialog
