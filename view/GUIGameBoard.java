@@ -29,7 +29,7 @@ public class GUIGameBoard extends JPanel {
 
     boolean isVisible;
     private Rectangle printButtonBounds;
-    private Rectangle QuitButton;
+    private Rectangle BacktoMenuButton;
 
     private NumberArea hoveredNumberArea = null;
 
@@ -51,7 +51,6 @@ public class GUIGameBoard extends JPanel {
         setBackground(Color.WHITE);
 
         isVisible = true;
-
 
         this.game = game;
 
@@ -79,18 +78,8 @@ public class GUIGameBoard extends JPanel {
                 handleHover(e.getPoint());
             }
         });
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                handleBoardClick(e.getPoint());
-
-
-                if (QuitButton.contains(e.getPoint())) {
-                    System.exit(0);
-                }
-            }
-        });
     }
+
 
 
     private void handleBoardClick(Point clickedPoint) {
@@ -113,6 +102,13 @@ public class GUIGameBoard extends JPanel {
                     repaint();
                 }
             });
+        }
+        if (BacktoMenuButton.contains(clickedPoint)) {
+            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            if (frame != null) {
+                frame.dispose(); // Close the current frame
+            }
+            GUIMenu.showMenu(); // Show the initial menu
         }
         else{
 
@@ -426,6 +422,7 @@ public class GUIGameBoard extends JPanel {
 //                    }
 
                 }
+
                 else{
                     drawHexagon(g2, x, y, side, row, col); // Pass row and col to drawHexagon
 
@@ -546,14 +543,14 @@ public class GUIGameBoard extends JPanel {
         g.setFont(new Font("Monospaced", Font.BOLD, 20));
         g2.drawString("Show/hide board", printButtonBounds.x + 15, printButtonBounds.y + 22);
 
-        QuitButton = new Rectangle(0, yB, buttonWidth - 60, buttonHeight);
+        BacktoMenuButton = new Rectangle(0, yB, buttonWidth - 60, buttonHeight);
 
 
         g2.setColor(Gold); // Use a more visible color
-        g2.fillRect(QuitButton.x, QuitButton.y, QuitButton.width, QuitButton.height);
+        g2.fillRect(BacktoMenuButton.x, BacktoMenuButton.y, BacktoMenuButton.width, BacktoMenuButton.height);
         g2.setColor(Color.WHITE); // Ensure text is visible
         g.setFont(new Font("Monospaced", Font.BOLD, 20));
-        g2.drawString("Quit", QuitButton.x + 20, QuitButton.y + 22);
+        g2.drawString("Menu", BacktoMenuButton.x + 20, BacktoMenuButton.y + 22);
 
     }
 

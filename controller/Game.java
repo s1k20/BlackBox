@@ -54,7 +54,7 @@ public class Game {
 
     public void playGame() {
 //        int choice;
-        GUIMenu.createAndShowGUI();
+        GUIMenu.showMenu();
 //        do {
 //            view.printStart();
 //            choice = playerIn.getPlayerOption();
