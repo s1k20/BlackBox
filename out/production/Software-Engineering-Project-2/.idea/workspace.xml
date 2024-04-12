@@ -9,13 +9,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4576e0cc-369a-4145-900a-290dc17a3fc7" name="Changes" comment="hexagon board gui in works and started working on ai player for single player mode">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="4576e0cc-369a-4145-900a-290dc17a3fc7" name="Changes" comment="added distinct game states integrated states into gui view/controller  and added input listener to adhere to mvc architecture">
+      <change afterPath="$PROJECT_DIR$/controller/GameObserver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/GameState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/AiPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/AiPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIMenu$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIMenu$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUI_UserInput.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUI_UserInput.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/Game$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/Game$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/GameState.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/GameState.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/AiPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/AiPlayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$HexagonPath.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$HexagonPath.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$NumberArea.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$NumberArea.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$NumberPath.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$NumberPath.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view/GUIGameBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/GUIGameBoard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -258,7 +267,8 @@
       <workItem from="1712589741113" duration="1168000" />
       <workItem from="1712662395202" duration="407000" />
       <workItem from="1712663109290" duration="69000" />
-      <workItem from="1712663444835" duration="1093000" />
+      <workItem from="1712663444835" duration="18948000" />
+      <workItem from="1712851669988" duration="8538000" />
     </task>
     <task id="LOCAL-00001" summary="fixed bug">
       <option name="closed" value="true" />
@@ -452,7 +462,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712424262927</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="added distinct game states integrated states into gui view/controller  and added input listener to adhere to mvc architecture">
+      <option name="closed" value="true" />
+      <created>1712683260356</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1712683260356</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -493,6 +511,8 @@
     <MESSAGE value="updated some classes" />
     <MESSAGE value="added previously guessed atoms list" />
     <MESSAGE value="hexagon board gui in works and started working on ai player for single player mode" />
-    <option name="LAST_COMMIT_MESSAGE" value="hexagon board gui in works and started working on ai player for single player mode" />
+    <MESSAGE value="added distinct game states integrated states into gui view/controller" />
+    <MESSAGE value="added distinct game states integrated states into gui view/controller  and added input listener to adhere to mvc architecture" />
+    <option name="LAST_COMMIT_MESSAGE" value="added distinct game states integrated states into gui view/controller  and added input listener to adhere to mvc architecture" />
   </component>
 </project>

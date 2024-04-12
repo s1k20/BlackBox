@@ -4,6 +4,8 @@ import view.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 //controller part of project which runs main logic
@@ -30,6 +32,7 @@ public class Game implements BoardInputListener {
     private GUIView guiView;
 
     volatile GameState currentState;
+    GameObserver observer;
 
     boolean doneSendingRays;
     boolean nextRound;
@@ -44,11 +47,11 @@ public class Game implements BoardInputListener {
         playerIn = new PlayerInput();
 
         guiView = new GUIView(this);
-
+        observer = guiView.boardScreen;
         //set gameNum to 1 for the first game
         gameNum = 1;
 
-        currentState = GameState.SettingAtoms;
+        currentState = GameState.SETTING_ATOMS;
     }
 
     public Game(Player player) {
@@ -143,8 +146,8 @@ public class Game implements BoardInputListener {
         // Initialize player names
         setupPlayers();
 
-        // Setup the initial game state
-        currentState = GameState.SettingAtoms;
+        //set up the initial game state
+        currentState = GameState.SETTING_ATOMS;
         gameNum = 1;
         doneSendingRays = false;
 
@@ -168,7 +171,7 @@ public class Game implements BoardInputListener {
 //            waitForGameState(GameState.GuessingAtoms);
 //
 //            waitForGameState(GameState.GameOver);
-            while (currentState != GameState.GameOver){
+            while (currentState != GameState.GAME_OVER){
                 nextGameState();
             }
 
@@ -227,7 +230,7 @@ public class Game implements BoardInputListener {
         playerIn.resetSentRays(); // Reset any necessary state for the new round
         board = new Board(); // Reset the board
         view = new GameView(this); // Refresh the view
-        currentState = GameState.SettingAtoms; // Reset the game state for the new round
+        currentState = GameState.SETTING_ATOMS; // Reset the game state for the new round
         doneSendingRays = false;
     }
 
@@ -245,28 +248,53 @@ public class Game implements BoardInputListener {
             return; // Optionally, loop back or exit
         }
 
+        AiPlayer aiPlayer = new AiPlayer(true, 3, this.board);
+        player2 = aiPlayer;
 
-//        singlePlayerSetAtoms();
-    while (gameNum <= numGames) {
-        guessedAtoms = new ArrayList<>();
+        currentState = GameState.SETTING_ATOMS;
+        gameNum = 1;
+        doneSendingRays = false;
 
-//    SwingUtilities.invokeLater(() -> {
-//        JFrame frame = new JFrame("Black Box Plus by Cian, Lloyd and Shlok");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.add(new GUIGameBoard(this));
-//        frame.pack();
-//        frame.setLocationRelativeTo(null); // Center on screen
-//        frame.setVisible(true);
-//    });
+        while (gameNum <= numGames) {
+            guessedAtoms = new ArrayList<>();
+            guiView.boardScreen.showBoard();
+            view.printRound(gameNum);
 
-    sendRays();
+            if (aiPlayer.isSetter()) {
+                aiPlayer.ai_setAtoms(this.numAtoms);
 
-    guessAtoms();
-}
+                while (currentState != GameState.GAME_OVER){
+                    nextGameState();
+                }
+            }
+            else {
+                while (currentState != GameState.SENDING_RAYS) {
+                    nextGameState();
+                }
+                ArrayList<Integer> rays = aiPlayer.ai_sendRays();
 
-        view.printEntireBoard();
+                for (int i : rays) {
+                    sendRay(i);
+//                    observer.update();
 
-        view.printStats_SinglePlayer(player1);
+                }
+
+
+                ArrayList<Point> guesses = aiPlayer.ai_guessAtoms(this.numAtoms);
+
+                for (Point guess : guesses) {
+                    int x = guess.x;
+                    int y = guess.y;
+
+                    guessAtom(x, y);
+                }
+            }
+
+            concludeRound();
+            setupNextRound();
+        }
+
+        displayWinner();
     }
 
     public void setAtom(boolean isSetter) {
@@ -384,7 +412,7 @@ public class Game implements BoardInputListener {
 
     @Override
     public void onAtomPlaced(int x, int y) {
-        if (currentState == GameState.SettingAtoms) {
+        if (currentState == GameState.SETTING_ATOMS) {
             placeAtom(x, y);
             guiView.boardScreen.refreshBoard();
             nextGameState(); // Check if it's time to change state
@@ -393,7 +421,7 @@ public class Game implements BoardInputListener {
 
     @Override
     public void onAtomRemoved(int x, int y) {
-        if (currentState == GameState.SettingAtoms) {
+        if (currentState == GameState.SETTING_ATOMS) {
             removeAtom(x, y);
             guiView.boardScreen.refreshBoard();
         }
@@ -401,10 +429,9 @@ public class Game implements BoardInputListener {
 
     @Override
     public void onRaySent(int number) {
-        if (currentState == GameState.SendingRays) {
+        if (currentState == GameState.SENDING_RAYS) {
             sendRay(number);
             guiView.boardScreen.refreshBoard();
-            // You might call nextGameState() here if needed to check for game progress
         }
     }
 
@@ -423,26 +450,25 @@ public class Game implements BoardInputListener {
 
     private void nextGameState() {
         switch (currentState) {
-            case SettingAtoms:
+            case SETTING_ATOMS -> {
                 if (board.getNumAtomsPlaced() >= 6) {
-                    currentState = GameState.SendingRays;
+                    currentState = GameState.SENDING_RAYS;
                     guiView.boardScreen.boardVisible_ENABLE();
                 }
-                break;
-            case SendingRays:
+            }
+            case SENDING_RAYS -> {
                 if (doneSendingRays) {
-                    currentState = GameState.GuessingAtoms;
+                    currentState = GameState.GUESSING_ATOMS;
                     guessingBoard = new Board();
                 }
-                break;
-            case GuessingAtoms:
+            }
+            case GUESSING_ATOMS -> {
                 if (guessingBoard.getNumAtomsPlaced() >= 6) {
-                    currentState = GameState.GameOver;
+                    currentState = GameState.GAME_OVER;
                 }
-                break;
-            case GameOver:
-                break;
-            // Add additional cases as needed
+            }
+            case GAME_OVER -> {
+            }
         }
     }
 

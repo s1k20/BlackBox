@@ -1,8 +1,8 @@
 package controller;
 
 public enum GameState {
-    SettingAtoms,
-    SendingRays,
-    GuessingAtoms,
-    GameOver
+    SETTING_ATOMS,
+    SENDING_RAYS,
+    GUESSING_ATOMS,
+    GAME_OVER
 }

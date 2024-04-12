@@ -32,12 +32,15 @@ public class AiPlayer extends Player {
         return names[random.nextInt(names.length)];
     }
 
-    public void ai_sendRays() {
-        int numRaysToSend = random.nextInt(2, 5) * difficulty;
+    public ArrayList<Integer> ai_sendRays() {
+        int numRaysToSend = (int) (random.nextInt(2, 3) * (difficulty / 0.4));
+        ArrayList<Integer> rays = new ArrayList<>();
 
         for (int i = 0; i < numRaysToSend; i++) {
-            board.sendRay(pickRayInput());
+            int ray = pickRayInput();
+            rays.add(ray);
         }
+        return rays;
     }
 
     private int pickRayInput() {
@@ -69,29 +72,37 @@ public class AiPlayer extends Player {
         return new Point(x, y);
     }
 
-    public void ai_guessAtoms(int numAtoms) {
+    public ArrayList<Point> ai_guessAtoms(int numAtoms) {
         switch (difficulty){
-            case 1 -> guessAtoms_hard(numAtoms);
-            case 2 -> guessAtoms_medium(numAtoms);
-            case 3 -> guessAtoms_easy(numAtoms);
+            case 1 -> {
+                return guessAtoms_hard(numAtoms);
+            }
+            case 2 -> {
+                return guessAtoms_medium(numAtoms);
+            }
+            case 3 -> {
+                return guessAtoms_easy(numAtoms);
+            }
             default -> throw new IllegalArgumentException("invalid difficulty");
         }
     }
 
-    private void guessAtoms_hard(int numAtoms) {
-
+    private ArrayList<Point> guessAtoms_hard(int numAtoms) {
+        return null;
     }
 
-    private void guessAtoms_medium(int numAtoms) {
-
+    private ArrayList<Point> guessAtoms_medium(int numAtoms) {
+        return null;
     }
 
-    private void guessAtoms_easy(int numAtoms) {
+    private ArrayList<Point> guessAtoms_easy(int numAtoms) {
+        ArrayList<Point> atomGuesses = new ArrayList<>();
+
         for (int i = 0; i < numAtoms; i++) {
             Point guess = ai_randomAtom(false);
-
-
+            atomGuesses.add(guess);
         }
+        return atomGuesses;
     }
 
 }

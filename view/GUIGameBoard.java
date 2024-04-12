@@ -2,6 +2,7 @@ package view;
 
 import controller.BoardInputListener;
 import controller.Game;
+import controller.GameObserver;
 import controller.GameState;
 import model.*;
 
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class GUIGameBoard extends JPanel {
+public class GUIGameBoard extends JPanel implements GameObserver {
     private final int rows = 11; // Number of rows
     private final int cols = 11; // Number of columns
     private final int side = 40; // Side length of the hexagon
@@ -100,11 +101,11 @@ public class GUIGameBoard extends JPanel {
 
 
     private void handleBoardClick(Point clickedPoint) {
-        if (game.getCurrentState() == GameState.SendingRays && printButtonBounds.contains(clickedPoint)) {
+        if (game.getCurrentState() == GameState.SENDING_RAYS && printButtonBounds.contains(clickedPoint)) {
             listener.onFinishRays();
         }
 
-        if(game.getCurrentState() == GameState.SettingAtoms && game.getBoard().getNumAtomsPlaced() < 6){
+        if(game.getCurrentState() == GameState.SETTING_ATOMS && game.getBoard().getNumAtomsPlaced() < 6){
             hexagonPaths.forEach(hexPath -> {
                 if (hexPath.path.contains(clickedPoint)) {
                     System.out.println("Hexagon clicked at row " + hexPath.row + " and col " + hexPath.col);
@@ -121,7 +122,7 @@ public class GUIGameBoard extends JPanel {
                 boardVisible_DISABLE();
             }
         }
-        else if (game.getCurrentState() == GameState.GuessingAtoms && game.getGuessingBoard().getNumAtomsPlaced() < 6) {
+        else if (game.getCurrentState() == GameState.GUESSING_ATOMS && game.getGuessingBoard().getNumAtomsPlaced() < 6) {
             boardVisible_ENABLE();
             hexagonPaths.forEach(hexPath -> {
                 if (hexPath.path.contains(clickedPoint)) {
@@ -190,7 +191,6 @@ public class GUIGameBoard extends JPanel {
                         repaint(); // Repaint to remove hover effect
                     }
                 }
-
     }
 
     public void refreshBoard() {
@@ -268,6 +268,11 @@ public class GUIGameBoard extends JPanel {
         hexagonPaths.add(new HexagonPath(path, row, col));
     }
 
+    @Override
+    public void update() {
+        SwingUtilities.invokeLater(this::refreshBoard);
+    }
+
     class NumberArea {
         Rectangle bounds; // This holds the x, y, width, and height.
         String number;
@@ -292,12 +297,14 @@ public class GUIGameBoard extends JPanel {
         super.paintComponent(g);
 
         Board currentBoard;
-        if (game.getCurrentState() != GameState.GuessingAtoms) currentBoard = game.getBoard();
+        if (game.getCurrentState() != GameState.GUESSING_ATOMS) currentBoard = game.getBoard();
         else currentBoard = game.getGuessingBoard();
 
         Graphics2D g2 = (Graphics2D) g;
         hexagonPaths.clear(); // Clear the list to avoid duplicate entries on repaint
         int counter = 1;
+
+        if (game.getCurrentState() == GameState.SENDING_RAYS) isVisible = false;
 
         Image scaledBackground = background.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
         g2.drawImage(scaledBackground, 0, 0, this);
@@ -311,13 +318,23 @@ public class GUIGameBoard extends JPanel {
 
 
         if(currentBoard.getNumAtomsPlaced() < 6){
-            String displayString = game.getSetter().getPlayerName() + " - Please place " + (6 - currentBoard.getNumAtomsPlaced())
+            String playerName;
+            String action;
+            if (game.getCurrentState() == GameState.SETTING_ATOMS) {
+                playerName = game.getSetter().getPlayerName();
+                action = "PLACE";
+            }
+            else {
+                playerName = game.getExperimenter().getPlayerName();
+                action = "GUESS";
+            }
+            String displayString = playerName + " - Please " + action + " " + (6 - currentBoard.getNumAtomsPlaced())
                     + " more atoms";
             int textWidth = metrics.stringWidth(displayString);
 
             g.drawString(displayString, 30, 75);
         }
-        else if (game.getCurrentState() != GameState.GameOver){
+        else if (game.getCurrentState() != GameState.GAME_OVER){
             if(hoveredNumberArea != null){
                 // Example hover effect: draw a highlighted border around the NumberArea
                 String displayString = "Send ray at: " + hoveredNumberArea.number;
@@ -584,7 +601,7 @@ public class GUIGameBoard extends JPanel {
 //            // Draw the bounds for visual inspection
 //        }
 
-        if(game.getBoard().currentRay.getInput() != -1 && game.getCurrentState() != GameState.GuessingAtoms && game.getCurrentState() != GameState.GameOver){
+        if(game.getBoard().currentRay.getInput() != -1 && game.getCurrentState() != GameState.GUESSING_ATOMS && game.getCurrentState() != GameState.GAME_OVER){
             g.setFont(new Font("Monospaced", Font.BOLD, 20));
             String displayString;
 
@@ -610,7 +627,7 @@ public class GUIGameBoard extends JPanel {
         Color Gold = new Color(51, 51, 51);
 
         // Now draw the button with updated bounds
-        if (game.getCurrentState() == GameState.SendingRays) {
+        if (game.getCurrentState() == GameState.SENDING_RAYS) {
             g2.setColor(Gold); // Use a more visible color
             g2.fillRect(printButtonBounds.x, printButtonBounds.y, printButtonBounds.width, printButtonBounds.height);
             g2.setColor(Color.WHITE); // Ensure text is visible
