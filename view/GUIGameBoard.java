@@ -623,7 +623,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
         int buttonHeight = 30;
         int xB = getWidth() - buttonWidth - 5; // Adjusted for the current width
         int yB = getHeight() - buttonHeight - 30; // Adjusted for the current height
-        printButtonBounds = new Rectangle(xB - 50, yB, buttonWidth + 120 , buttonHeight);
+        printButtonBounds = new Rectangle(xB, yB, buttonWidth + 10 , buttonHeight);
         Color Gold = new Color(51, 51, 51);
 
         // Now draw the button with updated bounds
@@ -632,7 +632,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
             g2.fillRect(printButtonBounds.x, printButtonBounds.y, printButtonBounds.width, printButtonBounds.height);
             g2.setColor(Color.WHITE); // Ensure text is visible
             g.setFont(new Font("Monospaced", Font.BOLD, 20));
-            g2.drawString("Finish Rays", printButtonBounds.x + 15, printButtonBounds.y + 22);
+            g2.drawString("Finish Rays", printButtonBounds.x + 16, printButtonBounds.y + 22);
         }
 
 

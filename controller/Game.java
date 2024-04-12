@@ -37,6 +37,9 @@ public class Game implements BoardInputListener {
     boolean doneSendingRays;
     boolean nextRound;
 
+    public boolean isSinglePlayer;
+    public boolean isMultiPlayer;
+
     //track the experimenters previously guessed atoms
     private ArrayList<Point> guessedAtoms;
 
@@ -78,6 +81,13 @@ public class Game implements BoardInputListener {
 
     }
 
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
 
     public Board getBoard() {
         return this.board;
@@ -183,6 +193,7 @@ public class Game implements BoardInputListener {
         }
 
         // Determine and display the winner
+        new GUIEndScreen(this).display();
         displayWinner();
     }
 
@@ -248,6 +259,8 @@ public class Game implements BoardInputListener {
             return; // Optionally, loop back or exit
         }
 
+        isSinglePlayer = true;
+
         AiPlayer aiPlayer = new AiPlayer(true, 3, this.board);
         player2 = aiPlayer;
 
@@ -295,6 +308,8 @@ public class Game implements BoardInputListener {
         }
 
         displayWinner();
+        new GUIEndScreen(this).display();
+        isSinglePlayer = false;
     }
 
     public void setAtom(boolean isSetter) {
