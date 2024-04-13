@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class AiPlayer extends Player {
-
-    //1 == hardest
-    //2 == medium
-    //3 == easiest
+    //general - will place random atoms and send a random number of rays at different points (guessing independent of sending rays)
+    //1 == hardest - will guess 4 atoms correctly and have a 40% chance of guessing each other atom
+    //2 == medium - will guess 2 atoms correctly and have a 30% chance of guessing each other atom
+    //3 == easiest - will guess 1 atom correctly and then randomly guess 5 other atoms (could be correct or incorrect)
     private final int difficulty;
-    private final Board board;
+    private Board board;
 
     private final ArrayList<Integer> sentRays;
     private final ArrayList<Point> guessedAtoms;
@@ -20,7 +20,7 @@ public class AiPlayer extends Player {
     private static final String[] names = {"Cian", "Lloyd", "Shlok"};
 
     public AiPlayer(boolean isSetter, int difficulty, Board board) {
-        super(getRandomName(), isSetter);
+        super(getRandomName() + " (AI)", isSetter);
         this.difficulty = difficulty;
         this.board = board;
 
@@ -33,7 +33,9 @@ public class AiPlayer extends Player {
     }
 
     public ArrayList<Integer> ai_sendRays() {
-        int numRaysToSend = (int) (random.nextInt(2, 3) * (difficulty / 0.4));
+        int multiplier = difficulty;
+        if (difficulty == 1) multiplier = 2;
+        int numRaysToSend = (random.nextInt(2, 5) * (multiplier));
         ArrayList<Integer> rays = new ArrayList<>();
 
         for (int i = 0; i < numRaysToSend; i++) {
@@ -87,22 +89,79 @@ public class AiPlayer extends Player {
         }
     }
 
+    public void setNewBoard(Board board) {
+        this.board = board;
+    }
+
     private ArrayList<Point> guessAtoms_hard(int numAtoms) {
-        return null;
+        ArrayList<Point> atomGuesses = new ArrayList<>();
+
+        int i = 0;
+        for (; i < 4; i++) {
+            int xAtom = board.getPlacedAtoms().get(i).getXCo_ord();
+            int yAtom = board.getPlacedAtoms().get(i).getYCo_ord();
+
+            atomGuesses.add(new Point(xAtom, yAtom));
+        }
+
+        calculatedAtomGuess(atomGuesses, i, numAtoms);
+
+        return atomGuesses;
     }
 
     private ArrayList<Point> guessAtoms_medium(int numAtoms) {
-        return null;
+        ArrayList<Point> atomGuesses = new ArrayList<>();
+
+        int i = 0;
+        for (; i < 2; i++) {
+            int xAtom = board.getPlacedAtoms().get(i).getXCo_ord();
+            int yAtom = board.getPlacedAtoms().get(i).getYCo_ord();
+
+            atomGuesses.add(new Point(xAtom, yAtom));
+        }
+
+        calculatedAtomGuess(guessedAtoms, i, numAtoms);
+
+        return atomGuesses;
     }
 
     private ArrayList<Point> guessAtoms_easy(int numAtoms) {
         ArrayList<Point> atomGuesses = new ArrayList<>();
+        int xAtom = board.getPlacedAtoms().get(0).getXCo_ord();
+        int yAtom = board.getPlacedAtoms().get(0).getYCo_ord();
 
-        for (int i = 0; i < numAtoms; i++) {
+        atomGuesses.add(new Point(xAtom, yAtom));
+
+        for (int i = 1; i < numAtoms; i++) {
             Point guess = ai_randomAtom(false);
             atomGuesses.add(guess);
         }
         return atomGuesses;
     }
+
+    private void calculatedAtomGuess(ArrayList<Point> atomGuesses, int i, int nAtoms) {
+        for (int j = i; j < nAtoms; j++) {
+            int xAtom = board.getPlacedAtoms().get(i).getXCo_ord();
+            int yAtom = board.getPlacedAtoms().get(i).getYCo_ord();
+
+            int addX;
+            int addY;
+
+            int bound = 3;
+            int minus = 1;
+
+            do {
+                addX = random.nextInt( bound) - minus;
+                addY = random.nextInt(bound) - minus;
+
+                bound += 2;
+                minus += 1;
+
+            } while (board.checkInvalidInput(xAtom + addX, yAtom + addY) || atomGuesses.contains(new Point(xAtom + addX, yAtom + addY)));
+
+            atomGuesses.add(new Point(xAtom + addX, yAtom + addY));
+        }
+    }
+
 
 }

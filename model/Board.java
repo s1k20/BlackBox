@@ -16,6 +16,8 @@ public class Board {
     public final HashMap<RayOutputPoint, Integer> numberOut = new HashMap<>();
 
     private final ArrayList<Ray> sentRays = new ArrayList<>();
+    private final ArrayList<Atom> placedAtoms = new ArrayList<>();
+    private final ArrayList<RayMarker> rayMarkers = new ArrayList<>();
     public Ray currentRay;
 
     private int numAtomsPlaced;
@@ -67,6 +69,14 @@ public class Board {
         return this.sentRays;
     }
 
+    public ArrayList<Atom> getPlacedAtoms() {
+        return this.placedAtoms;
+    }
+
+    public ArrayList<RayMarker> getRayMarkers() {
+        return this.rayMarkers;
+    }
+
 
     public void placeAtom(int x, int y){
         if(checkInvalidInput(y, x)){
@@ -74,6 +84,7 @@ public class Board {
         }
 
         Atom newAtom = new Atom(x, y);
+        placedAtoms.add(newAtom);
 
         //places atom into the board
         //y and x inverted as x = j and y = i
@@ -87,8 +98,50 @@ public class Board {
     }
 
     public void removeAtom(int x, int y) {
-        //TODO
+        Atom atom = (Atom) board[y][x];
+        board[y][x] = null;
+        placedAtoms.remove(atom);
+
+        removeCircleOfInfluence(atom);
+        replaceAtom();
+
+        numAtomsPlaced--;
     }
+
+    public void replaceAtom() {
+        for (Atom a : placedAtoms) {
+            placeCircleOfInfluence(a);
+        }
+    }
+
+    private void removeCircleOfInfluence(Atom atom) {
+        for (CircleOfInfluence c : atom.getCircleOfInfluence()) {
+            int cX = c.getXCo_ord();
+            int cY = c.getYCo_ord();
+
+            if (board[cY][cX] instanceof CircleOfInfluence) {
+                board[cY][cX] = null;
+            }
+            else if (board[cY][cX] instanceof IntersectingCircleOfInfluence i) {
+                if (i.getCircleOfInfluences().size() >= 3) {
+                    i.removePart(c.getOrientation());
+                }
+                else {
+                    i.removePart(c.getOrientation());
+                    if (i.getCircleOfInfluences().isEmpty()) {
+                        System.out.println("yes");
+                        board[cY][cX] = null;
+                    }
+                    else {
+                        CircleOfInfluence circleOfInfluence =  i.getCircleOfInfluence(0);
+                        board[cY][cX] = circleOfInfluence;
+                    }
+
+                }
+            }
+        }
+    }
+
 
     public void placeCircleOfInfluence(Atom a){
         //loop through all atom "a" circle of influence
@@ -98,7 +151,7 @@ public class Board {
             if(!(board[c.getYCo_ord()][c.getXCo_ord()] instanceof Atom) && !(board[c.getYCo_ord()][c.getXCo_ord()] instanceof EmptyMarker)) {
 
                 //in the case where one part of circle of influence intersects another part;
-                if(board[c.getYCo_ord()][c.getXCo_ord()] instanceof CircleOfInfluence i){
+                if(board[c.getYCo_ord()][c.getXCo_ord()] instanceof CircleOfInfluence i && c.getOrientation() != i.getOrientation()){
 
                     //create new intersecting circ. object to place previous and new circle of influence
                     IntersectingCircleOfInfluence s = new IntersectingCircleOfInfluence();
@@ -112,7 +165,7 @@ public class Board {
                 }
 
                 //in the case where one part of a circle of influence intersects and intersection of influences
-                else if(board[c.getYCo_ord()][c.getXCo_ord()] instanceof IntersectingCircleOfInfluence s){
+                else if(board[c.getYCo_ord()][c.getXCo_ord()] instanceof IntersectingCircleOfInfluence s && !s.getCircleOfInfluences().contains(c)){
 
                     //just add new part to old array list
                     s.addPart(c);
@@ -305,12 +358,14 @@ public class Board {
         String colour = "";
         Color guiColour = Color.WHITE;
 
-        RayMarker start = new RayMarker(rMap.x, rMap.y, colour, guiColour);
+        RayMarker start = new RayMarker(rMap.x, rMap.y, input, colour, guiColour);
+        rayMarkers.add(start);
         board[rMap.y][rMap.x] = start;
 
         while(!(board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] instanceof EmptyMarker) && !absorbed){
             if(board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] instanceof Atom) {
                 start.setColour(ANSI_GREEN);
+                start.setGuiColour(Color.green);
                 r.setOutput(-1);
                 System.out.println("Ray absorbed!");
                 return true;
@@ -377,8 +432,10 @@ public class Board {
             r.setOutput(exit);
             if (r.getDeflectionType() == 180) System.out.println("Deflected!");
             else System.out.println("Ray exited at " + exit);
+            RayMarker end = new RayMarker(r.getCurrXCo_ord(), r.getCurrYCo_ord(), exit, colour, guiColour);
+            rayMarkers.add(end);
 
-            board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] = new RayMarker(r.getCurrXCo_ord(), r.getCurrYCo_ord(), colour, guiColour);
+            board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] = end;
             return false;
         }
 

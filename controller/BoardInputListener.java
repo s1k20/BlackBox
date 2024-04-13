@@ -5,6 +5,8 @@ public interface BoardInputListener {
     void onAtomRemoved(int col, int row);
     void onRaySent(int number);
     void onFinishRays();
+    void onFinishRound();
+    void onAI_endRound();
     void onAtomGuess(int col, int row);
 
 }

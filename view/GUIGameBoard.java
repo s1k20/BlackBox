@@ -27,7 +27,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
     Game game;
     BoardInputListener listener;
 
-    private JFrame frame;
+    private static JFrame frame = null;
 
     private List<HexagonPath> hexagonPaths = new ArrayList<>(); // Store hexagon paths with their row and col
     private ArrayList<NumberPath> numberPaths = new ArrayList<>();
@@ -86,23 +86,32 @@ public class GUIGameBoard extends JPanel implements GameObserver {
         });
     }
 
-    public void showBoard() {
+
+    public void showBoard(String setter, String experimenter, int round) {
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Black Box Plus by Cian, Lloyd and Shlok");
-            this.frame = frame;
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.add(new GUIGameBoard(this.game));
-            frame.pack();
-            frame.setLocationRelativeTo(null); // Center on screen
-            frame.setVisible(true);
+            if (frame == null || !frame.isDisplayable()) {  // Check if frame is disposed
+                frame = new JFrame("Round " + round + " | Setter: " + setter + " | Experimenter: " + experimenter);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.add(this);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+            } else {
+                frame.repaint();
+                frame.revalidate();
+            }
         });
     }
 
-
-
     private void handleBoardClick(Point clickedPoint) {
-        if (game.getCurrentState() == GameState.SENDING_RAYS && printButtonBounds.contains(clickedPoint)) {
+        if ((game.getCurrentState() == GameState.SENDING_RAYS || game.getCurrentState() == GameState.AI_SENDING_RAYS) && printButtonBounds.contains(clickedPoint)) {
             listener.onFinishRays();
+        }
+        if (game.getCurrentState() == GameState.AI_GUESSING_ATOMS && printButtonBounds.contains(clickedPoint)) {
+            listener.onAI_endRound();
+        }
+        if (game.getCurrentState() == GameState.GAME_OVER && printButtonBounds.contains(clickedPoint)) {
+            listener.onFinishRound();
         }
 
         if(game.getCurrentState() == GameState.SETTING_ATOMS && game.getBoard().getNumAtomsPlaced() < 6){
@@ -194,7 +203,11 @@ public class GUIGameBoard extends JPanel implements GameObserver {
     }
 
     public void refreshBoard() {
-        repaint();
+        SwingUtilities.invokeLater(() -> {
+            invalidate();  // Invalidate the layout
+            validate();    // Force the layout manager to reset the layout
+            repaint();     // Request a repaint
+        });
     }
 
     public void disposeBoard() {
@@ -270,7 +283,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
 
     @Override
     public void update() {
-        SwingUtilities.invokeLater(this::refreshBoard);
+        refreshBoard();
     }
 
     class NumberArea {
@@ -295,16 +308,15 @@ public class GUIGameBoard extends JPanel implements GameObserver {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         Board currentBoard;
-        if (game.getCurrentState() != GameState.GUESSING_ATOMS) currentBoard = game.getBoard();
+        if (game.getCurrentState() != GameState.GUESSING_ATOMS && game.getCurrentState() != GameState.AI_GUESSING_ATOMS) currentBoard = game.getBoard();
         else currentBoard = game.getGuessingBoard();
 
         Graphics2D g2 = (Graphics2D) g;
-        hexagonPaths.clear(); // Clear the list to avoid duplicate entries on repaint
+        hexagonPaths.clear();
         int counter = 1;
 
-        if (game.getCurrentState() == GameState.SENDING_RAYS) isVisible = false;
+        if (game.getCurrentState() == GameState.SENDING_RAYS || game.getCurrentState() == GameState.AI_SENDING_RAYS) isVisible = false;
 
         Image scaledBackground = background.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
         g2.drawImage(scaledBackground, 0, 0, this);
@@ -374,19 +386,16 @@ public class GUIGameBoard extends JPanel implements GameObserver {
 
                 double y = (double) ((row * 1.16) * Math.sqrt(3) * side * 3) / 4;
 
-                if(currentBoard.getBoardPosition(col, row) instanceof RayMarker r){
-                    g2.setColor(Color.WHITE);
-                    g2.fillOval((int) x + 113, (int) y + 73, 55, 55);
-                    g2.setColor(r.getGuiColour());
-                    g2.fillOval((int) x + 115, (int) y + 75, 50, 50);
-
-                }
-                else if(currentBoard.getBoardPosition(col, row) instanceof Board.EmptyMarker){
+//                if(currentBoard.getBoardPosition(col, row) instanceof RayMarker r){
+////                    g2.setColor(Color.WHITE);
+////                    g2.fillOval((int) x + 113, (int) y + 73, 55, 55);
+////                    g2.setColor(r.getGuiColour());
+////                    g2.fillOval((int) x + 115, (int) y + 75, 50, 50);
+//                    continue;
+//                }
+                if(currentBoard.getBoardPosition(col, row) instanceof Board.EmptyMarker || currentBoard.getBoardPosition(col, row) instanceof RayMarker){
                     g.setFont(new Font("Roboto", Font.BOLD, 16));
                     g.setColor(Color.white);
-
-
-// Calculate the bounding box
 
 
                     RayOutputPoint p1 = new RayOutputPoint(col, row, true);
@@ -406,7 +415,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                         int textWidth1 = metrics.stringWidth(num1);
                         if(number1 < 10){
                             g.drawString(num1, (int) x + 155, (int) y + 103);
-                            bounds1 = new Rectangle((int) x - (textWidth1 / 2) + 160, (int) y - (textHeight / 2) + 98, textWidth1, textHeight);
+                            bounds1 = new Rectangle((int) x - (textWidth1 / 2) + 160 - 5, (int) y - (textHeight / 2) + 98, textWidth1 + 10, textHeight);
                         }
                         else if(number1 < 19){
                             g.drawString(num1, (int) x + 140, (int) y + 90);
@@ -415,7 +424,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                         }
                         else if(number1 <= 28){
                             g.drawString(num1, (int) x + 120, (int) y + 90);
-                            bounds1 = new Rectangle((int) x - (textWidth1 / 2) + 127, (int) y - (textHeight / 2) + 85, textWidth1, textHeight);
+                            bounds1 = new Rectangle((int) x - (textWidth1 / 2) + 130, (int) y - (textHeight / 2) + 85, textWidth1, textHeight);
 
                         }
                         else if(number1 < 37){
@@ -445,7 +454,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
 
                         if(number1 < 10){
                             g.drawString(num2, (int) x + 147, (int) y + 125);
-                            bounds2 = new Rectangle((int) x - (textWidth2 / 2) + 152, (int) y - (textHeight / 2) + 120, textWidth2, textHeight);
+                            bounds2 = new Rectangle((int) x - (textWidth2 / 2) + 152 - 5, (int) y - (textHeight / 2) + 120, textWidth2 + 10, textHeight);
                         }
                         else if(number1 < 19){
                             g.drawString(num2, (int) x + 150, (int) y + 110);
@@ -465,7 +474,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                         }
                         else{
                             g.drawString(num2, (int) x + 120, (int) y + 125);
-                            bounds2 = new Rectangle((int) x - (textWidth2 / 2) + 127, (int) y - (textHeight / 2) + 120, textWidth2, textHeight);
+                            bounds2 = new Rectangle((int) x - (textWidth2 / 2) + 130, (int) y - (textHeight / 2) + 120, textWidth2, textHeight);
                         }
 
 
@@ -503,15 +512,8 @@ public class GUIGameBoard extends JPanel implements GameObserver {
 //                    g2.draw(path);
                     path.closePath();
 
-
-//                    try{
-//                        int num = Integer.parseInt(num2);
-//                        numberPaths.add(new NumberPath(path, num));
-//                    }catch(NumberFormatException e){
-//                        numberPaths.add(new NumberPath(path, Integer.parseInt(num1)));
-//                    }
-
                 }
+
 
                 else{
                     drawHexagon(g2, x, y, side, row, col); // Pass row and col to drawHexagon
@@ -596,10 +598,27 @@ public class GUIGameBoard extends JPanel implements GameObserver {
 
         //testing hitbox
 //        for (NumberArea area : numberAreas) {
-//            g2.setColor(Color.RED); // Set a high-contrast color
-//            g2.fill(area.bounds);
+//
+//                g2.setColor(Color.RED); // Set a high-contrast color
+//                g2.fill(area.bounds);
+//
+//
 //            // Draw the bounds for visual inspection
 //        }
+
+        for (NumberArea n : numberAreas) {
+            int num = Integer.parseInt(n.number);
+            if (game.getBoard().getRayMarkers() != null) {
+                for (RayMarker r : game.getBoard().getRayMarkers()) {
+                    if (r.getNumber() == num) {
+                        g2.setColor(Color.WHITE);
+                        g2.fillRect(n.bounds.x - 3, n.bounds.y - 3, n.bounds.width + 6, n.bounds.height + 6);
+                        g2.setColor(r.getGuiColour());
+                        g2.fill(n.bounds);
+                    }
+                }
+            }
+        }
 
         if(game.getBoard().currentRay.getInput() != -1 && game.getCurrentState() != GameState.GUESSING_ATOMS && game.getCurrentState() != GameState.GAME_OVER){
             g.setFont(new Font("Monospaced", Font.BOLD, 20));
@@ -633,6 +652,27 @@ public class GUIGameBoard extends JPanel implements GameObserver {
             g2.setColor(Color.WHITE); // Ensure text is visible
             g.setFont(new Font("Monospaced", Font.BOLD, 20));
             g2.drawString("Finish Rays", printButtonBounds.x + 16, printButtonBounds.y + 22);
+        }
+        else if (game.getCurrentState() == GameState.AI_SENDING_RAYS) {
+            g2.setColor(Gold); // Use a more visible color
+            g2.fillRect(printButtonBounds.x, printButtonBounds.y, printButtonBounds.width, printButtonBounds.height);
+            g2.setColor(Color.WHITE); // Ensure text is visible
+            g.setFont(new Font("Monospaced", Font.BOLD, 20));
+            g2.drawString("Continue", printButtonBounds.x + 16, printButtonBounds.y + 22);
+        }
+        else if (game.getCurrentState() == GameState.AI_GUESSING_ATOMS) {
+            g2.setColor(Gold); // Use a more visible color
+            g2.fillRect(printButtonBounds.x, printButtonBounds.y, printButtonBounds.width, printButtonBounds.height);
+            g2.setColor(Color.WHITE); // Ensure text is visible
+            g.setFont(new Font("Monospaced", Font.BOLD, 20));
+            g2.drawString("Finish", printButtonBounds.x + 16, printButtonBounds.y + 22);
+        }
+        else if (game.getCurrentState() == GameState.GAME_OVER) {
+            g2.setColor(Gold); // Use a more visible color
+            g2.fillRect(printButtonBounds.x, printButtonBounds.y, printButtonBounds.width, printButtonBounds.height);
+            g2.setColor(Color.WHITE); // Ensure text is visible
+            g.setFont(new Font("Monospaced", Font.BOLD, 20));
+            g2.drawString("Next", printButtonBounds.x + 16, printButtonBounds.y + 22);
         }
 
 

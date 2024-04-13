@@ -1,4 +1,5 @@
 package controller;
+import jdk.dynalink.linker.GuardedInvocationTransformer;
 import model.*;
 import view.*;
 
@@ -7,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 //controller part of project which runs main logic
 //updates model and view
@@ -29,16 +31,14 @@ public class Game implements BoardInputListener {
     private PlayerInput playerIn;
     private GameView view;
 
-    private GUIView guiView;
+    private GUIGameBoard guiView;
 
     volatile GameState currentState;
     GameObserver observer;
 
     boolean doneSendingRays;
     boolean nextRound;
-
-    public boolean isSinglePlayer;
-    public boolean isMultiPlayer;
+    boolean endRound;
 
     //track the experimenters previously guessed atoms
     private ArrayList<Point> guessedAtoms;
@@ -49,8 +49,8 @@ public class Game implements BoardInputListener {
         view = new GameView(this);
         playerIn = new PlayerInput();
 
-        guiView = new GUIView(this);
-        observer = guiView.boardScreen;
+        guiView = new GUIGameBoard(this);
+        observer = guiView;
         //set gameNum to 1 for the first game
         gameNum = 1;
 
@@ -96,6 +96,7 @@ public class Game implements BoardInputListener {
     public Board getGuessingBoard() {
         return this.guessingBoard;
     }
+
 
 //    public void play2PlayerGame() {
 //        //create players
@@ -169,7 +170,7 @@ public class Game implements BoardInputListener {
             view.printRound(gameNum);
 
             // Show the board and enable interaction based on the current game state
-            guiView.boardScreen.showBoard();
+            guiView.showBoard(getSetter().getPlayerName(), getExperimenter().getPlayerName(), gameNum);
 
             // The game progresses through states based on player actions and interactions within the GUI
 
@@ -181,7 +182,7 @@ public class Game implements BoardInputListener {
 //            waitForGameState(GameState.GuessingAtoms);
 //
 //            waitForGameState(GameState.GameOver);
-            while (currentState != GameState.GAME_OVER){
+            while (currentState != GameState.NEXT_ROUND){
                 nextGameState();
             }
 
@@ -231,8 +232,8 @@ public class Game implements BoardInputListener {
     private void concludeRound() {
         // Logic to handle the end of a round, such as switching player roles
         switchRoles();
-        guiView.boardScreen.disposeBoard();
-        guiView.boardScreen.boardVisible_ENABLE();
+        guiView.disposeBoard();
+        guiView.boardVisible_ENABLE();
         view.printEntireBoard(); // Show the final board state for the round
     }
 
@@ -240,9 +241,12 @@ public class Game implements BoardInputListener {
         gameNum++;
         playerIn.resetSentRays(); // Reset any necessary state for the new round
         board = new Board(); // Reset the board
+        guessingBoard = new Board();
         view = new GameView(this); // Refresh the view
         currentState = GameState.SETTING_ATOMS; // Reset the game state for the new round
         doneSendingRays = false;
+        nextRound = false;
+        endRound = false;
     }
 
     private void displayWinner() {
@@ -259,9 +263,8 @@ public class Game implements BoardInputListener {
             return; // Optionally, loop back or exit
         }
 
-        isSinglePlayer = true;
-
-        AiPlayer aiPlayer = new AiPlayer(true, 3, this.board);
+        //TODO finish difficulties
+        AiPlayer aiPlayer = new AiPlayer(true, 1, this.board);
         player2 = aiPlayer;
 
         currentState = GameState.SETTING_ATOMS;
@@ -269,38 +272,46 @@ public class Game implements BoardInputListener {
         doneSendingRays = false;
 
         while (gameNum <= numGames) {
+            aiPlayer.setNewBoard(this.board);
             guessedAtoms = new ArrayList<>();
-            guiView.boardScreen.showBoard();
+            guiView.showBoard(getSetter().getPlayerName(), getExperimenter().getPlayerName(), gameNum);
             view.printRound(gameNum);
 
             if (aiPlayer.isSetter()) {
                 aiPlayer.ai_setAtoms(this.numAtoms);
 
-                while (currentState != GameState.GAME_OVER){
+                while (currentState != GameState.NEXT_ROUND){
                     nextGameState();
                 }
             }
             else {
+                endRound = false;
                 while (currentState != GameState.SENDING_RAYS) {
                     nextGameState();
                 }
+
                 ArrayList<Integer> rays = aiPlayer.ai_sendRays();
 
-                for (int i : rays) {
-                    sendRay(i);
-//                    observer.update();
+                aiSendRays(rays);
 
+                currentState = GameState.AI_SENDING_RAYS;
+                while (currentState != GameState.GUESSING_ATOMS){
+                    nextGameState();
                 }
-
-
                 ArrayList<Point> guesses = aiPlayer.ai_guessAtoms(this.numAtoms);
+                System.out.println(guesses.size() + " ================================================");
+                aiGuessAtoms(guesses);
+                currentState = GameState.AI_GUESSING_ATOMS;
 
-                for (Point guess : guesses) {
-                    int x = guess.x;
-                    int y = guess.y;
-
-                    guessAtom(x, y);
+                while (currentState != GameState.GAME_OVER) {
+                    nextGameState();
                 }
+                observer.update();
+                guiView.refreshBoard();
+            }
+
+            while (currentState != GameState.NEXT_ROUND) {
+                nextGameState();
             }
 
             concludeRound();
@@ -309,7 +320,51 @@ public class Game implements BoardInputListener {
 
         displayWinner();
         new GUIEndScreen(this).display();
-        isSinglePlayer = false;
+    }
+
+    private void aiGuessAtoms(ArrayList<Point> guesses) {
+        Iterator<Point> iterator = guesses.iterator();
+        Timer timer = new Timer(1000, null); // Delay of 1000 milliseconds (1 second)
+        timer.addActionListener(e -> {
+            if (!iterator.hasNext()) {
+                timer.stop(); // Stop the timer if there are no more actions
+            } else {
+                Point action = iterator.next();
+
+                guessAtom(action.x, action.y);
+                atomOnGuessBoard(action.x, action.y);
+
+                guiView.refreshBoard(); // Refresh the GUI to show the change
+                observer.update(); // Notify observers of the update
+            }
+        });
+
+        timer.setInitialDelay(0); // Start immediately
+        timer.start(); // Start the timer
+    }
+
+    private void aiSendRays(ArrayList<Integer> rays) {
+        Iterator<Integer> iterator = rays.iterator();
+        Timer timer = new Timer(1000, null); // Delay of 1000 milliseconds (1 second)
+        timer.addActionListener(e -> {
+            if (!iterator.hasNext()) {
+                timer.stop(); // Stop the timer if there are no more actions
+            } else {
+                Integer action = iterator.next();
+
+                sendRay(action);
+
+                guiView.refreshBoard(); // Refresh the GUI to show the change
+                observer.update(); // Notify observers of the update
+            }
+        });
+
+        timer.setInitialDelay(0); // Start immediately
+        timer.start(); // Start the timer
+    }
+
+    private void atomOnGuessBoard(int x, int y) {
+        guessingBoard.placeAtom(x, y);
     }
 
     public void setAtom(boolean isSetter) {
@@ -429,8 +484,8 @@ public class Game implements BoardInputListener {
     public void onAtomPlaced(int x, int y) {
         if (currentState == GameState.SETTING_ATOMS) {
             placeAtom(x, y);
-            guiView.boardScreen.refreshBoard();
-            nextGameState(); // Check if it's time to change state
+            guiView.refreshBoard();
+            nextGameState();
         }
     }
 
@@ -438,7 +493,7 @@ public class Game implements BoardInputListener {
     public void onAtomRemoved(int x, int y) {
         if (currentState == GameState.SETTING_ATOMS) {
             removeAtom(x, y);
-            guiView.boardScreen.refreshBoard();
+            guiView.refreshBoard();
         }
     }
 
@@ -446,13 +501,25 @@ public class Game implements BoardInputListener {
     public void onRaySent(int number) {
         if (currentState == GameState.SENDING_RAYS) {
             sendRay(number);
-            guiView.boardScreen.refreshBoard();
+            guiView.refreshBoard();
         }
     }
 
     @Override
     public void onFinishRays() {
         this.doneSendingRays = true;
+        nextGameState();
+    }
+
+    @Override
+    public void onFinishRound() {
+        this.nextRound = true;
+        nextGameState();
+    }
+
+    @Override
+    public void onAI_endRound() {
+        this.endRound = true;
         nextGameState();
     }
 
@@ -468,10 +535,10 @@ public class Game implements BoardInputListener {
             case SETTING_ATOMS -> {
                 if (board.getNumAtomsPlaced() >= 6) {
                     currentState = GameState.SENDING_RAYS;
-                    guiView.boardScreen.boardVisible_ENABLE();
+                    guiView.boardVisible_ENABLE();
                 }
             }
-            case SENDING_RAYS -> {
+            case SENDING_RAYS, AI_SENDING_RAYS -> {
                 if (doneSendingRays) {
                     currentState = GameState.GUESSING_ATOMS;
                     guessingBoard = new Board();
@@ -482,7 +549,19 @@ public class Game implements BoardInputListener {
                     currentState = GameState.GAME_OVER;
                 }
             }
+            case AI_GUESSING_ATOMS -> {
+                if (endRound) {
+                    currentState = GameState.IDLE;
+                }
+            }
+            case IDLE -> currentState = GameState.GAME_OVER;
+
             case GAME_OVER -> {
+                if (nextRound) {
+                    currentState = GameState.NEXT_ROUND;
+                }
+            }
+            case NEXT_ROUND -> {
             }
         }
     }

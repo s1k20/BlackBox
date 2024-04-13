@@ -20,6 +20,10 @@ public class IntersectingCircleOfInfluence {
         orientations.add(c.getOrientation());
     }
 
+    public void removePart(int orientation) {
+        circleOfInfluences.removeIf(c -> c.getOrientation() == orientation);
+    }
+
     public ArrayList<Integer> getOrientations(){
         return this.orientations;
     }

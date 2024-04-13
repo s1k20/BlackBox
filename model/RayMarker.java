@@ -8,15 +8,18 @@ public class RayMarker {
     private final int xCo_ord;
     private final int yCo_ord;
 
+    private final int number;
+
     //string which will hold ansi code for text-based interface to show colour
     //TODO will be developed when working on gui
     private String colour;
     private Color guiColour;
 
     //constructor to create ray marker
-    public RayMarker(int x, int y, String colour, Color guiColour){
+    public RayMarker(int x, int y, int number, String colour, Color guiColour){
         this.xCo_ord = x;
         this.yCo_ord = y;
+        this.number = number;
         this.colour = colour;
         this.guiColour = guiColour;
     }
@@ -28,6 +31,10 @@ public class RayMarker {
 
     public int getYCo_ord(){
         return this.yCo_ord;
+    }
+
+    public int getNumber() {
+        return this.number;
     }
 
     public String getColour(){

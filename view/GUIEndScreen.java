@@ -6,7 +6,7 @@ import controller.Game;  // Assuming Game and Player classes are defined appropr
 import model.Player;     // Make sure the Player class is in the right package
 
 public class GUIEndScreen extends JFrame {
-    private Game game;
+    private final Game game;
 
     public GUIEndScreen(Game game) {
         this.game = game;
@@ -59,12 +59,7 @@ public class GUIEndScreen extends JFrame {
 
         buttonPanel.add(backButton);
 
-        // Load stats based on game mode
-        if (game.isSinglePlayer) {
-            displaySinglePlayerStats(panel, gbc);
-        } else {
-            displayMultiplayerStats(panel, gbc);
-        }
+        displayMultiplayerStats(panel, gbc);
 
         setVisible(true);
     }
