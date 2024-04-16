@@ -28,6 +28,7 @@ public class GUIEndScreen extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.anchor = GridBagConstraints.CENTER;
 
+
         // Panel for the button, also needs to be non-opaque
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         buttonPanel.setOpaque(false); // Ensure the background image is visible
@@ -44,6 +45,7 @@ public class GUIEndScreen extends JFrame {
 
         getContentPane().add(panel, BorderLayout.CENTER);
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+
 
         // Button to go back to the main menu
         JButton backButton = new JButton("Menu");

@@ -20,6 +20,7 @@ public class GUIMenu {
         JFrame mainFrame = new JFrame("Black Box Plus - Main Menu");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(600, 600);
+        mainFrame.setResizable(false);
 
         JPanel panel = new JPanel() {
             @Override
@@ -114,6 +115,7 @@ public class GUIMenu {
         initialMenuFrame = new JFrame("Welcome to Black Box Plus");
         initialMenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initialMenuFrame.setSize(800, 550);
+        initialMenuFrame.setResizable(false);
 
         JPanel panel = new JPanel() {
             @Override

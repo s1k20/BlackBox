@@ -96,6 +96,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                 frame.pack();
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
+                frame.setResizable(false);
             } else {
                 frame.repaint();
                 frame.revalidate();
@@ -145,7 +146,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                     System.out.println("Hexagon clicked at row " + hexPath.row + " and col " + hexPath.col);
                     if (game.getGuessingBoard().getBoardPosition(hexPath.col, hexPath.row) instanceof Atom) {
                         //TODO change this so it does it to guessing board
-                        listener.onAtomRemoved(hexPath.col, hexPath.row);
+                        listener.onAtomGuessRemoved(hexPath.col, hexPath.row);
                     } else {
                         listener.onAtomGuess(hexPath.col, hexPath.row);
                     }
@@ -339,7 +340,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                 playerName = game.getExperimenter().getPlayerName();
                 action = "GUESS";
             }
-            String displayString = playerName + " - Please " + action + " " + (6 - currentBoard.getNumAtomsPlaced())
+            String displayString = playerName + " - " + action + " " + (6 - currentBoard.getNumAtomsPlaced())
                     + " more atoms";
             int textWidth = metrics.stringWidth(displayString);
 
@@ -356,8 +357,8 @@ public class GUIGameBoard extends JPanel implements GameObserver {
 
             }
             else{
-                g.setFont(new Font("Monospaced", Font.BOLD, 25));
-                String displayString = game.getExperimenter().getPlayerName() + " - Please click a number in which to send a ray";
+                g.setFont(new Font("Monospaced", Font.BOLD, 20));
+                String displayString = game.getExperimenter().getPlayerName() + " - Click a number to send a ray";
                 int textWidth = metrics.stringWidth(displayString);
                 g.drawString(displayString.toUpperCase(), ((this.getWidth() - textWidth) / 2) - 215, 60);
             }

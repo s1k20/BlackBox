@@ -8,6 +8,7 @@ public interface GUIInputListener {
     void onFinishRound();
     void onAI_endRound();
     void onAtomGuess(int col, int row);
+    void onAtomGuessRemoved(int col, int row);
     void onMainMenuToggle();
 //    void onSinglePlayer();
 //    void onTwoPlayer();

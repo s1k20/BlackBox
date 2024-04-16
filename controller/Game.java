@@ -361,6 +361,11 @@ public class Game implements GUIInputListener {
         music.playSound("sfx/remove_atom.wav");
     }
 
+    public void removeAtomFromGuessBoard(int x, int y) {
+        guessingBoard.removeAtom(x, y);
+        music.playSound("sfx/remove_atom.wav");
+    }
+
     public void sendRay(int input) {
         if (board.sendRay(input)) {
             getExperimenter().updateScore(1);
@@ -449,6 +454,14 @@ public class Game implements GUIInputListener {
         guessingBoard.placeAtom(x, y);
         view.printEntireBoard();
         nextGameState();
+    }
+
+    @Override
+    public void onAtomGuessRemoved(int x, int y) {
+        if (currentState == GameState.GUESSING_ATOMS) {
+            removeAtomFromGuessBoard(x, y);
+            guiView.refreshBoard();
+        }
     }
 
     @Override

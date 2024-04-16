@@ -20,6 +20,7 @@ public class GUI_UserInput {
         dialog.setModal(true);
         dialog.setSize(400, 250);
         dialog.setLocationRelativeTo(null); // Center on screen
+        dialog.setResizable(false);
 
         // Create a panel with a background image
         JPanel panel = new JPanel(new BorderLayout()) {
@@ -73,17 +74,35 @@ public class GUI_UserInput {
     }
 
     public static int getAIDifficulty() {
+        ImageIcon icon = new ImageIcon("view/coolbackground.jpg"); // Ensure the image path is correct
+        Image image = icon.getImage();
+
         // Create a modal JDialog
         JDialog dialog = new JDialog();
         dialog.setTitle("Select Difficulty");
         dialog.setSize(400, 250);
         dialog.setLocationRelativeTo(null); // Center on screen
         dialog.setModal(true); // Set modal to block user interaction with other windows
+        dialog.setResizable(false);
 
-        JPanel panel = new JPanel();
+        // Create a panel with an overridden paintComponent method to draw the background image
+        JPanel panel = new JPanel(new BorderLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), this); // Draw the background image
+            }
+        };
+
+        JPanel comboBoxPanel = new JPanel(new GridBagLayout());
+        comboBoxPanel.setOpaque(false); // Make the panel transparent
 
         String[] options = {"Easy", "Medium", "Hard"};
         JComboBox<String> comboBox = new JComboBox<>(options);
+        comboBox.setFont(new Font("Monospaced", Font.PLAIN, 20)); // Set font to Monospaced with size 20
+        comboBox.setBackground(Color.GRAY); // Set a grey background
+        Dimension comboBoxSize = new Dimension(200, 45); // Set preferred size
+        comboBox.setPreferredSize(comboBoxSize); // Apply the preferred size
 
         JButton submitButton = new JButton("Submit");
         submitButton.setFont(new Font("Monospaced", Font.BOLD, 25));
@@ -99,8 +118,13 @@ public class GUI_UserInput {
             }
         });
 
-        panel.add(comboBox);
-        panel.add(submitButton);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.anchor = GridBagConstraints.CENTER;
+        comboBoxPanel.add(comboBox, gbc);
+        comboBoxPanel.add(submitButton, gbc);
+
+        panel.add(comboBoxPanel, BorderLayout.CENTER);
         dialog.add(panel);
         dialog.setVisible(true);
 
@@ -110,4 +134,5 @@ public class GUI_UserInput {
         else if (selectedItem.equals("Medium")) return 2;
         else return 3;
     }
+
 }
