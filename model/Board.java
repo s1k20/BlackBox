@@ -186,6 +186,11 @@ public class Board {
                     (j == 10 && i < 6) || (i == 10 && j <= 5) || (j == 0 && i >= 5);
     }
 
+    private static boolean checkEdgeOfBoard(int i, int j) {
+        return i + j == 6 || i + j == 14 || (i == 1 && j >= 5) ||
+                (j == 9 && i < 6) || (i == 9 && j <= 5) || (j == 1 && i >= 5);
+    }
+
     //TODO develop this (probably dont need this)
     //TODO make it work for certain deflections/reflection and absorption
 //    public void placeRayMarker(int x, int y){
@@ -455,14 +460,19 @@ public class Board {
 
     //will return true if ray is absorbed
     public boolean placeRay(int x, int y, int orientation, Ray r){
-        if (board[y][x] == null || board[y][x] instanceof RayTrail) {
-            board[y][x] = new RayTrail(orientation);
+        if (board[y][x] == null || board[y][x] instanceof RayTrails) {
+            if (board[y][x] instanceof RayTrails rt) rt.addRayTrail(orientation);
+            else board[y][x] = new RayTrails(orientation);
             return false;
         }
         else if(board[y][x] instanceof CircleOfInfluence c){
             return r.deflectionLogic_CircleOfInfluence(c.getOrientation());
         }
         else if(board[y][x] instanceof IntersectingCircleOfInfluence i) {
+            if (checkEdgeOfBoard(y, x)) {
+                r.flipOrientation();
+                return false;
+            }
             return r.deflectionLogic_IntersectingCircleOfInfluence(i);
         }
         return false;
@@ -478,6 +488,23 @@ public class Board {
 
         public int getOrientation() {
             return this.orientation;
+        }
+    }
+
+    public static class RayTrails {
+        private final ArrayList<RayTrail> rayTrails;
+
+        private RayTrails(int orientation) {
+            rayTrails = new ArrayList<>();
+            rayTrails.add(new RayTrail(orientation));
+        }
+
+        public ArrayList<RayTrail> getRayTrails() {
+            return this.rayTrails;
+        }
+
+        public void addRayTrail(int orientation) {
+            this.rayTrails.add(new RayTrail(orientation));
         }
     }
 

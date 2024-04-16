@@ -1,22 +1,22 @@
 package controller;
-import jdk.dynalink.linker.GuardedInvocationTransformer;
+
 import model.*;
 import view.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 //controller part of project which runs main logic
 //updates model and view
-public class Game implements BoardInputListener {
+public class Game implements GUIInputListener {
 
     //players objects which will hold necessary information about players
     private Player player1;
     private Player player2;
+
+    private AiPlayer aiPlayer;
 
     //board object which holds logic to create the game
     private Board board;
@@ -24,13 +24,14 @@ public class Game implements BoardInputListener {
 
     //variable to allow for two
     private int gameNum;
-    private final int numGames = 2;
-    private final int numAtoms = 6;
+    private final int NUM_GAMES = 2;
+    public final int NUM_ATOMS = 6;
 
     //player controller class to allow game to get necessary user input
     private PlayerInput playerIn;
     private GameView view;
 
+    private GameMusic music;
     private GUIGameBoard guiView;
 
     volatile GameState currentState;
@@ -46,8 +47,10 @@ public class Game implements BoardInputListener {
     //game constructor which inits all objects/variables
     public Game() {
         board = new Board();
+        guessingBoard = new Board();
         view = new GameView(this);
         playerIn = new PlayerInput();
+        music = new GameMusic();
 
         guiView = new GUIGameBoard(this);
         observer = guiView;
@@ -57,6 +60,7 @@ public class Game implements BoardInputListener {
         currentState = GameState.SETTING_ATOMS;
     }
 
+    //second constructor for testing purposes
     public Game(Player player) {
         board = new Board();
         this.player1 = player;
@@ -66,20 +70,6 @@ public class Game implements BoardInputListener {
         return this.currentState;
     }
 
-
-    public void playGame() {
-//        int choice;
-        GUIMenu.showMenu();
-//        do {
-//            view.printStart();
-//            choice = playerIn.getPlayerOption();
-//            switch (choice) {
-//                case 1 -> playSinglePlayerGame();
-//                case 2 -> play2PlayerGame();
-//            }
-//        } while (choice != 3);
-
-    }
 
     public Player getPlayer1() {
         return player1;
@@ -97,65 +87,12 @@ public class Game implements BoardInputListener {
         return this.guessingBoard;
     }
 
-
-//    public void play2PlayerGame() {
-//        //create players
-//
-//        String name1 = GUI_UserInput.askForPlayerName("Player 1 - Enter Name");
-//        if (name1 != null && !name1.trim().isEmpty()) {
-//            player1 = new Player(name1, true);
-//        } else {
-//            // Handle cancellation or empty input
-//            return; // Optionally, loop back or exit
-//        }
-//
-//        String name2 = GUI_UserInput.askForPlayerName("Player 2 - Enter Name");
-//        if (name2 != null && !name2.trim().isEmpty()) {
-//            player2 = new Player(name2, false);
-//        } else {
-//            // Handle cancellation or empty input
-//            return; // Optionally, loop back or exit
-//        }
-//
-//        //main game loop
-//        while (gameNum <= numGames) {
-//            guessedAtoms = new ArrayList<>();
-//            //first round player 1 is setter and player 2 is experimenter
-//            view.printRound(gameNum);
-//            //let setter place 6 atoms
-//
-//            guiView.boardScreen.showBoard();
-//            guiView.boardScreen.boardVisible_ENABLE();
-//
-//            setAtoms();
-//            guiView.boardScreen.boardVisible_DISABLE();
-//
-//            //let experimenter send rays
-//
-//            sendRays();
-//
-//            //let experimenter guess atoms locations
-//
-//            guessAtoms();
-//
-//            view.printEntireBoard();
-//
-//            //switch the roles and increase gameNum
-//            switchRoles();
-//            gameNum += 1;
-//
-//            playerIn.resetSentRays();
-//            board = new Board();
-//            view = new GameView(this);
-//        }
-//        Player winner = getWinner();
-//        view.printStats(player1, player2, winner);
-//    }
-
-
     public void play2PlayerGame() {
+        playNextSound();
+
         // Initialize player names
-        setupPlayers();
+        setupPlayer_2Player();
+        music.playMusic("blackboxgamemusic.wav");
 
         //set up the initial game state
         currentState = GameState.SETTING_ATOMS;
@@ -163,29 +100,18 @@ public class Game implements BoardInputListener {
         doneSendingRays = false;
 
         // Main game loop adapted for state management
-        while (gameNum <= numGames) {
+        while (gameNum <= NUM_GAMES) {
             guessedAtoms = new ArrayList<>();
 
             // Display round information
-            view.printRound(gameNum);
+//            view.printRound(gameNum);
 
             // Show the board and enable interaction based on the current game state
             guiView.showBoard(getSetter().getPlayerName(), getExperimenter().getPlayerName(), gameNum);
 
-            // The game progresses through states based on player actions and interactions within the GUI
-
-            // Wait for the current game phase to complete before moving on
-//            waitForGameState(GameState.SettingAtoms);
-//
-//            waitForGameState(GameState.SendingRays);
-//            // Conclude the round, switch roles, and reset for the next game
-//            waitForGameState(GameState.GuessingAtoms);
-//
-//            waitForGameState(GameState.GameOver);
             while (currentState != GameState.NEXT_ROUND){
                 nextGameState();
             }
-
 
             concludeRound();
 
@@ -196,38 +122,146 @@ public class Game implements BoardInputListener {
         // Determine and display the winner
         new GUIEndScreen(this).display();
         displayWinner();
+        music.stopMusic();
     }
 
-    private void setupPlayers() {
-        String name1 = GUI_UserInput.askForPlayerName("Player 1 - Enter Name");
-        if (name1 != null && !name1.trim().isEmpty()) {
-            player1 = new Player(name1, true);
-        } else {
-            // Handle cancellation or empty input
-            return; // Optionally, loop back or exit
+    public void test() {
+        board.placeAtom(5, 4);
+        board.sendRay(19);
+        board.sendRay(28);
+        board.sendRay(10);
+        board.sendRay(48);
+        board.sendRay(53);
+        currentState = GameState.GAME_OVER;
+        player1 = new Player("John", false);
+        player2 = new Player("erw", true);
+        guiView.showBoard("erw", "erw", 0);
+    }
+
+    public void playSinglePlayerGame() {
+        playNextSound();
+        setupPlayers_1Player();
+        music.playMusic("blackboxgamemusic.wav");
+
+
+
+        currentState = GameState.SETTING_ATOMS;
+        gameNum = 1;
+        doneSendingRays = false;
+
+        while (gameNum <= NUM_GAMES) {
+            aiPlayer.setNewBoard(this.board);
+            guessedAtoms = new ArrayList<>();
+            guiView.showBoard(getSetter().getPlayerName(), getExperimenter().getPlayerName(), gameNum);
+            view.printRound(gameNum);
+
+            if (aiPlayer.isSetter()) {
+                aiPlayer.ai_setAtoms(this.NUM_ATOMS);
+
+                while (currentState != GameState.NEXT_ROUND){
+                    nextGameState();
+                }
+            }
+            else {
+                endRound = false;
+                while (currentState != GameState.SENDING_RAYS) {
+                    nextGameState();
+                }
+
+                ArrayList<Integer> rays = aiPlayer.ai_sendRays();
+
+                aiSendRays(rays);
+
+                currentState = GameState.AI_SENDING_RAYS;
+                while (currentState != GameState.GUESSING_ATOMS){
+                    nextGameState();
+                }
+                ArrayList<Point> guesses = aiPlayer.ai_guessAtoms(this.NUM_ATOMS);
+                aiGuessAtoms(guesses);
+                currentState = GameState.AI_GUESSING_ATOMS;
+
+                while (currentState != GameState.GAME_OVER) {
+                    System.out.println(currentState);
+                    nextGameState();
+                }
+                observer.update();
+                guiView.refreshBoard();
+            }
+
+            while (currentState != GameState.NEXT_ROUND) {
+                System.out.println(currentState);
+                nextGameState();
+            }
+
+            concludeRound();
+            setupNextRound();
         }
 
-        String name2 = GUI_UserInput.askForPlayerName("Player 2 - Enter Name");
-        if (name2 != null && !name2.trim().isEmpty()) {
-            player2 = new Player(name2, false);
-        } else {
-            // Handle cancellation or empty input
-            return; // Optionally, loop back or exit
+        displayWinner();
+        new GUIEndScreen(this).display();
+    }
+
+    private void setupPlayer_2Player() {
+        setupPlayer(1);
+        setupPlayer(2);
+    }
+    private void setupPlayers_1Player() {
+        setupPlayer(1);
+        AiPlayer ai = new AiPlayer(false, GUI_UserInput.getAIDifficulty(), this.board);
+        playNextSound();
+        player2 = ai;
+        aiPlayer = ai;
+        switchRoles();
+    }
+
+    private void setupPlayer(int playerNum) {
+        String name = GUI_UserInput.askForPlayerName("Player " + playerNum + " - Enter Name");
+        playNextSound();
+        if (name == null || name.trim().isEmpty()) {
+            name = "Player " + playerNum;
+        }
+        if (playerNum == 1) {
+            player1 = new Player(name, true);
+        }
+        else {
+            player2 = new Player(name, false);
         }
     }
 
-//    private void waitForGameState(GameState state) {
-//        // Implement logic to wait for a specific game state
-//        // This could be as simple as a while loop checking the currentState, with proper thread handling to avoid freezing the UI
-//        while (currentState == state) {
-//            try {
-//                Thread.sleep(100); // Sleep a bit before checking again to avoid hogging CPU
-//            } catch (InterruptedException e) {
-//                Thread.currentThread().interrupt(); // Restore interrupt status
-//                return; // Exit if the thread was interrupted
-//            }
-//        }
-//    }
+    private void nextGameState() {
+        switch (currentState) {
+            case SETTING_ATOMS -> {
+                if (board.getNumAtomsPlaced() >= 6) {
+                    currentState = GameState.SENDING_RAYS;
+                    guiView.boardVisible_ENABLE();
+                }
+            }
+            case SENDING_RAYS, AI_SENDING_RAYS -> {
+                if (doneSendingRays) {
+                    currentState = GameState.GUESSING_ATOMS;
+                }
+            }
+            case GUESSING_ATOMS -> {
+                if (guessingBoard.getNumAtomsPlaced() >= 6) {
+                    currentState = GameState.GAME_OVER;
+                }
+            }
+            case AI_GUESSING_ATOMS -> {
+                if (endRound) {
+                    currentState = GameState.IDLE;
+                }
+            }
+            case IDLE -> currentState = GameState.GAME_OVER;
+
+            case GAME_OVER -> {
+                if (nextRound) {
+                    currentState = GameState.NEXT_ROUND;
+                }
+            }
+            case NEXT_ROUND -> {
+            }
+        }
+    }
 
     private void concludeRound() {
         // Logic to handle the end of a round, such as switching player roles
@@ -249,78 +283,16 @@ public class Game implements BoardInputListener {
         endRound = false;
     }
 
+    private void playNextSound() {
+        music.playSound("sfx/next_sound.wav");
+    }
+
     private void displayWinner() {
         Player winner = getWinner();
         view.printStats(player1, player2, winner);
     }
 
-    public void playSinglePlayerGame() {
-        String name1 = GUI_UserInput.askForPlayerName("Player 1 - Enter Name");
-        if (name1 != null && !name1.trim().isEmpty()) {
-            player1 = new Player(name1, false);
-        } else {
-            // Handle cancellation or empty input
-            return; // Optionally, loop back or exit
-        }
 
-        //TODO finish difficulties
-        AiPlayer aiPlayer = new AiPlayer(true, 1, this.board);
-        player2 = aiPlayer;
-
-        currentState = GameState.SETTING_ATOMS;
-        gameNum = 1;
-        doneSendingRays = false;
-
-        while (gameNum <= numGames) {
-            aiPlayer.setNewBoard(this.board);
-            guessedAtoms = new ArrayList<>();
-            guiView.showBoard(getSetter().getPlayerName(), getExperimenter().getPlayerName(), gameNum);
-            view.printRound(gameNum);
-
-            if (aiPlayer.isSetter()) {
-                aiPlayer.ai_setAtoms(this.numAtoms);
-
-                while (currentState != GameState.NEXT_ROUND){
-                    nextGameState();
-                }
-            }
-            else {
-                endRound = false;
-                while (currentState != GameState.SENDING_RAYS) {
-                    nextGameState();
-                }
-
-                ArrayList<Integer> rays = aiPlayer.ai_sendRays();
-
-                aiSendRays(rays);
-
-                currentState = GameState.AI_SENDING_RAYS;
-                while (currentState != GameState.GUESSING_ATOMS){
-                    nextGameState();
-                }
-                ArrayList<Point> guesses = aiPlayer.ai_guessAtoms(this.numAtoms);
-                System.out.println(guesses.size() + " ================================================");
-                aiGuessAtoms(guesses);
-                currentState = GameState.AI_GUESSING_ATOMS;
-
-                while (currentState != GameState.GAME_OVER) {
-                    nextGameState();
-                }
-                observer.update();
-                guiView.refreshBoard();
-            }
-
-            while (currentState != GameState.NEXT_ROUND) {
-                nextGameState();
-            }
-
-            concludeRound();
-            setupNextRound();
-        }
-
-        displayWinner();
-        new GUIEndScreen(this).display();
-    }
 
     private void aiGuessAtoms(ArrayList<Point> guesses) {
         Iterator<Point> iterator = guesses.iterator();
@@ -336,6 +308,7 @@ public class Game implements BoardInputListener {
 
                 guiView.refreshBoard(); // Refresh the GUI to show the change
                 observer.update(); // Notify observers of the update
+//                music.playSound("sfx/atom_place.wav");
             }
         });
 
@@ -356,6 +329,7 @@ public class Game implements BoardInputListener {
 
                 guiView.refreshBoard(); // Refresh the GUI to show the change
                 observer.update(); // Notify observers of the update
+
             }
         });
 
@@ -367,79 +341,24 @@ public class Game implements BoardInputListener {
         guessingBoard.placeAtom(x, y);
     }
 
-    public void setAtom(boolean isSetter) {
-        if (isSetter)
-            System.out.println("Please enter an X Co-ordinate and a Y Co-ordinate (comma separated) in which to PLACE an Atom:");
-        else
-            System.out.println("Please enter an X Co-ordinate and a Y Co-ordinate (comma separated) in which to GUESS an Atom:");
-        int[] co_ords;
-        Point p;
 
-        do {
-            co_ords = playerIn.getAtomInput();
-
-            p = new Point(co_ords[1], co_ords[0]);
-
-            if (isSetter && board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom) {
-                System.out.println(getSetter().getPlayerName() + " - You have already placed an atom in this position!");
-            }
-            if (!isSetter && guessedAtoms.contains(p))
-                System.out.println(getExperimenter().getPlayerName() + " - You have already guessed this position!");
-
-        } while ((isSetter && board.getBoardPosition(co_ords[0], co_ords[1]) instanceof Atom) || (!isSetter && guessedAtoms.contains(p)));
-
-        if (isSetter) board.placeAtom(co_ords[0], co_ords[1]);
-        else guessAtom(co_ords[0], co_ords[1]);
-    }
-
-    //    public void setAtoms() {
-//        for (int i = 0; i < numAtoms; i++) {
-//            System.out.print(getSetter().getPlayerName() + " - (Setter): ");
-//            setAtom(true);
-//            view.printEntireBoard();
-//        }
-//    }
-
-
-    public void guessAtoms() {
-        for (int i = 0; i < numAtoms; i++) {
-            System.out.print(getExperimenter().getPlayerName() + " - (Experimenter): ");
-            setAtom(false);
-        }
-    }
 
     public void guessAtom(int x, int y) {
         Point p = new Point(x, y);
         guessedAtoms.add(p);
         if (!(board.getBoardPosition(x, y) instanceof Atom)) getExperimenter().updateScore(5);
         else getExperimenter().correctAtom();
-    }
-
-    public void sendRays() {
-        String input = "";
-
-        do {
-            System.out.print(getExperimenter().getPlayerName() + " - (Experimenter): ");
-            System.out.println("Enter a number between 1 and 54 to send a ray or hit 'ENTER' to stop:");
-            input = playerIn.getRayInput();
-            if (input.isEmpty()) {
-                break;
-            }
-            sendRay(Integer.parseInt(input));
-
-            view.printLiveBoard();
-            getExperimenter().raySent();
-
-        } while (true);
-
+        music.playSound("sfx/atom_place.wav");
     }
 
     public void placeAtom(int x, int y) {
         board.placeAtom(x, y);
+        music.playSound("sfx/atom_place.wav");
     }
 
     public void removeAtom(int x, int y) {
         board.removeAtom(x, y);
+        music.playSound("sfx/remove_atom.wav");
     }
 
     public void sendRay(int input) {
@@ -449,6 +368,7 @@ public class Game implements BoardInputListener {
             getExperimenter().updateScore(2);
         }
         getExperimenter().raySent();
+        music.playSound("sfx/send_ray.wav");
     }
 
 
@@ -527,43 +447,16 @@ public class Game implements BoardInputListener {
     public void onAtomGuess(int x, int y) {
         guessAtom(x, y);
         guessingBoard.placeAtom(x, y);
+        view.printEntireBoard();
         nextGameState();
     }
 
-    private void nextGameState() {
-        switch (currentState) {
-            case SETTING_ATOMS -> {
-                if (board.getNumAtomsPlaced() >= 6) {
-                    currentState = GameState.SENDING_RAYS;
-                    guiView.boardVisible_ENABLE();
-                }
-            }
-            case SENDING_RAYS, AI_SENDING_RAYS -> {
-                if (doneSendingRays) {
-                    currentState = GameState.GUESSING_ATOMS;
-                    guessingBoard = new Board();
-                }
-            }
-            case GUESSING_ATOMS -> {
-                if (guessingBoard.getNumAtomsPlaced() >= 6) {
-                    currentState = GameState.GAME_OVER;
-                }
-            }
-            case AI_GUESSING_ATOMS -> {
-                if (endRound) {
-                    currentState = GameState.IDLE;
-                }
-            }
-            case IDLE -> currentState = GameState.GAME_OVER;
-
-            case GAME_OVER -> {
-                if (nextRound) {
-                    currentState = GameState.NEXT_ROUND;
-                }
-            }
-            case NEXT_ROUND -> {
-            }
-        }
+    @Override
+    public void onMainMenuToggle() {
+        GUIMenu.showMenu();
+        music.stopMusic();
     }
 
 }
+
+

@@ -54,7 +54,7 @@ public class GUIEndScreen extends JFrame {
         backButton.setForeground(Color.WHITE);
         backButton.addActionListener(e -> {
             this.dispose(); // Close the current window
-            GUIMenu.showMenu(); // Show the main menu again
+            game.onMainMenuToggle();
         });
 
         buttonPanel.add(backButton);

@@ -1,6 +1,6 @@
 package view;
 
-import controller.BoardInputListener;
+import controller.GUIInputListener;
 import controller.Game;
 import controller.GameObserver;
 import controller.GameState;
@@ -25,7 +25,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
     private final int side = 40; // Side length of the hexagon
 
     Game game;
-    BoardInputListener listener;
+    GUIInputListener listener;
 
     private static JFrame frame = null;
 
@@ -104,6 +104,13 @@ public class GUIGameBoard extends JPanel implements GameObserver {
     }
 
     private void handleBoardClick(Point clickedPoint) {
+        if (BacktoMenuButton.contains(clickedPoint)) {
+            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            if (frame != null) {
+                frame.dispose();
+            }
+            listener.onMainMenuToggle();
+        }
         if ((game.getCurrentState() == GameState.SENDING_RAYS || game.getCurrentState() == GameState.AI_SENDING_RAYS) && printButtonBounds.contains(clickedPoint)) {
             listener.onFinishRays();
         }
@@ -114,7 +121,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
             listener.onFinishRound();
         }
 
-        if(game.getCurrentState() == GameState.SETTING_ATOMS && game.getBoard().getNumAtomsPlaced() < 6){
+        if(game.getCurrentState() == GameState.SETTING_ATOMS && game.getBoard().getNumAtomsPlaced() < game.NUM_ATOMS){
             hexagonPaths.forEach(hexPath -> {
                 if (hexPath.path.contains(clickedPoint)) {
                     System.out.println("Hexagon clicked at row " + hexPath.row + " and col " + hexPath.col);
@@ -127,16 +134,17 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                 }
             });
 
-            if (game.getBoard().getNumAtomsPlaced() == 6) {
+            if (game.getBoard().getNumAtomsPlaced() == game.NUM_ATOMS) {
                 boardVisible_DISABLE();
             }
         }
-        else if (game.getCurrentState() == GameState.GUESSING_ATOMS && game.getGuessingBoard().getNumAtomsPlaced() < 6) {
+        else if (game.getCurrentState() == GameState.GUESSING_ATOMS && game.getGuessingBoard().getNumAtomsPlaced() < game.NUM_ATOMS) {
             boardVisible_ENABLE();
             hexagonPaths.forEach(hexPath -> {
                 if (hexPath.path.contains(clickedPoint)) {
                     System.out.println("Hexagon clicked at row " + hexPath.row + " and col " + hexPath.col);
                     if (game.getGuessingBoard().getBoardPosition(hexPath.col, hexPath.row) instanceof Atom) {
+                        //TODO change this so it does it to guessing board
                         listener.onAtomRemoved(hexPath.col, hexPath.row);
                     } else {
                         listener.onAtomGuess(hexPath.col, hexPath.row);
@@ -144,17 +152,8 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                     repaint();
                 }
             });
-            if (game.getGuessingBoard().getNumAtomsPlaced() == 6) {
+        }
 
-            }
-        }
-        else if (BacktoMenuButton.contains(clickedPoint)) {
-            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            if (frame != null) {
-                frame.dispose(); // Close the current frame
-            }
-            GUIMenu.showMenu(); // Show the initial menu
-        }
         else{
             for (NumberArea area : numberAreas) {
                 if (area.contains(clickedPoint)) {
@@ -179,7 +178,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
         }
 
 
-                if(game.getBoard().getNumAtomsPlaced() >= 6) {
+                if(game.getBoard().getNumAtomsPlaced() >= game.NUM_ATOMS) {
 
                     boolean foundHover = false;
                     for (NumberArea area : numberAreas) {
@@ -545,44 +544,47 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                         // Draw the image
                         g2.drawImage(scaledImage, imageX + 10, imageY + 7, this);
                     }
-                    else if(currentBoard.getBoardPosition(col, row) instanceof Board.RayTrail r && isVisible){
-                        double scale = 0.3;
+                    else if(currentBoard.getBoardPosition(col, row) instanceof Board.RayTrails rt && isVisible){
+                        for (Board.RayTrail r : rt.getRayTrails()) {
+                            double scale = 0.63;
 
-                        if(r.getOrientation() == 60 || r.getOrientation() == 240){
-                            int imageWidth = (int) (ray60.getWidth() * scale);
-                            int imageHeight = (int) (ray60.getHeight() * scale);
-                            int imageX = (int) (centerX - imageWidth / 2);
-                            int imageY = (int) (centerY - imageHeight / 2);
+                            if(r.getOrientation() == 60 || r.getOrientation() == 240){
+                                int imageWidth = (int) (ray60.getWidth() * scale);
+                                int imageHeight = (int) (ray60.getHeight() * scale);
+                                int imageX = (int) (centerX - imageWidth / 2);
+                                int imageY = (int) (centerY - imageHeight / 2);
 
-                            Image scaledImage = ray60.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
-                            // Draw the image
-                            g2.drawImage(scaledImage, imageX, imageY + 30, this);
+                                Image scaledImage = ray60.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
+                                // Draw the image
+                                g2.drawImage(scaledImage, imageX - 17, imageY + 62, this);
 
 
+                            }
+                            else if(r.getOrientation() == 0 || r.getOrientation() == 180){
+                                scale = 0.25;
+                                int imageWidth = (int) (ray0.getWidth() * scale);
+                                int imageHeight = (int) (ray0.getHeight() * scale);
+                                int imageX = (int) (centerX - imageWidth / 2);
+                                int imageY = (int) (centerY - imageHeight / 2);
+
+                                Image scaledImage = ray0.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
+                                // Draw the image
+                                g2.drawImage(scaledImage, imageX + 10, imageY + 7, this);
+
+                            }
+                            else{
+                                int imageWidth = (int) (ray120.getWidth() * scale);
+                                int imageHeight = (int) (ray120.getHeight() * scale);
+                                int imageX = (int) (centerX - imageWidth / 2);
+                                int imageY = (int) (centerY - imageHeight / 2);
+
+                                Image scaledImage = ray120.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
+                                // Draw the image
+                                g2.drawImage(scaledImage, imageX + 45, imageY + 63, this);
+
+                            }
                         }
-                        else if(r.getOrientation() == 0 || r.getOrientation() == 180){
-                            scale = 0.2;
-                            int imageWidth = (int) (ray0.getWidth() * scale);
-                            int imageHeight = (int) (ray0.getHeight() * scale);
-                            int imageX = (int) (centerX - imageWidth / 2);
-                            int imageY = (int) (centerY - imageHeight / 2);
 
-                            Image scaledImage = ray0.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
-                            // Draw the image
-                            g2.drawImage(scaledImage, imageX + 10, imageY + 7, this);
-
-                        }
-                        else{
-                            int imageWidth = (int) (ray120.getWidth() * scale);
-                            int imageHeight = (int) (ray120.getHeight() * scale);
-                            int imageX = (int) (centerX - imageWidth / 2);
-                            int imageY = (int) (centerY - imageHeight / 2);
-
-                            Image scaledImage = ray120.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
-                            // Draw the image
-                            g2.drawImage(scaledImage, imageX + 30, imageY + 30, this);
-
-                        }
                     }
                     else if(currentBoard.getBoardPosition(col, row) instanceof CircleOfInfluence c && isVisible){
                         printCircleOfInfluence(c, g2, x, y);

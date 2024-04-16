@@ -1,5 +1,8 @@
 package model;
 
+import java.awt.*;
+import java.util.ArrayList;
+
 public class Ray {
 
     private final int input;
@@ -8,6 +11,7 @@ public class Ray {
     private int currYCo_ord;
     private int orientation;
     private int deflectionType;
+//    private ArrayList<Point> visitedHex;
 
     public Ray(int input) {
         this.input = input;

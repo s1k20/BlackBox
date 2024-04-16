@@ -71,4 +71,43 @@ public class GUI_UserInput {
 
         return playerName[0];
     }
+
+    public static int getAIDifficulty() {
+        // Create a modal JDialog
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Select Difficulty");
+        dialog.setSize(400, 250);
+        dialog.setLocationRelativeTo(null); // Center on screen
+        dialog.setModal(true); // Set modal to block user interaction with other windows
+
+        JPanel panel = new JPanel();
+
+        String[] options = {"Easy", "Medium", "Hard"};
+        JComboBox<String> comboBox = new JComboBox<>(options);
+
+        JButton submitButton = new JButton("Submit");
+        submitButton.setFont(new Font("Monospaced", Font.BOLD, 25));
+        submitButton.setBackground(new Color(255, 215, 0)); // Gold color background
+        submitButton.setForeground(Color.BLACK); // Text color
+        submitButton.setOpaque(true);
+        submitButton.setBorderPainted(false);
+
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialog.dispose(); // Close the dialog on submit
+            }
+        });
+
+        panel.add(comboBox);
+        panel.add(submitButton);
+        dialog.add(panel);
+        dialog.setVisible(true);
+
+        // Process the selected item after dialog is disposed
+        String selectedItem = (String) comboBox.getSelectedItem();
+        if (selectedItem.equals("Hard")) return 1;
+        else if (selectedItem.equals("Medium")) return 2;
+        else return 3;
+    }
 }

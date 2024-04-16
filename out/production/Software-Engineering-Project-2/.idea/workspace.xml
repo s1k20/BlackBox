@@ -9,29 +9,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4576e0cc-369a-4145-900a-290dc17a3fc7" name="Changes" comment="worked on single player w/ gui">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/BoardInputListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/BoardInputListener.java" afterDir="false" />
+    <list default="true" id="4576e0cc-369a-4145-900a-290dc17a3fc7" name="Changes" comment="(some things didnt push from last push)">
+      <change afterPath="$PROJECT_DIR$/controller/GameMusic.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controller/blackboxgamemusic.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controller/sfx/atom_place.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controller/sfx/next_sound.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controller/sfx/remove_atom.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controller/sfx/send_ray.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/BoardInputListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/GUIInputListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/GameState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/AiPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/AiPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Ray.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/BoardInputListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/BoardInputListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/BoardInputListener.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/Game$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/Game$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/Game.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/GameState.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/GameState.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/AiPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/AiPlayer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Board$RayTrail.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Board$RayTrail.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Board.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIEndScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIEndScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Ray.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Ray.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$HexagonPath.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$HexagonPath.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$NumberArea.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$NumberArea.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$NumberPath.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$NumberPath.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUI_UserInput.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUI_UserInput.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view/GUIEndScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/GUIEndScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view/GUIGameBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/GUIGameBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/GUI_UserInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/GUI_UserInput.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +80,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;gui-development&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/cianboyle/IdeaProjects/Software-Engineering-Project-2/view&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/cianboyle/IdeaProjects/Software-Engineering-Project-2/controller/sfx&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -92,7 +95,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/controller/sfx" />
       <recent name="$PROJECT_DIR$/view" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/controller/sfx" />
     </key>
   </component>
   <component name="RunManager" selected="Application.RunGame">
@@ -281,7 +288,13 @@
       <workItem from="1712932924239" duration="126000" />
       <workItem from="1712949543657" duration="3259000" />
       <workItem from="1712961717359" duration="5274000" />
-      <workItem from="1713006807557" duration="598000" />
+      <workItem from="1713006807557" duration="23749000" />
+      <workItem from="1713101215152" duration="123000" />
+      <workItem from="1713109525139" duration="3186000" />
+      <workItem from="1713121799300" duration="215000" />
+      <workItem from="1713124962992" duration="5254000" />
+      <workItem from="1713188164683" duration="4117000" />
+      <workItem from="1713196626175" duration="7054000" />
     </task>
     <task id="LOCAL-00001" summary="fixed bug">
       <option name="closed" value="true" />
@@ -499,7 +512,23 @@
       <option name="project" value="LOCAL" />
       <updated>1712919478435</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="developed ai (single player mode) and incorporated full board screen">
+      <option name="closed" value="true" />
+      <created>1713030137353</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1713030137353</updated>
+    </task>
+    <task id="LOCAL-00029" summary="(some things didnt push from last push)">
+      <option name="closed" value="true" />
+      <created>1713051815918</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1713051815918</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -518,8 +547,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="fixed bug" />
-    <MESSAGE value="fixed x-y issue" />
     <MESSAGE value="start ray marker (worked together in lab)" />
     <MESSAGE value="fixed small things" />
     <MESSAGE value="comments added" />
@@ -543,6 +570,8 @@
     <MESSAGE value="added distinct game states integrated states into gui view/controller" />
     <MESSAGE value="added distinct game states integrated states into gui view/controller  and added input listener to adhere to mvc architecture" />
     <MESSAGE value="worked on single player w/ gui" />
-    <option name="LAST_COMMIT_MESSAGE" value="worked on single player w/ gui" />
+    <MESSAGE value="developed ai (single player mode) and incorporated full board screen" />
+    <MESSAGE value="(some things didnt push from last push)" />
+    <option name="LAST_COMMIT_MESSAGE" value="(some things didnt push from last push)" />
   </component>
 </project>
