@@ -346,7 +346,7 @@ public class Board {
     }
 
     public boolean sendRay(int input){
-        System.out.println("Ray entered at " + input);
+//        System.out.println("Ray entered at " + input);
         RayInputMap rMap = inputMapping.get(input);
 
         Ray r = new Ray(input);
@@ -371,7 +371,7 @@ public class Board {
                 start.setColour(ANSI_GREEN);
                 start.setGuiColour(Color.green);
                 r.setOutput(-1);
-                System.out.println("Ray absorbed!");
+//                System.out.println("Ray absorbed!");
                 return true;
             }
 
@@ -401,12 +401,16 @@ public class Board {
         }
         if(!absorbed){
             //if ray is reflected, set colour purple
-            if(start.getXCo_ord() == r.getCurrXCo_ord() && start.getYCo_ord() == r.getCurrYCo_ord()){
+            RayInputMap rmap = inputMapping.get(start.getNumber());
+
+//            System.out.println(r.getDeflectionType());
+            if(r.getDeflectionType() == 180 || start.getXCo_ord() == r.getCurrXCo_ord() && start.getYCo_ord() == r.getCurrYCo_ord() && rmap.orientation == Math.abs(r.getOrientation() - 180)) {
                 colour = "\u001B[35m";
                 guiColour = new Color(191, 0, 255);
                 start.setGuiColour(guiColour);
                 start.setColour(colour);
                 r.setDeflectionType(180);
+                return true;
             }
             else if(r.getDeflectionType() == 120){
                 colour = "\u001B[35m";
@@ -434,8 +438,8 @@ public class Board {
 
             int exit = findExit(m);
             r.setOutput(exit);
-            if (r.getDeflectionType() == 180) System.out.println("Deflected!");
-            else System.out.println("Ray exited at " + exit);
+//            if (r.getDeflectionType() == 180) System.out.println("Deflected!");
+//            else System.out.println("Ray exited at " + exit);
             RayMarker end = new RayMarker(r.getCurrXCo_ord(), r.getCurrYCo_ord(), exit, colour, guiColour);
             rayMarkers.add(end);
 

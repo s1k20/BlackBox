@@ -50,7 +50,7 @@ public class GameStateManager {
             case SETTING_ATOMS -> {
                 if (board.getNumAtomsPlaced() >= 6) {
                     currentState = GameState.SENDING_RAYS;
-                    guiView.boardVisible_ENABLE();
+//                    guiView.boardVisible_ENABLE();
                 }
             }
             case SENDING_RAYS, AI_HAS_SENT_RAYS -> {

@@ -100,7 +100,7 @@ public class Game implements GUIInputListener {
         initGame_2Player();
 
         while (gameNum <= NUM_GAMES) {
-            System.out.println(getCurrentState());
+//            System.out.println(getCurrentState());
             guiView.showBoard(getSetter().getPlayerName(), getExperimenter().getPlayerName(), gameNum);
             waitForGameState(GameState.NEXT_ROUND);
             concludeRound();

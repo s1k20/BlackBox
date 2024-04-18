@@ -26,8 +26,11 @@ public class GUIGameBoard extends JPanel implements GameObserver {
 
     private static JFrame frame = null;
 
-    private final List<HexagonPath> hexagonPaths = new ArrayList<>(); // Store hexagon paths with their row and col
+    private final List<HexagonPath> hexagonPaths = new ArrayList<>();
+
     private final ArrayList<NumberPath> numberPaths = new ArrayList<>();
+
+
     private final List<NumberArea> numberAreas = new ArrayList<>();
 
     boolean isVisible;
@@ -237,7 +240,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
         path.closePath();
         g2.draw(path);
 
-        // Store the hexagon's path with its row and column for click detection
+
         hexagonPaths.add(new HexagonPath(path, row, col));
     }
 
@@ -339,6 +342,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                 }
 
                 // Calculate x and y positions based on your original logic
+
                 double x = ((col * 1.155) * 2 * side * 3) / 4;
                 x += (row * (2 * side * 0.8)) - (row * 30);
                 x -= 250;
@@ -583,7 +587,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                 displayString = "Ray " + game.getBoard().numRaysSent + ": Entered at " + game.getBoard().currentRay.getInput() +
                         " -> Absorbed!";
             }
-            else if (game.getBoard().currentRay.getOutput() == game.getBoard().currentRay.getInput()) {
+            else if (game.getBoard().currentRay.getDeflectionType() == 180) {
                 displayString = "Ray " + game.getBoard().numRaysSent + ": Entered at " + game.getBoard().currentRay.getInput() +
                         " -> Reflected!";
             }
@@ -646,7 +650,6 @@ public class GUIGameBoard extends JPanel implements GameObserver {
 
     }
 
-    // Inner class to store hexagon path and its row and column
     private static class HexagonPath {
         Path2D path;
         int row, col;

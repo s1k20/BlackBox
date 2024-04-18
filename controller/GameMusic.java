@@ -12,28 +12,28 @@ public class GameMusic {
     Clip music;
 
     public void playMusic() {
-//        try {
-//            // Obtain an audio input stream from the audio file
-//            URL url = this.getClass().getResource("gamemusic/blackboxgamemusic.wav");
-//            AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
-//
-//            // Get a sound clip resource
-//            music = AudioSystem.getClip();
-//
-//            // Open audio clip and load samples from the audio input stream
-//            music.open(audioIn);
-//            music.start(); // Play the audio clip
-//
-//        } catch (UnsupportedAudioFileException e) {
-//            System.out.println("Audio file format not supported.");
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            System.out.println("Error reading the audio file.");
-//            e.printStackTrace();
-//        } catch (LineUnavailableException e) {
-//            System.out.println("Audio line unavailable.");
-//            e.printStackTrace();
-//        }
+        try {
+            // Obtain an audio input stream from the audio file
+            URL url = this.getClass().getResource("gamemusic/blackboxgamemusic.wav");
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
+
+            // Get a sound clip resource
+            music = AudioSystem.getClip();
+
+            // Open audio clip and load samples from the audio input stream
+            music.open(audioIn);
+            music.start(); // Play the audio clip
+
+        } catch (UnsupportedAudioFileException e) {
+            System.out.println("Audio file format not supported.");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Error reading the audio file.");
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            System.out.println("Audio line unavailable.");
+            e.printStackTrace();
+        }
     }
 
     public void stopMusic() {

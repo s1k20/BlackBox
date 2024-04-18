@@ -35,7 +35,9 @@ public class AiPlayer extends Player {
     public ArrayList<Integer> ai_sendRays() {
         int multiplier = difficulty;
         if (difficulty == 1) multiplier = 2;
+
         int numRaysToSend = (random.nextInt(2, 5) * (multiplier));
+
         ArrayList<Integer> rays = new ArrayList<>();
 
         for (int i = 0; i < numRaysToSend; i++) {

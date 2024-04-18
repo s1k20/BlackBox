@@ -94,6 +94,7 @@ public class Ray {
         else this.orientation += 180;
 
         if (this.orientation == 360) this.orientation = 0;
+        this.setDeflectionType(180);
     }
 
     public boolean deflectionLogic_CircleOfInfluence(int coiOrientation){
@@ -200,6 +201,7 @@ public class Ray {
                 } else if (this.getOrientation() == 0 && intersectingCircleOfInfluence.getOrientations().contains(300)) {
                     minus120();
                 }
+                this.setDeflectionType(120);
 
             }
         }
@@ -233,11 +235,9 @@ public class Ray {
                     }
 
                 }
-
+                this.setDeflectionType(120);
             }
-
         }
-        this.setDeflectionType(120);
         return false;
     }
 
