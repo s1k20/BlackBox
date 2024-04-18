@@ -3,6 +3,7 @@ package model;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import static model.BoardConstants.*;
 
@@ -18,6 +19,8 @@ public class Board {
     private final ArrayList<Ray> sentRays = new ArrayList<>();
     private final ArrayList<Atom> placedAtoms = new ArrayList<>();
     private final ArrayList<RayMarker> rayMarkers = new ArrayList<>();
+    private final HashSet<Integer> rayMarkerNumbers = new HashSet<>();
+
     public Ray currentRay;
 
     private int numAtomsPlaced;
@@ -75,6 +78,10 @@ public class Board {
 
     public ArrayList<RayMarker> getRayMarkers() {
         return this.rayMarkers;
+    }
+
+    public HashSet<Integer> getRayMarkerNumbers() {
+        return this.rayMarkerNumbers;
     }
 
 
@@ -364,6 +371,7 @@ public class Board {
 
         RayMarker start = new RayMarker(rMap.x, rMap.y, input, colour, guiColour);
         rayMarkers.add(start);
+        rayMarkerNumbers.add(start.getNumber());
         board[rMap.y][rMap.x] = start;
 
         while(!(board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] instanceof EmptyMarker) && !absorbed){
@@ -410,6 +418,7 @@ public class Board {
                 start.setGuiColour(guiColour);
                 start.setColour(colour);
                 r.setDeflectionType(180);
+                r.setOutput(r.getInput());
                 return true;
             }
             else if(r.getDeflectionType() == 120){
@@ -442,6 +451,7 @@ public class Board {
 //            else System.out.println("Ray exited at " + exit);
             RayMarker end = new RayMarker(r.getCurrXCo_ord(), r.getCurrYCo_ord(), exit, colour, guiColour);
             rayMarkers.add(end);
+            rayMarkerNumbers.add(end.getNumber());
 
             board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] = end;
             return false;

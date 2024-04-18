@@ -51,6 +51,9 @@ public class Game implements GUIInputListener {
     //second constructor for testing purposes
     public Game(Player player) {
         board = new Board();
+        music = new GameMusic();
+        guessingBoard = new Board();
+        guiView = new GUIGameBoard(this);
         this.player1 = player;
     }
 
@@ -83,17 +86,45 @@ public class Game implements GUIInputListener {
     }
 
     public void test() {
-        board.placeAtom(5, 4);
-        board.sendRay(19);
-        board.sendRay(28);
-        board.sendRay(10);
-        board.sendRay(48);
-        board.sendRay(53);
-        board.sendRay(30);
+//        board.placeAtom(5, 4);
+//        board.sendRay(19);
+//        board.sendRay(28);
+//        board.sendRay(10);
+//        board.sendRay(48);
+//        board.sendRay(53);
+//        board.sendRay(30);
+//        stateManager.setCurrentState(GameState.GAME_OVER);
+//        player1 = new Player("John", false);
+//        player2 = new Player("erw", true);
+//        guiView.showBoard("erw", "erw", 0);
+
         stateManager.setCurrentState(GameState.GAME_OVER);
         player1 = new Player("John", false);
         player2 = new Player("erw", true);
         guiView.showBoard("erw", "erw", 0);
+
+        placeAtom(5, 5);
+        placeAtom(7,5);
+        placeAtom(8,1);
+        placeAtom(6,6);
+        placeAtom(1,5);
+        placeAtom(4,2);
+
+        sendRay(29);
+        sendRay(39);
+        sendRay(46);
+        sendRay(3);
+        sendRay(5);
+        sendRay(18);
+//        System.out.println(board.getRayMarkerNumbers().size() + "rerer");
+
+//        System.out.println(player1.getScore() + "hello");
+
+        stateManager.setCurrentState(GameState.GAME_OVER);
+        player1 = new Player("John", false);
+        player2 = new Player("erw", true);
+        guiView.showBoard("erw", "erw", 0);
+
     }
 
     public void play2PlayerGame() {
@@ -200,6 +231,7 @@ public class Game implements GUIInputListener {
     }
 
     private void concludeRound() {
+        getExperimenter().updateScore(board.getRayMarkerNumbers().size());
         switchRoles();
         guiView.disposeBoard();
         guiView.boardVisible_ENABLE();
@@ -285,12 +317,14 @@ public class Game implements GUIInputListener {
     }
 
     public void sendRay(int input) {
-        if (board.sendRay(input)) {
-            getExperimenter().updateScore(1);
-        } else {
-            getExperimenter().updateScore(2);
-        }
+//        if (board.sendRay(input)) {
+//            getExperimenter().updateScore(1);
+//        } else {
+//            getExperimenter().updateScore(2);
+//        }
+        board.sendRay(input);
         getExperimenter().raySent();
+//        getExperimenter().updateScore(board.getRayMarkerNumbers().size());
         music.playSendRay();
     }
 

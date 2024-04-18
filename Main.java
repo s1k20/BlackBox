@@ -4,6 +4,8 @@ import view.GUIMenu;
 public class Main {
     public static void main(String[] args) {
         //run game
-        GUIMenu.showMenu();
+//        GUIMenu.showMenu();
+        Game g = new Game();
+        g.test();
     }
 }
