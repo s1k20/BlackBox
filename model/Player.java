@@ -42,6 +42,10 @@ public class Player {
         this.numCorrectAtoms += 1;
     }
 
+    public void removeCorrectAtom() {
+        this.numCorrectAtoms -= 1;
+    }
+
     public int getNumCorrectAtoms() {
         return this.numCorrectAtoms;
     }

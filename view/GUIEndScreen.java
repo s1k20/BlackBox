@@ -38,7 +38,7 @@ public class GUIEndScreen extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon icon = new ImageIcon("view/coolbackground.jpg");
+                ImageIcon icon = new ImageIcon("view/images/background.jpg");
                 g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         });

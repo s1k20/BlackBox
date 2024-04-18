@@ -11,7 +11,7 @@ public class GUI_UserInput {
         final String[] playerName = {null}; // To hold the player's name
 
         // Load the background image
-        ImageIcon background = new ImageIcon("view/coolbackground.jpg");
+        ImageIcon background = new ImageIcon("view/images/background.jpg");
         Image img = background.getImage();
 
         // Create the dialog
@@ -74,7 +74,7 @@ public class GUI_UserInput {
     }
 
     public static int getAIDifficulty() {
-        ImageIcon icon = new ImageIcon("view/coolbackground.jpg"); // Ensure the image path is correct
+        ImageIcon icon = new ImageIcon("view/images/background.jpg"); // Ensure the image path is correct
         Image image = icon.getImage();
 
         // Create a modal JDialog

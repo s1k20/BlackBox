@@ -129,7 +129,6 @@ public class Board {
                 else {
                     i.removePart(c.getOrientation());
                     if (i.getCircleOfInfluences().isEmpty()) {
-                        System.out.println("yes");
                         board[cY][cX] = null;
                     }
                     else {
@@ -469,10 +468,6 @@ public class Board {
             return r.deflectionLogic_CircleOfInfluence(c.getOrientation());
         }
         else if(board[y][x] instanceof IntersectingCircleOfInfluence i) {
-            if (checkEdgeOfBoard(y, x)) {
-                r.flipOrientation();
-                return false;
-            }
             return r.deflectionLogic_IntersectingCircleOfInfluence(i);
         }
         return false;
@@ -507,5 +502,4 @@ public class Board {
             this.rayTrails.add(new RayTrail(orientation));
         }
     }
-
 }

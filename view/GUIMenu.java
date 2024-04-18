@@ -26,7 +26,7 @@ public class GUIMenu {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon icon = new ImageIcon("view/coolbackground.jpg"); // Load the image
+                ImageIcon icon = new ImageIcon("view/images/background.jpg"); // Load the image
                 g.drawImage(icon.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
             }
         };
@@ -121,14 +121,14 @@ public class GUIMenu {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon icon = new ImageIcon("view/coolbackground.jpg");
+                ImageIcon icon = new ImageIcon("view/images/background.jpg");
                 g.drawImage(icon.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
             }
         };
         panel.setLayout(null);
 
         // Logo next to the title
-        ImageIcon logoIcon = new ImageIcon(new ImageIcon("view/Logo.png").getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)); // Adjust the size as needed
+        ImageIcon logoIcon = new ImageIcon(new ImageIcon("view/images/Logo.png").getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)); // Adjust the size as needed
         JLabel logoLabel = new JLabel(logoIcon);
         logoLabel.setBounds(50, 25, logoIcon.getIconWidth(), logoIcon.getIconHeight()); // Adjust position as needed
         panel.add(logoLabel);

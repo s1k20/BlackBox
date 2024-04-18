@@ -50,6 +50,7 @@ public class AiPlayer extends Player {
         do {
             input = random.nextInt(1, 55);
         } while (sentRays.contains(input));
+        sentRays.add(input);
         return input;
     }
 
@@ -71,7 +72,10 @@ public class AiPlayer extends Player {
             y = random.nextInt(9) + 1;
         } while (board.checkInvalidInput(x, y) || (board.getBoardPosition(x, y) instanceof Atom && isSetting) || (!isSetting && guessedAtoms.contains(new Point(x, y))));
 
-        return new Point(x, y);
+        Point randomPosition = new Point(x, y);
+        guessedAtoms.add(randomPosition);
+
+        return randomPosition;
     }
 
     public ArrayList<Point> ai_guessAtoms(int numAtoms) {
@@ -120,7 +124,7 @@ public class AiPlayer extends Player {
             atomGuesses.add(new Point(xAtom, yAtom));
         }
 
-        calculatedAtomGuess(guessedAtoms, i, numAtoms);
+        calculatedAtomGuess(atomGuesses, i, numAtoms);
 
         return atomGuesses;
     }
@@ -151,7 +155,7 @@ public class AiPlayer extends Player {
             int minus = 1;
 
             do {
-                addX = random.nextInt( bound) - minus;
+                addX = random.nextInt(bound) - minus;
                 addY = random.nextInt(bound) - minus;
 
                 bound += 2;

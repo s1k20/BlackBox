@@ -7,7 +7,6 @@ import static model.BoardConstants.*;
 
 public class GameView {
 
-
     Game game;
     Board board;
 

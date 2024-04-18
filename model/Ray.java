@@ -97,8 +97,8 @@ public class Ray {
     }
 
     public boolean deflectionLogic_CircleOfInfluence(int coiOrientation){
-        if(absorption(coiOrientation)) return true;
-        else if (reflection(coiOrientation)) flipOrientation();
+        if(isAbsorption(coiOrientation)) return true;
+        else if (isEdgeReflection(coiOrientation)) flipOrientation();
 
         else{
             //TODO tidy this up
@@ -153,12 +153,12 @@ public class Ray {
         return false;
     }
 
-    private boolean absorption(int coiOrientation) {
+    private boolean isAbsorption(int coiOrientation) {
         return this.orientation - coiOrientation == 90 || this.orientation - coiOrientation == -90
                 || this.orientation + coiOrientation == 360;
     }
 
-    private boolean reflection(int coiOrientation) {
+    private boolean isEdgeReflection(int coiOrientation) {
         if (this.orientation == coiOrientation) return true;
 
         return switch (this.orientation) {
@@ -170,10 +170,19 @@ public class Ray {
         };
     }
 
+    private boolean isEdgeReflection_IntersectingCircleOfInfluence(IntersectingCircleOfInfluence intersectingCircleOfInfluence) {
+        for (CircleOfInfluence c : intersectingCircleOfInfluence.getCircleOfInfluences()) {
+            if (isEdgeReflection(c.getOrientation())) return true;
+        }
+        return false;
+    }
+
     public boolean deflectionLogic_IntersectingCircleOfInfluence(IntersectingCircleOfInfluence intersectingCircleOfInfluence) {
+        if (isEdgeReflection_IntersectingCircleOfInfluence(intersectingCircleOfInfluence)) flipOrientation();
+
         //if ray is going straight across, conditions for reflecting is that it incounters intersecting
         //circle of influences which are like / and \
-        if (this.getOrientation() == 0 || this.getOrientation() == 180) {
+        else if (this.getOrientation() == 0 || this.getOrientation() == 180) {
             //horizontal reflection
             //function which checks to make sure conditions of horizontal reflection can take place
             //function just checks if two parts of circle of influence add to 360 which leads to horizontal reflection

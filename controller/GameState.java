@@ -6,7 +6,7 @@ public enum GameState {
     GUESSING_ATOMS,
     GAME_OVER,
     NEXT_ROUND,
-    AI_SENDING_RAYS,
+    AI_HAS_SENT_RAYS,
     AI_GUESSING_ATOMS,
     IDLE
 }

@@ -6,7 +6,6 @@ import controller.GameObserver;
 import controller.GameState;
 import model.*;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -14,10 +13,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class GUIGameBoard extends JPanel implements GameObserver {
     private final int rows = 11; // Number of rows
@@ -29,27 +26,17 @@ public class GUIGameBoard extends JPanel implements GameObserver {
 
     private static JFrame frame = null;
 
-    private List<HexagonPath> hexagonPaths = new ArrayList<>(); // Store hexagon paths with their row and col
-    private ArrayList<NumberPath> numberPaths = new ArrayList<>();
-    List<NumberArea> numberAreas = new ArrayList<>();
+    private final List<HexagonPath> hexagonPaths = new ArrayList<>(); // Store hexagon paths with their row and col
+    private final ArrayList<NumberPath> numberPaths = new ArrayList<>();
+    private final List<NumberArea> numberAreas = new ArrayList<>();
 
     boolean isVisible;
     private Rectangle printButtonBounds;
-    private Rectangle BacktoMenuButton;
+    private Rectangle backToMenuButton;
 
     private NumberArea hoveredNumberArea = null;
 
-    BufferedImage atomImage;
-    BufferedImage background;
-    BufferedImage circle60;
-    BufferedImage circle120;
-    BufferedImage circle240;
-    BufferedImage circle300;
-    BufferedImage circle90;
-    BufferedImage circle270;
-    BufferedImage ray60;
-    BufferedImage ray120;
-    BufferedImage ray0;
+    private final GameImages images;
 
 
     public GUIGameBoard(Game game) {
@@ -61,10 +48,9 @@ public class GUIGameBoard extends JPanel implements GameObserver {
         this.listener = game;
         this.game = game;
 
-        loadImages();
+        images = new GameImages();
         initMouseListener();
         initMouseHover();
-
 
     }
 
@@ -89,7 +75,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
 
     public void showBoard(String setter, String experimenter, int round) {
         SwingUtilities.invokeLater(() -> {
-            if (frame == null || !frame.isDisplayable()) {  // Check if frame is disposed
+            if (frame == null || !frame.isDisplayable()) {
                 frame = new JFrame("Round " + round + " | Setter: " + setter + " | Experimenter: " + experimenter);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.add(this);
@@ -105,27 +91,26 @@ public class GUIGameBoard extends JPanel implements GameObserver {
     }
 
     private void handleBoardClick(Point clickedPoint) {
-        if (BacktoMenuButton.contains(clickedPoint)) {
+        if (backToMenuButton.contains(clickedPoint)) {
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
             if (frame != null) {
                 frame.dispose();
             }
             listener.onMainMenuToggle();
         }
-        if ((game.getCurrentState() == GameState.SENDING_RAYS || game.getCurrentState() == GameState.AI_SENDING_RAYS) && printButtonBounds.contains(clickedPoint)) {
+        if ((game.getCurrentState() == GameState.AI_HAS_SENT_RAYS || (game.getCurrentState() == GameState.SENDING_RAYS && !game.stateManager.isAiSending())) && printButtonBounds.contains(clickedPoint)) {
             listener.onFinishRays();
         }
-        if (game.getCurrentState() == GameState.AI_GUESSING_ATOMS && printButtonBounds.contains(clickedPoint)) {
+        else if (game.getCurrentState() == GameState.AI_GUESSING_ATOMS && game.getGuessingBoard().getNumAtomsPlaced() >= game.NUM_ATOMS && printButtonBounds.contains(clickedPoint)) {
             listener.onAI_endRound();
         }
-        if (game.getCurrentState() == GameState.GAME_OVER && printButtonBounds.contains(clickedPoint)) {
+        else if (game.getCurrentState() == GameState.GAME_OVER && printButtonBounds.contains(clickedPoint)) {
             listener.onFinishRound();
         }
 
         if(game.getCurrentState() == GameState.SETTING_ATOMS && game.getBoard().getNumAtomsPlaced() < game.NUM_ATOMS){
             hexagonPaths.forEach(hexPath -> {
                 if (hexPath.path.contains(clickedPoint)) {
-                    System.out.println("Hexagon clicked at row " + hexPath.row + " and col " + hexPath.col);
                     if (game.getBoard().getBoardPosition(hexPath.col, hexPath.row) instanceof Atom) {
                         listener.onAtomRemoved(hexPath.col, hexPath.row);
                     } else {
@@ -143,9 +128,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
             boardVisible_ENABLE();
             hexagonPaths.forEach(hexPath -> {
                 if (hexPath.path.contains(clickedPoint)) {
-                    System.out.println("Hexagon clicked at row " + hexPath.row + " and col " + hexPath.col);
                     if (game.getGuessingBoard().getBoardPosition(hexPath.col, hexPath.row) instanceof Atom) {
-                        //TODO change this so it does it to guessing board
                         listener.onAtomGuessRemoved(hexPath.col, hexPath.row);
                     } else {
                         listener.onAtomGuess(hexPath.col, hexPath.row);
@@ -158,48 +141,45 @@ public class GUIGameBoard extends JPanel implements GameObserver {
         else{
             for (NumberArea area : numberAreas) {
                 if (area.contains(clickedPoint)) {
-                    // Clicked within the bounds of a number
-                    System.out.println("Clicked number: " + area.number + " at row " + area.row + " and col " + area.col);
-//                    game.getBoard().sendRay(Integer.parseInt(area.number));
                     listener.onRaySent(Integer.parseInt(area.number));
                     repaint();
-                    // Execute any associated action here
-                    break; // Assuming only one number can be clicked at a time
+                    break;
                 }
             }
         }
     }
 
     private void handleHover(Point hover) {
-        boolean onHexagon = hexagonPaths.stream().anyMatch(numberPath -> numberPath.path.contains(hover)) || printButtonBounds.contains(hover);
-        if (onHexagon) {
+        boolean onHover = hexagonPaths.stream().anyMatch(numberPath -> numberPath.path.contains(hover)) || backToMenuButton.contains(hover)
+                || (printButtonBounds.contains(hover) && ((game.getCurrentState() == GameState.AI_HAS_SENT_RAYS || (game.getCurrentState() == GameState.SENDING_RAYS && !game.stateManager.isAiSending())) ||
+                game.getCurrentState() == GameState.AI_GUESSING_ATOMS && game.getGuessingBoard().getNumAtomsPlaced() >= game.NUM_ATOMS
+        || game.getCurrentState() == GameState.GAME_OVER));
+        if (onHover) {
             setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         } else {
             setCursor(Cursor.getDefaultCursor());
         }
+            if(game.getBoard().getNumAtomsPlaced() >= game.NUM_ATOMS) {
 
+                boolean foundHover = false;
+                for (NumberArea area : numberAreas) {
+                    if (area.bounds.contains(hover)) {
+                        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-                if(game.getBoard().getNumAtomsPlaced() >= game.NUM_ATOMS) {
-
-                    boolean foundHover = false;
-                    for (NumberArea area : numberAreas) {
-                        if (area.bounds.contains(hover)) {
-                            setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                            // Mouse is hovering over this NumberArea
-                            if (hoveredNumberArea != area) {
-                                hoveredNumberArea = area;
-                                repaint(); // Only repaint if hover state changes
-                            }
-                            foundHover = true;
-                            break; // Exit loop since we found the hover target
+                        if (hoveredNumberArea != area) {
+                            hoveredNumberArea = area;
+                            repaint();
                         }
-                    }
-                    if (!foundHover && hoveredNumberArea != null) {
-                        hoveredNumberArea = null; // Clear hover state if not over a NumberArea
-                        setCursor(Cursor.getDefaultCursor());
-                        repaint(); // Repaint to remove hover effect
+                        foundHover = true;
+                        break;
                     }
                 }
+                if (!foundHover && hoveredNumberArea != null) {
+                    hoveredNumberArea = null; // Clear hover state if not over a NumberArea
+                    setCursor(Cursor.getDefaultCursor());
+                    repaint(); // Repaint to remove hover effect
+                }
+            }
     }
 
     public void refreshBoard() {
@@ -231,28 +211,8 @@ public class GUIGameBoard extends JPanel implements GameObserver {
     }
 
 
-    private void loadImages() {
-        try {
-            atomImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("atom.svg.png")));
-            background = ImageIO.read(Objects.requireNonNull(getClass().getResource("coolbackground.jpg")));
-            circle60 = ImageIO.read(Objects.requireNonNull(getClass().getResource("60CircleOfInfluence.png")));
-            circle120 = ImageIO.read(Objects.requireNonNull(getClass().getResource("120CircleOfInfluence.png")));
-            circle90 = ImageIO.read(Objects.requireNonNull(getClass().getResource("90CircleOfInfluence.png")));
-            circle270 = ImageIO.read(Objects.requireNonNull(getClass().getResource("270CircleOfInfluence.png")));
-            circle300 = ImageIO.read(Objects.requireNonNull(getClass().getResource("300CircleOfInfluence.png")));
-            circle240 = ImageIO.read(Objects.requireNonNull(getClass().getResource("240CircleOfInfluence.png")));
-            ray0 = ImageIO.read(Objects.requireNonNull(getClass().getResource("straight_line_thick.png")));
-            ray60 = ImageIO.read(Objects.requireNonNull(getClass().getResource("60_degree_line_thick.png")));
-            ray120 = ImageIO.read(Objects.requireNonNull(getClass().getResource("120_degree_line_thick.png")));
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void drawHexagon(Graphics2D g2, double x, double y, int side, int row, int col) {
-        double height = (int) (Math.sin(Math.PI / 3) * side);
+//        double height = (int) (Math.sin(Math.PI / 3) * side);
         double width = 2 * side;
         Path2D path = new Path2D.Double();
 
@@ -286,7 +246,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
         refreshBoard();
     }
 
-    class NumberArea {
+    static class NumberArea {
         Rectangle bounds; // This holds the x, y, width, and height.
         String number;
         int row;
@@ -316,16 +276,15 @@ public class GUIGameBoard extends JPanel implements GameObserver {
         hexagonPaths.clear();
         int counter = 1;
 
-        if (game.getCurrentState() == GameState.SENDING_RAYS || game.getCurrentState() == GameState.AI_SENDING_RAYS) isVisible = false;
+        if (game.getCurrentState() == GameState.SENDING_RAYS || game.getCurrentState() == GameState.AI_HAS_SENT_RAYS) isVisible = false;
+//        System.out.println(isVisible);
 
-        Image scaledBackground = background.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
+        Image scaledBackground = images.background.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
         g2.drawImage(scaledBackground, 0, 0, this);
 
         FontMetrics metrics = g.getFontMetrics();
         g.setColor(Color.WHITE);
         g.setFont(new Font("Monospaced", Font.BOLD, 40));
-
-
 
 
 
@@ -380,19 +339,12 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                 }
 
                 // Calculate x and y positions based on your original logic
-                double x = (double) ((col * 1.155) * 2 * side * 3) / 4;
+                double x = ((col * 1.155) * 2 * side * 3) / 4;
                 x += (row * (2 * side * 0.8)) - (row * 30);
                 x -= 250;
 
-                double y = (double) ((row * 1.16) * Math.sqrt(3) * side * 3) / 4;
+                double y = ((row * 1.16) * Math.sqrt(3) * side * 3) / 4;
 
-//                if(currentBoard.getBoardPosition(col, row) instanceof RayMarker r){
-////                    g2.setColor(Color.WHITE);
-////                    g2.fillOval((int) x + 113, (int) y + 73, 55, 55);
-////                    g2.setColor(r.getGuiColour());
-////                    g2.fillOval((int) x + 115, (int) y + 75, 50, 50);
-//                    continue;
-//                }
                 if(currentBoard.getBoardPosition(col, row) instanceof Board.EmptyMarker || currentBoard.getBoardPosition(col, row) instanceof RayMarker){
                     g.setFont(new Font("Roboto", Font.BOLD, 16));
                     g.setColor(Color.white);
@@ -519,7 +471,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                     drawHexagon(g2, x, y, side, row, col); // Pass row and col to drawHexagon
 
                     double centerX = 100 + x + (double) 2 * side / 2;
-                    double centerY = 100 + y + (double) Math.sqrt(3) * side / 2;
+                    double centerY = 100 + y + Math.sqrt(3) * side / 2;
                     centerY -= 40;
                     centerX -= 10;
                     int circleRadius = side / 4; // Adjust the radius as needed
@@ -532,15 +484,15 @@ public class GUIGameBoard extends JPanel implements GameObserver {
 
                         double scale = 0.049;
 
-                        int imageWidth = (int) (atomImage.getWidth() * scale);
-                        int imageHeight = (int) (atomImage.getHeight() * scale);
+                        int imageWidth = (int) (images.atomImage.getWidth() * scale);
+                        int imageHeight = (int) (images.atomImage.getHeight() * scale);
 
                         // Adjust the image position so that it's centered within the hexagon
                         int imageX = (int) (centerX - imageWidth / 2);
                         int imageY = (int) (centerY - imageHeight / 2);
 
                         // Draw the scaled image
-                        Image scaledImage = atomImage.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
+                        Image scaledImage = images.atomImage.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
 
                         // Draw the image
                         g2.drawImage(scaledImage, imageX + 10, imageY + 7, this);
@@ -550,12 +502,12 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                             double scale = 0.63;
 
                             if(r.getOrientation() == 60 || r.getOrientation() == 240){
-                                int imageWidth = (int) (ray60.getWidth() * scale);
-                                int imageHeight = (int) (ray60.getHeight() * scale);
+                                int imageWidth = (int) (images.ray60.getWidth() * scale);
+                                int imageHeight = (int) (images.ray60.getHeight() * scale);
                                 int imageX = (int) (centerX - imageWidth / 2);
                                 int imageY = (int) (centerY - imageHeight / 2);
 
-                                Image scaledImage = ray60.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
+                                Image scaledImage = images.ray60.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
                                 // Draw the image
                                 g2.drawImage(scaledImage, imageX - 17, imageY + 62, this);
 
@@ -563,25 +515,25 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                             }
                             else if(r.getOrientation() == 0 || r.getOrientation() == 180){
                                 scale = 0.25;
-                                int imageWidth = (int) (ray0.getWidth() * scale);
-                                int imageHeight = (int) (ray0.getHeight() * scale);
+                                int imageWidth = (int) (images.ray0.getWidth() * scale);
+                                int imageHeight = (int) (images.ray0.getHeight() * scale);
                                 int imageX = (int) (centerX - imageWidth / 2);
                                 int imageY = (int) (centerY - imageHeight / 2);
 
-                                Image scaledImage = ray0.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
+                                Image scaledImage = images.ray0.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
                                 // Draw the image
                                 g2.drawImage(scaledImage, imageX + 10, imageY + 7, this);
 
                             }
                             else{
-                                int imageWidth = (int) (ray120.getWidth() * scale);
-                                int imageHeight = (int) (ray120.getHeight() * scale);
+                                int imageWidth = (int) (images.ray120.getWidth() * scale);
+                                int imageHeight = (int) (images.ray120.getHeight() * scale);
                                 int imageX = (int) (centerX - imageWidth / 2);
                                 int imageY = (int) (centerY - imageHeight / 2);
 
-                                Image scaledImage = ray120.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
+                                Image scaledImage = images.ray120.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
                                 // Draw the image
-                                g2.drawImage(scaledImage, imageX + 45, imageY + 63, this);
+                                g2.drawImage(scaledImage, imageX + 45, imageY + 60, this);
 
                             }
                         }
@@ -631,6 +583,10 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                 displayString = "Ray " + game.getBoard().numRaysSent + ": Entered at " + game.getBoard().currentRay.getInput() +
                         " -> Absorbed!";
             }
+            else if (game.getBoard().currentRay.getOutput() == game.getBoard().currentRay.getInput()) {
+                displayString = "Ray " + game.getBoard().numRaysSent + ": Entered at " + game.getBoard().currentRay.getInput() +
+                        " -> Reflected!";
+            }
             else{
                 displayString = "Ray " + game.getBoard().numRaysSent + ": Entered at " + game.getBoard().currentRay.getInput() +
                         " -> Exited at " + game.getBoard().currentRay.getOutput();
@@ -649,21 +605,21 @@ public class GUIGameBoard extends JPanel implements GameObserver {
         Color Gold = new Color(51, 51, 51);
 
         // Now draw the button with updated bounds
-        if (game.getCurrentState() == GameState.SENDING_RAYS) {
+        if (game.getCurrentState() == GameState.SENDING_RAYS && !game.stateManager.isAiSending()) {
             g2.setColor(Gold); // Use a more visible color
             g2.fillRect(printButtonBounds.x, printButtonBounds.y, printButtonBounds.width, printButtonBounds.height);
             g2.setColor(Color.WHITE); // Ensure text is visible
             g.setFont(new Font("Monospaced", Font.BOLD, 20));
             g2.drawString("Finish Rays", printButtonBounds.x + 16, printButtonBounds.y + 22);
         }
-        else if (game.getCurrentState() == GameState.AI_SENDING_RAYS) {
+        else if (game.getCurrentState() == GameState.AI_HAS_SENT_RAYS && !game.stateManager.isAiSending()) {
             g2.setColor(Gold); // Use a more visible color
             g2.fillRect(printButtonBounds.x, printButtonBounds.y, printButtonBounds.width, printButtonBounds.height);
             g2.setColor(Color.WHITE); // Ensure text is visible
             g.setFont(new Font("Monospaced", Font.BOLD, 20));
             g2.drawString("Continue", printButtonBounds.x + 16, printButtonBounds.y + 22);
         }
-        else if (game.getCurrentState() == GameState.AI_GUESSING_ATOMS) {
+        else if (game.getCurrentState() == GameState.AI_GUESSING_ATOMS && game.getGuessingBoard().getNumAtomsPlaced() >= game.NUM_ATOMS) {
             g2.setColor(Gold); // Use a more visible color
             g2.fillRect(printButtonBounds.x, printButtonBounds.y, printButtonBounds.width, printButtonBounds.height);
             g2.setColor(Color.WHITE); // Ensure text is visible
@@ -679,14 +635,14 @@ public class GUIGameBoard extends JPanel implements GameObserver {
         }
 
 
-        BacktoMenuButton = new Rectangle(0, yB, buttonWidth - 60, buttonHeight);
+        backToMenuButton = new Rectangle(0, yB, buttonWidth - 60, buttonHeight);
 
 
         g2.setColor(Gold); // Use a more visible color
-        g2.fillRect(BacktoMenuButton.x, BacktoMenuButton.y, BacktoMenuButton.width, BacktoMenuButton.height);
+        g2.fillRect(backToMenuButton.x, backToMenuButton.y, backToMenuButton.width, backToMenuButton.height);
         g2.setColor(Color.WHITE); // Ensure text is visible
         g.setFont(new Font("Monospaced", Font.BOLD, 20));
-        g2.drawString("Menu", BacktoMenuButton.x + 20, BacktoMenuButton.y + 22);
+        g2.drawString("Menu", backToMenuButton.x + 20, backToMenuButton.y + 22);
 
     }
 
@@ -727,7 +683,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
 
     public void printCircleOfInfluence(CircleOfInfluence c, Graphics2D g2, double x, double y){
         double centerX = 100 + x + (double) 2 * side / 2;
-        double centerY = 100 + y + (double) Math.sqrt(3) * side / 2;
+        double centerY = 100 + y + Math.sqrt(3) * side / 2;
         centerY -= 40;
         centerX -= 10;
         int circleRadius = side / 4; // Adjust the radius as needed
@@ -735,39 +691,26 @@ public class GUIGameBoard extends JPanel implements GameObserver {
 //                    g2.fillOval((int) (centerX - circleRadius), (int) (centerY - circleRadius), 4 * circleRadius, 4 * circleRadius);
 
         double scale = 0.3;
-//        double scale = 0.05;
 
         if(c.getOrientation() == 60){
-            circleOfInfluenceImage(circle60, g2, centerX, centerY, scale);
+            circleOfInfluenceImage(images.circle60, g2, centerX, centerY, scale);
         }
         else if(c.getOrientation() == 120){
-            circleOfInfluenceImage(circle120, g2, centerX, centerY, scale);
+            circleOfInfluenceImage(images.circle120, g2, centerX, centerY, scale);
         }
         else if(c.getOrientation() == 240){
-            circleOfInfluenceImage(circle240, g2, centerX, centerY, scale);
+            circleOfInfluenceImage(images.circle240, g2, centerX, centerY, scale);
         }
         else if(c.getOrientation() == 300){
-            circleOfInfluenceImage(circle300, g2, centerX, centerY, scale);
+            circleOfInfluenceImage(images.circle300, g2, centerX, centerY, scale);
         }
         else if(c.getOrientation() == 90){
-            circleOfInfluenceImage(circle90, g2, centerX + 4, centerY, scale * 1.1);
+            circleOfInfluenceImage(images.circle90, g2, centerX + 4, centerY, scale * 1.1);
         }
         else if(c.getOrientation() == 270){
-            circleOfInfluenceImage(circle270, g2, centerX - 7, centerY, scale);
+            circleOfInfluenceImage(images.circle270, g2, centerX - 7, centerY, scale);
         }
     }
-
-    private void paintRayMarker(Graphics g2, double x, double y) {
-        // Define the dimensions of the square
-        int width = 100; // Width of the square
-        int height = 100; // Height of the square
-
-        // Draw the outline of a square
-        g2.setColor(Color.BLACK);
-        g2.fillOval((int)x, (int)y, width, height);
-        // Use g2.fillRect((int)x, (int)y, width, height) if you want to draw a filled square.
-    }
-
 
 }
 
