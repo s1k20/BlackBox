@@ -314,13 +314,13 @@ public class GUIGameBoard extends JPanel implements GameObserver {
             g.setFont(new Font("Monospaced", Font.BOLD, 20));
             String displayString = "Click 'Continue'";
             int textWidth = metrics.stringWidth(displayString);
-            g.drawString(displayString.toUpperCase(), ((this.getWidth() - textWidth) / 2) - 215, 60);
+            g.drawString(displayString.toUpperCase(), 300, 60);
         }
         else if (game.getCurrentState() == GameState.AI_GUESSING_ATOMS && currentBoard.getNumAtomsPlaced() == 6) {
             g.setFont(new Font("Monospaced", Font.BOLD, 20));
             String displayString = "Click 'Finish'";
             int textWidth = metrics.stringWidth(displayString);
-            g.drawString(displayString.toUpperCase(), ((this.getWidth() - textWidth) / 2) - 215, 60);
+            g.drawString(displayString.toUpperCase(), 300, 60);
         }
         else if (game.getCurrentState() != GameState.GAME_OVER){
             if(hoveredNumberArea != null){
@@ -342,13 +342,10 @@ public class GUIGameBoard extends JPanel implements GameObserver {
         }
         else {
             String displayString = "Full Game Picture".toUpperCase();  // Convert to upper case here
-            int textWidth = metrics.stringWidth(displayString);
 
-            // Calculate x so that text is centered
-            int x = (getWidth() - textWidth) / 2;
 
             // Draw the string at the calculated x and a fixed y position
-            g.drawString(displayString, x, 60);
+            g.drawString(displayString, 300, 60);
         }
 
 
