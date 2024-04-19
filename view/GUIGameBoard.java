@@ -139,9 +139,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                     repaint();
                 }
             });
-        }
 
-        else{
             for (NumberArea area : numberAreas) {
                 if (area.contains(clickedPoint)) {
                     listener.onRaySent(Integer.parseInt(area.number));
@@ -150,6 +148,16 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                 }
             }
         }
+//
+//        else{
+//            for (NumberArea area : numberAreas) {
+//                if (area.contains(clickedPoint)) {
+//                    listener.onRaySent(Integer.parseInt(area.number));
+//                    repaint();
+//                    break;
+//                }
+//            }
+//        }
     }
 
     private void handleHover(Point hover) {
@@ -294,21 +302,36 @@ public class GUIGameBoard extends JPanel implements GameObserver {
 
 
         if(currentBoard.getNumAtomsPlaced() < 6){
-            String playerName;
-            String action;
-            if (game.getCurrentState() == GameState.SETTING_ATOMS) {
-                playerName = game.getSetter().getPlayerName();
-                action = "PLACE";
-            }
-            else {
-                playerName = game.getExperimenter().getPlayerName();
-                action = "GUESS";
-            }
-            String displayString = playerName + " - " + action + " " + (6 - currentBoard.getNumAtomsPlaced())
-                    + " more atoms";
-            int textWidth = metrics.stringWidth(displayString);
+            if(hoveredNumberArea != null && game.getCurrentState() == GameState.GUESSING_ATOMS){
+                // Example hover effect: draw a highlighted border around the NumberArea
+                String displayString = "Send ray at: " + hoveredNumberArea.number;
+                int textWidth = metrics.stringWidth(displayString);
+                int x = ((getWidth() - metrics.stringWidth(displayString)) / 2) - 115;
 
-            g.drawString(displayString, 220, 60);
+                g.drawString(displayString.toUpperCase(), x, 60);
+
+            }
+            else{
+                String playerName;
+                String action;
+                if (game.getCurrentState() == GameState.SETTING_ATOMS) {
+                    playerName = game.getSetter().getPlayerName();
+                    action = "PLACE";
+                }
+                else {
+                    playerName = game.getExperimenter().getPlayerName();
+                    action = "GUESS";
+                }
+                String displayString = playerName + " - " + action + " " + (6 - currentBoard.getNumAtomsPlaced())
+                        + " more atoms";
+                if (game.getCurrentState() == GameState.GUESSING_ATOMS) {
+                    displayString += " or send a ray";
+                }
+                int textWidth = metrics.stringWidth(displayString);
+
+                g.drawString(displayString, 180, 60);
+            }
+
         }
         else if (game.getCurrentState() == GameState.AI_HAS_SENT_RAYS) {
             g.setFont(new Font("Monospaced", Font.BOLD, 20));
@@ -593,7 +616,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
             }
         }
 
-        if(game.getBoard().currentRay.getInput() != -1 && game.getCurrentState() != GameState.GUESSING_ATOMS && game.getCurrentState() != GameState.GAME_OVER){
+        if(game.getBoard().currentRay.getInput() != -1 && game.getCurrentState() != GameState.GAME_OVER){
             g.setFont(new Font("Monospaced", Font.BOLD, 20));
             String displayString;
 

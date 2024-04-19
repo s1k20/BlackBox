@@ -16,9 +16,12 @@ public class GameStateManager {
 
 
     private boolean doneSendingRays;
+    private boolean doneSetting;
+    private boolean doneGuessing;
     private boolean nextRound;
     private boolean endRound;
     private boolean aiSending;
+    private boolean isSinglePlayer;
 
 
 
@@ -48,10 +51,14 @@ public class GameStateManager {
 //        System.out.println(currentState);
         switch (currentState) {
             case SETTING_ATOMS -> {
+
                 if (board.getNumAtomsPlaced() >= 6) {
-                    currentState = GameState.SENDING_RAYS;
-//                    guiView.boardVisible_ENABLE();
+                    if (isSinglePlayer) currentState = GameState.SENDING_RAYS;
+                    else currentState = GameState.GUESSING_ATOMS;
                 }
+//                if (doneSetting) {
+//                    currentState = GameState.GUESSING_ATOMS;
+//                }
             }
             case SENDING_RAYS, AI_HAS_SENT_RAYS -> {
                 if (doneSendingRays) {
@@ -62,6 +69,9 @@ public class GameStateManager {
                 if (guessingBoard.getNumAtomsPlaced() >= 6) {
                     currentState = GameState.GAME_OVER;
                 }
+//                if (doneGuessing) {
+//                    currentState = GameState.GAME_OVER;
+//                }
             }
             case AI_GUESSING_ATOMS -> {
                 if (endRound) {
@@ -78,6 +88,22 @@ public class GameStateManager {
             }
         }
     }
+    public void setDoneSetting(boolean b) {
+        this.doneSetting = b;
+    }
+
+    public void setDoneGuessing(boolean b) {
+        this.doneGuessing = b;
+    }
+
+    public void setSinglePlayer(boolean b) {
+        this.isSinglePlayer = b;
+    }
+
+    public boolean isSinglePlayer() {
+        return this.isSinglePlayer;
+    }
+
 
     /**
      * Signals that rays have finished being sent by the experimenter.
@@ -119,6 +145,8 @@ public class GameStateManager {
         doneSendingRays = false;
         nextRound = false;
         endRound = false;
+        doneSetting = false;
+        doneGuessing = false;
 
         this.board = gameBoard;
         this.guessingBoard = guessingBoard;

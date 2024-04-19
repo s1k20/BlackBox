@@ -192,7 +192,7 @@ public class Game implements GUIInputListener {
         music.playNextSound();
         setupPlayer_2Player();
         music.playMusic();
-
+        stateManager.setSinglePlayer(false);
         initGame();
     }
 
@@ -200,7 +200,7 @@ public class Game implements GUIInputListener {
         music.playNextSound();
         setupPlayers_1Player();
         music.playMusic();
-
+        stateManager.setSinglePlayer(true);
         initGame();
     }
 
@@ -208,6 +208,8 @@ public class Game implements GUIInputListener {
         stateManager.setCurrentState(GameState.SETTING_ATOMS);
         gameNum = 1;
         stateManager.setDoneSendingRays(false);
+        stateManager.setDoneSetting(false);
+        stateManager.setDoneGuessing(false);
     }
 
     private void setupPlayer(int playerNum) {
@@ -281,6 +283,7 @@ public class Game implements GUIInputListener {
 
     private void aiSetterRound() {
         aiPlayer.ai_setAtoms(this.NUM_ATOMS);
+        stateManager.setCurrentState(GameState.GUESSING_ATOMS);
         waitForGameState(GameState.NEXT_ROUND);
     }
 
@@ -363,7 +366,7 @@ public class Game implements GUIInputListener {
 
     @Override
     public void onRaySent(int number) {
-        if (stateManager.getCurrentState() == GameState.SENDING_RAYS && !stateManager.isAiSending()) {
+        if ((stateManager.getCurrentState() == GameState.SENDING_RAYS && !stateManager.isAiSending()) || stateManager.getCurrentState() == GameState.GUESSING_ATOMS) {
             sendRay(number);
             guiView.refreshBoard();
         }
@@ -407,6 +410,18 @@ public class Game implements GUIInputListener {
     public void onMainMenuToggle() {
         GUIMenu.showMenu();
         music.stopMusic();
+    }
+
+    @Override
+    public void onDoneSetting() {
+        stateManager.setDoneSetting(true);
+        stateManager.updateGameState();
+    }
+
+    @Override
+    public void onDoneGuessing() {
+        stateManager.setDoneGuessing(true);
+        stateManager.updateGameState();
     }
 
 }

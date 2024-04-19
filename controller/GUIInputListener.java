@@ -10,4 +10,8 @@ public interface GUIInputListener {
     void onAtomGuess(int col, int row);
     void onAtomGuessRemoved(int col, int row);
     void onMainMenuToggle();
+
+    void onDoneSetting();
+
+    void onDoneGuessing();
 }
