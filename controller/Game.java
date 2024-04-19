@@ -346,22 +346,27 @@ public class Game implements GUIInputListener {
 
     @Override
     public void onAtomPlaced(int x, int y) {
-        placeAtom(x, y);
-        guiView.refreshBoard();
-        stateManager.updateGameState();
+        if (stateManager.getCurrentState() == GameState.SETTING_ATOMS) {
+            placeAtom(x, y);
+            guiView.refreshBoard();
+            stateManager.updateGameState();
+        }
     }
 
     @Override
     public void onAtomRemoved(int x, int y) {
-        removeAtom(x, y);
-        guiView.refreshBoard();
-
+        if (stateManager.getCurrentState() == GameState.SETTING_ATOMS) {
+            removeAtom(x, y);
+            guiView.refreshBoard();
+        }
     }
 
     @Override
     public void onRaySent(int number) {
-        sendRay(number);
-        guiView.refreshBoard();
+        if (stateManager.getCurrentState() == GameState.SENDING_RAYS) {
+            sendRay(number);
+            guiView.refreshBoard();
+        }
     }
 
     @Override
@@ -378,20 +383,24 @@ public class Game implements GUIInputListener {
 
     @Override
     public void onAI_endRound() {
-        stateManager.setEndRound(true);
-        stateManager.updateGameState();
+            stateManager.setEndRound(true);
+            stateManager.updateGameState();
     }
 
     @Override
     public void onAtomGuess(int x, int y) {
-        guessAtom(x, y);
-        stateManager.updateGameState();
+        if (stateManager.getCurrentState() == GameState.GUESSING_ATOMS || stateManager.getCurrentState() == GameState.AI_GUESSING_ATOMS) {
+            guessAtom(x, y);
+            stateManager.updateGameState();
+        }
     }
 
     @Override
     public void onAtomGuessRemoved(int x, int y) {
-        removeGuessAtom(x, y);
-        guiView.refreshBoard();
+        if (stateManager.getCurrentState() == GameState.GUESSING_ATOMS || stateManager.getCurrentState() == GameState.AI_GUESSING_ATOMS) {
+            removeGuessAtom(x, y);
+            guiView.refreshBoard();
+        }
     }
 
     @Override

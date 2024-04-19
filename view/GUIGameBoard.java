@@ -308,6 +308,18 @@ public class GUIGameBoard extends JPanel implements GameObserver {
 
             g.drawString(displayString, 30, 75);
         }
+        else if (game.getCurrentState() == GameState.AI_HAS_SENT_RAYS) {
+            g.setFont(new Font("Monospaced", Font.BOLD, 20));
+            String displayString = "Click 'Continue'";
+            int textWidth = metrics.stringWidth(displayString);
+            g.drawString(displayString.toUpperCase(), ((this.getWidth() - textWidth) / 2) - 215, 60);
+        }
+        else if (game.getCurrentState() == GameState.AI_GUESSING_ATOMS && currentBoard.getNumAtomsPlaced() == 6) {
+            g.setFont(new Font("Monospaced", Font.BOLD, 20));
+            String displayString = "Click 'Finish'";
+            int textWidth = metrics.stringWidth(displayString);
+            g.drawString(displayString.toUpperCase(), ((this.getWidth() - textWidth) / 2) - 215, 60);
+        }
         else if (game.getCurrentState() != GameState.GAME_OVER){
             if(hoveredNumberArea != null){
                 // Example hover effect: draw a highlighted border around the NumberArea
