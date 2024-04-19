@@ -287,7 +287,9 @@ public class GUIGameBoard extends JPanel implements GameObserver {
 
         FontMetrics metrics = g.getFontMetrics();
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Monospaced", Font.BOLD, 40));
+        g.setFont(new Font("Monospaced", Font.BOLD, 20));
+        // Determine the x and y position to center text
+
 
 
 
@@ -306,7 +308,7 @@ public class GUIGameBoard extends JPanel implements GameObserver {
                     + " more atoms";
             int textWidth = metrics.stringWidth(displayString);
 
-            g.drawString(displayString, 30, 75);
+            g.drawString(displayString, 220, 60);
         }
         else if (game.getCurrentState() == GameState.AI_HAS_SENT_RAYS) {
             g.setFont(new Font("Monospaced", Font.BOLD, 20));
@@ -333,17 +335,20 @@ public class GUIGameBoard extends JPanel implements GameObserver {
             else{
                 g.setFont(new Font("Monospaced", Font.BOLD, 20));
                 String displayString = game.getExperimenter().getPlayerName() + " - Click a number to send a ray";
-                int textWidth = metrics.stringWidth(displayString);
-                g.drawString(displayString.toUpperCase(), ((this.getWidth() - textWidth) / 2) - 215, 60);
+//                int textWidth = metrics.stringWidth(displayString);
+//                int x = (getWidth() - textWidth) / 2;
+                g.drawString(displayString.toUpperCase(), 195, 60);
             }
         }
         else {
-            // Example hover effect: draw a highlighted border around the NumberArea
-            String displayString = "Full Game Picture";
+            String displayString = "Full Game Picture".toUpperCase();  // Convert to upper case here
             int textWidth = metrics.stringWidth(displayString);
-            int x = ((getWidth() - metrics.stringWidth(displayString)) / 2) - 115;
 
-            g.drawString(displayString.toUpperCase(), x, 60);
+            // Calculate x so that text is centered
+            int x = (getWidth() - textWidth) / 2;
+
+            // Draw the string at the calculated x and a fixed y position
+            g.drawString(displayString, x, 60);
         }
 
 
