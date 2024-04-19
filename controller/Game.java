@@ -363,7 +363,7 @@ public class Game implements GUIInputListener {
 
     @Override
     public void onRaySent(int number) {
-        if (stateManager.getCurrentState() == GameState.SENDING_RAYS) {
+        if (stateManager.getCurrentState() == GameState.SENDING_RAYS && !stateManager.isAiSending()) {
             sendRay(number);
             guiView.refreshBoard();
         }
