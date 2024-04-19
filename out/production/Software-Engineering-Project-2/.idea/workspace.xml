@@ -13,8 +13,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4576e0cc-369a-4145-900a-290dc17a3fc7" name="Changes" comment="fixed some text stuff">
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/Game.class" afterDir="false" />
+    <list default="true" id="4576e0cc-369a-4145-900a-290dc17a3fc7" name="Changes" comment="fixed issue with ray counts">
+      <change beforePath="$PROJECT_DIR$/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Board$RayTrail.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Board$RayTrail.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Board$RayTrails.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Board$RayTrails.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Board.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -281,7 +285,7 @@
       <workItem from="1713297475836" duration="1248000" />
       <workItem from="1713346617330" duration="21375000" />
       <workItem from="1713436651531" duration="17098000" />
-      <workItem from="1713520919515" duration="4730000" />
+      <workItem from="1713520919515" duration="7272000" />
     </task>
     <task id="LOCAL-00001" summary="fixed bug">
       <option name="closed" value="true" />
@@ -555,7 +559,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713522706652</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="fixed issue with ray counts">
+      <option name="closed" value="true" />
+      <created>1713536363737</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1713536363737</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -574,7 +586,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="minor refactoring" />
     <MESSAGE value="added file" />
     <MESSAGE value="tidy project structure and seperated constants into separate class" />
     <MESSAGE value="added some extra tests" />
@@ -599,7 +610,8 @@
     <MESSAGE value="refactored packages and added seperation in classes" />
     <MESSAGE value="fixed some bugs and got rid of print statements to terminal" />
     <MESSAGE value="fixed some text stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed some text stuff" />
+    <MESSAGE value="fixed issue with ray counts" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed issue with ray counts" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -1,7 +1,12 @@
 package view;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Objects;
+
 import controller.Game;  // Assuming Game and Player classes are defined appropriately
 import model.Player;     // Make sure the Player class is in the right package
 
@@ -38,8 +43,13 @@ public class GUIEndScreen extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon icon = new ImageIcon("view/images/background.jpg");
-                g.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
+                BufferedImage background;
+                try {
+                    background = ImageIO.read(Objects.requireNonNull(getClass().getResource("images/background.jpg")));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
             }
         });
 

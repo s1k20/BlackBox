@@ -2,10 +2,15 @@ package view;
 
 import controller.Game;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.nio.Buffer;
+import java.util.Objects;
 
 public class GUIMenu {
 
@@ -26,8 +31,13 @@ public class GUIMenu {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon icon = new ImageIcon("view/images/background.jpg"); // Load the image
-                g.drawImage(icon.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
+                BufferedImage background;
+                try {
+                    background = ImageIO.read(Objects.requireNonNull(getClass().getResource("images/background.jpg")));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), this);
             }
         };
         panel.setLayout(null);
@@ -121,17 +131,22 @@ public class GUIMenu {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon icon = new ImageIcon("view/images/background.jpg");
-                g.drawImage(icon.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
+                BufferedImage background;
+                try {
+                    background = ImageIO.read(Objects.requireNonNull(getClass().getResource("images/background.jpg")));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), this);
             }
         };
         panel.setLayout(null);
 
         // Logo next to the title
-        ImageIcon logoIcon = new ImageIcon(new ImageIcon("view/images/Logo.png").getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)); // Adjust the size as needed
-        JLabel logoLabel = new JLabel(logoIcon);
-        logoLabel.setBounds(50, 25, logoIcon.getIconWidth(), logoIcon.getIconHeight()); // Adjust position as needed
-        panel.add(logoLabel);
+//        ImageIcon logoIcon = new ImageIcon(new ImageIcon("view/images/Logo.png").getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)); // Adjust the size as needed
+//        JLabel logoLabel = new JLabel(logoIcon);
+//        logoLabel.setBounds(50, 25, logoIcon.getIconWidth(), logoIcon.getIconHeight()); // Adjust position as needed
+//        panel.add(logoLabel);
 
         // Title Label
         JLabel titleLabel = new JLabel("Black Box Plus");

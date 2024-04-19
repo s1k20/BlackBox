@@ -1,18 +1,25 @@
 package view;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Objects;
 
 public class GUI_UserInput {
 
     public static String askForPlayerName(String title) {
         final String[] playerName = {null}; // To hold the player's name
 
-        // Load the background image
-        ImageIcon background = new ImageIcon("view/images/background.jpg");
-        Image img = background.getImage();
+        BufferedImage background;
+        try {
+            background = ImageIO.read(Objects.requireNonNull(GUI_UserInput.class.getResource("images/background.jpg")));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         // Create the dialog
         JDialog dialog = new JDialog();
@@ -27,7 +34,7 @@ public class GUI_UserInput {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+                g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), this);
             }
         };
 
@@ -74,8 +81,12 @@ public class GUI_UserInput {
     }
 
     public static int getAIDifficulty() {
-        ImageIcon icon = new ImageIcon("view/images/background.jpg"); // Ensure the image path is correct
-        Image image = icon.getImage();
+        BufferedImage background;
+        try {
+            background = ImageIO.read(Objects.requireNonNull(GUI_UserInput.class.getResource("images/background.jpg")));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         // Create a modal JDialog
         JDialog dialog = new JDialog();
@@ -90,7 +101,7 @@ public class GUI_UserInput {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.drawImage(image, 0, 0, getWidth(), getHeight(), this); // Draw the background image
+                g.drawImage(background, 0, 0, getWidth(), getHeight(), this); // Draw the background image
             }
         };
 
