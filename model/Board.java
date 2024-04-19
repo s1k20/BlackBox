@@ -357,6 +357,7 @@ public class Board {
         RayInputMap rMap = inputMapping.get(input);
 
         Ray r = new Ray(input);
+        numRaysSent++;
         currentRay = r;
         sentRays.add(r);
 
