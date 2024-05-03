@@ -13,12 +13,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4576e0cc-369a-4145-900a-290dc17a3fc7" name="Changes" comment="fixed issue with ray counts">
-      <change beforePath="$PROJECT_DIR$/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Board$RayTrail.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Board$RayTrail.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Board$RayTrails.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Board$RayTrails.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/model/Board.class" afterDir="false" />
+    <list default="true" id="4576e0cc-369a-4145-900a-290dc17a3fc7" name="Changes" comment="merged sending and guessing into one step, so you can guess an atom, send a ray then guess another">
+      <change afterPath="$PROJECT_DIR$/controller/PlayerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/GUIInputListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/GUIInputListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/GameMusic.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/GameMusic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/GameObserver.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/GameStateManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller/GameStateManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_tests/controller/TestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_tests/controller/TestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_tests/model/TestScore.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_tests/model/TestScore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/AiPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/AiPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/GameMusic.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/GameMusic.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/GameObserver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/GameStateManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/GameStateManager$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/GameStateManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/controller/GameStateManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/game_tests/controller/TestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/game_tests/controller/TestController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/game_tests/model/TestScore.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/game_tests/model/TestScore.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIEndScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIEndScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$HexagonPath.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$HexagonPath.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$NumberArea.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$NumberArea.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$NumberPath.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard$NumberPath.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIGameBoard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GameView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GameView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/GUIEndScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/GUIEndScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/GUIGameBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/GUIGameBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/GameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/GameView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +114,7 @@
       <recent name="$PROJECT_DIR$/controller/sfx" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.RunGame">
+  <component name="RunManager" selected="JUnit.game_tests in Software-Engineering-Project-2">
     <configuration name="RunGame" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Software-Engineering-Project-2" />
@@ -97,50 +122,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestAtom.testCircleOfInfluenceList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="All in Software-Engineering-Project-2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Software-Engineering-Project-2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="game_tests.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="game_tests.model" />
-      <option name="MAIN_CLASS_NAME" value="game_tests.model.TestAtom" />
-      <option name="METHOD_NAME" value="testCircleOfInfluenceList" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestAtom.testRayMarkerColour" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Software-Engineering-Project-2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="game_tests.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="game_tests.model" />
-      <option name="MAIN_CLASS_NAME" value="game_tests.model.TestAtom" />
-      <option name="METHOD_NAME" value="testRayMarkerColour" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestCircleOfInfluences.testCircleOfInfluencePlace" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Software-Engineering-Project-2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="game_tests.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="game_tests.model" />
-      <option name="MAIN_CLASS_NAME" value="game_tests.model.TestCircleOfInfluences" />
-      <option name="METHOD_NAME" value="testCircleOfInfluencePlace" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -156,6 +141,38 @@
       <option name="PACKAGE_NAME" value="game_tests.model" />
       <option name="MAIN_CLASS_NAME" value="game_tests.model.TestCircleOfInfluences" />
       <option name="METHOD_NAME" value="testIntersectingCircleOfInfluence" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestController.testOnAtomPlace" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Software-Engineering-Project-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game_tests.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="game_tests.controller" />
+      <option name="MAIN_CLASS_NAME" value="game_tests.controller.TestController" />
+      <option name="METHOD_NAME" value="testOnAtomPlace" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestController.testOnSendRay" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Software-Engineering-Project-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game_tests.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="game_tests.controller" />
+      <option name="MAIN_CLASS_NAME" value="game_tests.controller.TestController" />
+      <option name="METHOD_NAME" value="testOnSendRay" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -177,19 +194,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.RunGame" />
+      <item itemvalue="JUnit.All in Software-Engineering-Project-2" />
+      <item itemvalue="JUnit.TestController.testOnAtomPlace" />
+      <item itemvalue="JUnit.TestController.testOnSendRay" />
       <item itemvalue="JUnit.game_tests in Software-Engineering-Project-2" />
-      <item itemvalue="JUnit.TestAtom.testRayMarkerColour" />
-      <item itemvalue="JUnit.TestAtom.testCircleOfInfluenceList" />
-      <item itemvalue="JUnit.TestCircleOfInfluences.testCircleOfInfluencePlace" />
       <item itemvalue="JUnit.TestCircleOfInfluences.testIntersectingCircleOfInfluence" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.game_tests in Software-Engineering-Project-2" />
+        <item itemvalue="JUnit.TestController.testOnSendRay" />
+        <item itemvalue="JUnit.TestController.testOnAtomPlace" />
+        <item itemvalue="JUnit.All in Software-Engineering-Project-2" />
         <item itemvalue="JUnit.TestCircleOfInfluences.testIntersectingCircleOfInfluence" />
-        <item itemvalue="JUnit.TestCircleOfInfluences.testCircleOfInfluencePlace" />
-        <item itemvalue="JUnit.TestAtom.testCircleOfInfluenceList" />
-        <item itemvalue="JUnit.TestAtom.testRayMarkerColour" />
       </list>
     </recent_temporary>
   </component>
@@ -285,7 +302,13 @@
       <workItem from="1713297475836" duration="1248000" />
       <workItem from="1713346617330" duration="21375000" />
       <workItem from="1713436651531" duration="17098000" />
-      <workItem from="1713520919515" duration="7272000" />
+      <workItem from="1713520919515" duration="18464000" />
+      <workItem from="1713722385684" duration="3850000" />
+      <workItem from="1713780992531" duration="7160000" />
+      <workItem from="1713794416670" duration="386000" />
+      <workItem from="1713965210548" duration="1142000" />
+      <workItem from="1714221261967" duration="8577000" />
+      <workItem from="1714411706810" duration="18725000" />
     </task>
     <task id="LOCAL-00001" summary="fixed bug">
       <option name="closed" value="true" />
@@ -567,7 +590,23 @@
       <option name="project" value="LOCAL" />
       <updated>1713536363737</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="fixed image loading">
+      <option name="closed" value="true" />
+      <created>1713538058055</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1713538058055</updated>
+    </task>
+    <task id="LOCAL-00037" summary="merged sending and guessing into one step, so you can guess an atom, send a ray then guess another">
+      <option name="closed" value="true" />
+      <created>1713550614449</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1713550614449</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -586,8 +625,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added file" />
-    <MESSAGE value="tidy project structure and seperated constants into separate class" />
     <MESSAGE value="added some extra tests" />
     <MESSAGE value="worked on rays and deflections handled" />
     <MESSAGE value="added getter for ray graphic" />
@@ -611,7 +648,9 @@
     <MESSAGE value="fixed some bugs and got rid of print statements to terminal" />
     <MESSAGE value="fixed some text stuff" />
     <MESSAGE value="fixed issue with ray counts" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed issue with ray counts" />
+    <MESSAGE value="fixed image loading" />
+    <MESSAGE value="merged sending and guessing into one step, so you can guess an atom, send a ray then guess another" />
+    <option name="LAST_COMMIT_MESSAGE" value="merged sending and guessing into one step, so you can guess an atom, send a ray then guess another" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

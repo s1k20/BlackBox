@@ -2,7 +2,7 @@ package game_tests.model;
 import controller.Game;
 import model.*;
 import org.junit.jupiter.api.Test;
-import view.GameView;
+import view.TUIBoard;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -222,7 +222,7 @@ public class TestRay {
     @Test
     void test120deflection() {
         Board b = new Board();
-        GameView view = new GameView(b);
+        TUIBoard view = new TUIBoard(b);
 
         b.placeAtom(3,5);
         b.placeAtom(4,5);
@@ -256,7 +256,7 @@ public class TestRay {
     @Test
     void test120deflection2() {
         Board b = new Board();
-        GameView view = new GameView(b);
+        TUIBoard view = new TUIBoard(b);
 
         b.placeAtom(6,3);
         b.placeAtom(5,5);
@@ -294,7 +294,7 @@ public class TestRay {
     @Test
     void test180deflection() {
         Board b = new Board();
-        GameView view = new GameView(b);
+        TUIBoard view = new TUIBoard(b);
 
         b.placeAtom(9,1);
         b.placeAtom(5,2);
@@ -334,7 +334,7 @@ public class TestRay {
     @Test
     void test180deflection2() {
         Board b = new Board();
-        GameView view = new GameView(b);
+        TUIBoard view = new TUIBoard(b);
 
         b.placeAtom(5,4);
         b.placeAtom(3,5);
@@ -375,7 +375,7 @@ public class TestRay {
     @Test
     void testAdvancedRayPath() {
         Board b = new Board();
-        GameView view = new GameView(b);
+        TUIBoard view = new TUIBoard(b);
 
         b.placeAtom(5,3);
         b.placeAtom(7,3);
@@ -406,7 +406,7 @@ public class TestRay {
     @Test
     void testAdvancedRayPath2() {
         Board b = new Board();
-        GameView view = new GameView(b);
+        TUIBoard view = new TUIBoard(b);
 
         b.placeAtom(4,3);
         b.placeAtom(5,4);
@@ -455,7 +455,7 @@ public class TestRay {
     @Test
     void testAtomEdge() {
         Board b = new Board();
-        GameView view = new GameView(b);
+        TUIBoard view = new TUIBoard(b);
 
         b.placeAtom(2,4);
         b.placeAtom(9,4);

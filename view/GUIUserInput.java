@@ -9,14 +9,14 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class GUI_UserInput {
+public class GUIUserInput {
 
     public static String askForPlayerName(String title) {
         final String[] playerName = {null}; // To hold the player's name
 
         BufferedImage background;
         try {
-            background = ImageIO.read(Objects.requireNonNull(GUI_UserInput.class.getResource("images/background.jpg")));
+            background = ImageIO.read(Objects.requireNonNull(GUIUserInput.class.getResource("GUIBoard/images/background.jpg")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -83,7 +83,7 @@ public class GUI_UserInput {
     public static int getAIDifficulty() {
         BufferedImage background;
         try {
-            background = ImageIO.read(Objects.requireNonNull(GUI_UserInput.class.getResource("images/background.jpg")));
+            background = ImageIO.read(Objects.requireNonNull(GUIUserInput.class.getResource("images/background.jpg")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

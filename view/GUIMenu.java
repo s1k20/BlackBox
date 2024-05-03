@@ -33,7 +33,7 @@ public class GUIMenu {
                 super.paintComponent(g);
                 BufferedImage background;
                 try {
-                    background = ImageIO.read(Objects.requireNonNull(getClass().getResource("images/background.jpg")));
+                    background = ImageIO.read(Objects.requireNonNull(getClass().getResource("GUIBoard/images/background.jpg")));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -65,18 +65,13 @@ public class GUIMenu {
         singlePlayerButton.setBorderPainted(false);
         singlePlayerButton.setFont(buttonFont);
         singlePlayerButton.setForeground(Color.WHITE);
-        singlePlayerButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        singlePlayerButton.addActionListener(e -> {
 
-                jFrame.dispose();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Game singlePlayerGame = new Game();
-                        singlePlayerGame.playSinglePlayerGame();
-                    }
-                }).start();
-            }
+            jFrame.dispose();
+            new Thread(() -> {
+                Game singlePlayerGame = new Game();
+                singlePlayerGame.playSinglePlayerGame();
+            }).start();
         });
         panel.add(singlePlayerButton);
 
@@ -88,18 +83,12 @@ public class GUIMenu {
         twoPlayerButton.setBorderPainted(false);
         twoPlayerButton.setFont(buttonFont);
         twoPlayerButton.setForeground(Color.WHITE);
-        twoPlayerButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                jFrame.dispose();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Game twoPlayerGame = new Game();
-                        twoPlayerGame.play2PlayerGame();
-                    }
-                }).start();
-            }
+        twoPlayerButton.addActionListener(e -> {
+            jFrame.dispose();
+            new Thread(() -> {
+                Game twoPlayerGame = new Game();
+                twoPlayerGame.play2PlayerGame();
+            }).start();
         });
         panel.add(twoPlayerButton);
 
@@ -111,12 +100,10 @@ public class GUIMenu {
         quitButton.setBorderPainted(false);
         quitButton.setFont(buttonFont);
         quitButton.setForeground(Color.WHITE);
-        quitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Code to quit the game
-                jFrame.dispose();
-                createInitialMenu();
-            }
+        quitButton.addActionListener(e -> {
+            // Code to quit the game
+            jFrame.dispose();
+            createInitialMenu();
         });
         panel.add(quitButton);
     }

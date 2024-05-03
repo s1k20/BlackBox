@@ -45,7 +45,7 @@ public class GUIEndScreen extends JFrame {
                 super.paintComponent(g);
                 BufferedImage background;
                 try {
-                    background = ImageIO.read(Objects.requireNonNull(getClass().getResource("images/background.jpg")));
+                    background = ImageIO.read(Objects.requireNonNull(getClass().getResource("GUIBoard/images/background.jpg")));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -76,7 +76,7 @@ public class GUIEndScreen extends JFrame {
         setVisible(true);
     }
     private void displaySinglePlayerStats(JPanel panel, GridBagConstraints gbc) {
-        Player player = game.getPlayer1(); // Ensure getPlayer1() method exists and returns a valid player
+        Player player = game.getPlayerManager().getPlayer1(); // Ensure getPlayer1() method exists and returns a valid player
 
         JLabel titleLabel = new JLabel("Final Score and Statistics for " + player.getPlayerName(), SwingConstants.CENTER);
         styleStatsLabel(titleLabel);
@@ -93,9 +93,9 @@ public class GUIEndScreen extends JFrame {
     }
 
     private void displayMultiplayerStats(JPanel panel, GridBagConstraints gbc) {
-        Player player1 = game.getPlayer1();
-        Player player2 = game.getPlayer2();
-        Player winner = game.getWinner();
+        Player player1 = game.getPlayerManager().getPlayer1();
+        Player player2 = game.getPlayerManager().getPlayer2();
+        Player winner = game.getPlayerManager().getWinner();
 
         JLabel titleLabel = new JLabel("Game Statistics", SwingConstants.CENTER);
         styleStatsLabel(titleLabel);

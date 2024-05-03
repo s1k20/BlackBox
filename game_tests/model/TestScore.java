@@ -32,9 +32,9 @@ public class TestScore {
         game.guessAtom(6, 6);
         game.guessAtom(4, 2);
         game.guessAtom(6, 1);
-        player.updateScore(game.getBoard().getRayMarkerNumbers().size());
+        game.getPlayerManager().getPlayer2().updateScore(game.getBoard().getRayMarkerNumbers().size());
 
-        assertEquals(game.getExperimenter().getScore(), 27);
+        assertEquals(27, game.getPlayerManager().getExperimenter().getScore());
 
     }
 

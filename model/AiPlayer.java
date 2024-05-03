@@ -4,21 +4,26 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Represents an AI player in the game, capable of setting and guessing atom positions
+ * and sending rays based on a specified difficulty level.
+ */
 public class AiPlayer extends Player {
-    //general - will place random atoms and send a random number of rays at different points (guessing independent of sending rays)
-    //1 == hardest - will guess 4 atoms correctly and have a 40% chance of guessing each other atom
-    //2 == medium - will guess 2 atoms correctly and have a 30% chance of guessing each other atom
-    //3 == easiest - will guess 1 atom correctly and then randomly guess 5 other atoms (could be correct or incorrect)
-    private final int difficulty;
-    private Board board;
+    private final int difficulty;  // Defines the difficulty level of the AI (1: hard, 2: medium, 3: easy)
+    private Board board;           // The game board associated with this AI player
 
-    private final ArrayList<Integer> sentRays;
-    private final ArrayList<Point> guessedAtoms;
+    private final ArrayList<Integer> sentRays;   // Tracks the rays sent by the AI to avoid repetition
+    private final ArrayList<Point> guessedAtoms; // Tracks the atoms guessed by the AI
 
-    private static final Random random = new Random();
+    private static final Random random = new Random(); // Random generator for AI operations
+    private static final String[] names = {"Cian", "Lloyd", "Shlok"}; // Predefined names for AI players
 
-    private static final String[] names = {"Cian", "Lloyd", "Shlok"};
-
+    /**
+     * Constructs an AI player with specified settings.
+     * @param isSetter whether this AI player is initially the setter
+     * @param difficulty the difficulty level of the AI (1=hard, 2=medium, 3=easy)
+     * @param board the game board associated with this player
+     */
     public AiPlayer(boolean isSetter, int difficulty, Board board) {
         super(getRandomName() + " (AI)", isSetter);
         this.difficulty = difficulty;
@@ -28,16 +33,23 @@ public class AiPlayer extends Player {
         guessedAtoms = new ArrayList<>();
     }
 
+    /**
+     * Generates a random name for the AI player from a predefined list of names.
+     * @return a randomly selected name
+     */
     private static String getRandomName() {
         return names[random.nextInt(names.length)];
     }
 
+    /**
+     * Simulates sending rays based on AI difficulty.
+     * The number of rays sent increases with difficulty.
+     * @return a list of integers representing the ray inputs
+     */
     public ArrayList<Integer> ai_sendRays() {
-        int multiplier = difficulty;
-        if (difficulty == 1) multiplier = 2;
+        int multiplier = difficulty == 1 ? 2 : difficulty;
 
-        int numRaysToSend = (random.nextInt(2, 5) * (multiplier));
-
+        int numRaysToSend = random.nextInt(2, 5) * multiplier;
         ArrayList<Integer> rays = new ArrayList<>();
 
         for (int i = 0; i < numRaysToSend; i++) {
@@ -47,6 +59,10 @@ public class AiPlayer extends Player {
         return rays;
     }
 
+    /**
+     * Helper method to pick a unique ray input that has not been used before.
+     * @return a valid ray input
+     */
     private int pickRayInput() {
         int input;
         do {
@@ -56,19 +72,24 @@ public class AiPlayer extends Player {
         return input;
     }
 
+    /**
+     * Directs the AI to place a specified number of atoms on the board randomly.
+     * @param numAtoms the number of atoms to place
+     */
     public void ai_setAtoms(int numAtoms) {
-
         for (int i = 0; i < numAtoms; i++) {
             Point newAtom = ai_randomAtom(true);
-
             board.placeAtom(newAtom.x, newAtom.y);
         }
     }
 
+    /**
+     * Generates a random point on the board that is valid and not currently occupied.
+     * @param isSetting true if setting atoms, false if guessing
+     * @return a valid point for placing or guessing an atom
+     */
     private Point ai_randomAtom(boolean isSetting) {
-        int x;
-        int y;
-
+        int x, y;
         do {
             x = random.nextInt(9) + 1;
             y = random.nextInt(9) + 1;
@@ -76,25 +97,27 @@ public class AiPlayer extends Player {
 
         Point randomPosition = new Point(x, y);
         guessedAtoms.add(randomPosition);
-
         return randomPosition;
     }
 
+    /**
+     * Simulates the AI guessing atom positions based on its difficulty.
+     * @param numAtoms the number of atoms to guess
+     * @return a list of points where the AI guesses atoms are located
+     */
     public ArrayList<Point> ai_guessAtoms(int numAtoms) {
-        switch (difficulty){
-            case 1 -> {
-                return guessAtoms_hard(numAtoms);
-            }
-            case 2 -> {
-                return guessAtoms_medium(numAtoms);
-            }
-            case 3 -> {
-                return guessAtoms_easy(numAtoms);
-            }
-            default -> throw new IllegalArgumentException("invalid difficulty");
+        switch (difficulty) {
+            case 1: return guessAtoms_hard(numAtoms);
+            case 2: return guessAtoms_medium(numAtoms);
+            case 3: return guessAtoms_easy(numAtoms);
+            default: throw new IllegalArgumentException("Invalid difficulty");
         }
     }
 
+    /**
+     * Updates the game board for this AI player.
+     * @param board the new game board
+     */
     public void setNewBoard(Board board) {
         this.board = board;
     }

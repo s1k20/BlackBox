@@ -1,4 +1,4 @@
-package view;
+package view.GUIBoard;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -36,7 +36,6 @@ public class GameImages {
             ray0 = ImageIO.read(Objects.requireNonNull(getClass().getResource("images/straight_line_thick.png")));
             ray60 = ImageIO.read(Objects.requireNonNull(getClass().getResource("images/60_degree_line_thick.png")));
             ray120 = ImageIO.read(Objects.requireNonNull(getClass().getResource("images/120_degree_line_thick.png")));
-
 
         } catch (IOException e) {
             e.printStackTrace();

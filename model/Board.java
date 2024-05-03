@@ -184,9 +184,6 @@ public class Board {
         }
     }
 
-    //TODO: change this function to not use constant values and instead will
-    //TODO: - calculate each value based on our HEIGHT and WIDTH constants
-    //TODO: (make it scalable)
     private static boolean checkRayMarker(int i, int j){
             return i + j == 5 || i + j == 15 || (i == 0 && j >= 5) ||
                     (j == 10 && i < 6) || (i == 10 && j <= 5) || (j == 0 && i >= 5);
@@ -197,22 +194,6 @@ public class Board {
                 (j == 9 && i < 6) || (i == 9 && j <= 5) || (j == 1 && i >= 5);
     }
 
-    //TODO develop this (probably dont need this)
-    //TODO make it work for certain deflections/reflection and absorption
-//    public void placeRayMarker(int x, int y){
-//
-//        //validation that position is valid ray marker position
-//        if(!checkRayMarker(y, x)){
-//            throw new IllegalArgumentException("Invalid Position for Ray Marker");
-//        }
-//
-//        //just creates a new ray marker in a certain position and creates a random colour for it
-//        RayMarker r = new RayMarker(x, y, generateColour());
-//
-//        //place new ray marker into board
-//        board[y][x] = r;
-//    }
-
     //classes which have no functionality other than representing a position on board
     //null hex is a position in the object array which cants be accessed in the game
     //empty ray marker is the perimeter of the board; position which will hold ray markers for rays
@@ -221,41 +202,26 @@ public class Board {
     public static class EmptyMarker{
     }
 
-    //TODO: (probably dont need this)
-    //function to create a different colour for each ray marker
-//    private String generateColour(){
-//        //TODO: fix this function so it generates the colour based on
-//        //TODO: - what kind of reflection ray takes
-//
-//        //loop colours back to the start
-//        if(colourIndex >= 37){
-//            colourIndex = 31;
-//        }
-//
-//        return "\u001B[" + colourIndex++ + "m";
-//    }
-
     public boolean checkInvalidInput(int i, int j){
         return i + j <= 5 || i + j >= 15 || i <= 0 || j <= 0 || i >= 10 || j >= 10;
     }
 
     //function to map each number between 1 - 54 (ray input positions) to a hexagon and orientation
     public void setInputMapping(){
+        int NUM_RAY_INPUTS = 54;
 
-        //TODO try not hard code this, will try later on
-        int SETLENGTH = 54;
-
+        // coordinates in the board data structure starting from the top, most left input = 1
         int x = 5;
         int y = 0;
 
-        for(int i = 1; i <= SETLENGTH; i++){
+        for(int i = 1; i <= NUM_RAY_INPUTS; i++){
             RayInputMap r = new RayInputMap();
 
             if(i <= 18){
                 r.x = x;
                 r.y = y;
+                //1 - 9
                 if(i < 10){
-
                     if(i % 2 == 0){
                         r.orientation = 0;
                         numberOut.put(new RayOutputPoint(x, y, true), i);
@@ -266,8 +232,8 @@ public class Board {
                         x--;
                         y++;
                     }
-
                 }
+                //10 - 18
                 else{
 
                     if(i % 2 == 0){
@@ -284,7 +250,8 @@ public class Board {
                 }
                 inputMapping.put(i, r);
             }
-            else if(i <= 28){
+            //19 - 27
+            else if(i < 28){
                 r.x = x;
                 r.y = y;
                 if(i % 2 == 0){
@@ -297,15 +264,16 @@ public class Board {
                     x++;
                 }
                 inputMapping.put(i, r);
-
             }
+
             else if(i <= 45){
-                if(i == 29){
-                    x++;
-                    y--;
-                }
+//                if(i == 29){
+//                    x++;
+//                    y--;
+//                }
                 r.x = x;
                 r.y = y;
+                //28 - 36
                 if(i < 37){
 
                     if(i % 2 == 0){
@@ -320,6 +288,7 @@ public class Board {
                     }
 
                 }
+                //37 - 45
                 else{
                     if(i % 2 == 0){
                         r.orientation = 240;
@@ -330,11 +299,10 @@ public class Board {
                         numberOut.put(new RayOutputPoint(x, y, false), i);
                         y--;
                     }
-
-
                 }
                 inputMapping.put(i, r);
             }
+            //46 - 54
             else{
                 r.x = x;
                 r.y = y;
@@ -352,7 +320,7 @@ public class Board {
         }
     }
 
-    public boolean sendRay(int input){
+    public void sendRay(int input){
 //        System.out.println("Ray entered at " + input);
         RayInputMap rMap = inputMapping.get(input);
 
@@ -381,7 +349,7 @@ public class Board {
                 start.setGuiColour(Color.green);
                 r.setOutput(-1);
 //                System.out.println("Ray absorbed!");
-                return true;
+                return;
             }
 
             switch (r.getOrientation()) {
@@ -404,7 +372,7 @@ public class Board {
                 start.setGuiColour(Color.green);
                 r.setDeflectionType(-1);
                 r.setOutput(-1);
-                return true;
+                return;
             }
 
         }
@@ -420,7 +388,7 @@ public class Board {
                 start.setColour(colour);
                 r.setDeflectionType(180);
                 r.setOutput(r.getInput());
-                return true;
+                return;
             }
             else if(r.getDeflectionType() == 120){
                 colour = "\u001B[35m";
@@ -448,18 +416,15 @@ public class Board {
 
             int exit = findExit(m);
             r.setOutput(exit);
-//            if (r.getDeflectionType() == 180) System.out.println("Deflected!");
-//            else System.out.println("Ray exited at " + exit);
             RayMarker end = new RayMarker(r.getCurrXCo_ord(), r.getCurrYCo_ord(), exit, colour, guiColour);
             rayMarkers.add(end);
             rayMarkerNumbers.add(end.getNumber());
 
             board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] = end;
-            return false;
+            return;
         }
 
         r.setDeflectionType(-1);
-        return true;
     }
 
     private int findExit(RayInputMap r){
@@ -488,8 +453,6 @@ public class Board {
         return false;
     }
 
-
-
     public static class RayTrail{
         private final int orientation;
         private RayTrail(int orientation){
@@ -514,7 +477,14 @@ public class Board {
         }
 
         public void addRayTrail(int orientation) {
-            this.rayTrails.add(new RayTrail(orientation));
+            if (!containsOrientation(orientation)) this.rayTrails.add(new RayTrail(orientation));
+        }
+
+        private boolean containsOrientation(int orientation) {
+            for (RayTrail r : rayTrails) {
+                if (r.orientation == orientation) return true;
+            }
+            return false;
         }
     }
 }

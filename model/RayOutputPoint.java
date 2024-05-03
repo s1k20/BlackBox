@@ -1,6 +1,6 @@
 package model;
 
-public class RayOutputPoint{
+public class RayOutputPoint {
     int x, y;
     boolean isFirst;
 
@@ -20,10 +20,10 @@ public class RayOutputPoint{
 
     @Override
     public int hashCode() {
-        int result = 17; // Start with a non-zero constant prime number.
-        result = 31 * result + x; // Multiply by a prime number before adding the next field.
+        int result = 17;
+        result = 31 * result + x;
         result = 31 * result + y;
-        result = 31 * result + (isFirst ? 1 : 0); // Convert boolean to an int (1 for true, 0 for false).
+        result = 31 * result + (isFirst ? 1 : 0);
         return result;
     }
 
