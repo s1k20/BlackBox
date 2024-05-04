@@ -120,7 +120,7 @@ public class GUIMenu {
                 super.paintComponent(g);
                 BufferedImage background;
                 try {
-                    background = ImageIO.read(Objects.requireNonNull(getClass().getResource("images/background.jpg")));
+                    background = ImageIO.read(Objects.requireNonNull(getClass().getResource("GUIBoard/images/background.jpg")));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

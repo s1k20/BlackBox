@@ -26,6 +26,38 @@ public class TestController {
         assertTrue(g.getBoard().getBoardPosition(5,4) instanceof CircleOfInfluence);
     }
 
+    @Test
+    void testOnAtomPlace2() {
+        Game g = new Game();
+        GUIGameScreen gb = new GUIGameScreen(g);
+
+        gb.getListener().onAtomPlaced(8, 3);
+
+        assertTrue(g.getBoard().getBoardPosition(8,3) instanceof Atom);
+        assertTrue(g.getBoard().getBoardPosition(7,4) instanceof CircleOfInfluence);
+        assertTrue(g.getBoard().getBoardPosition(7,3) instanceof CircleOfInfluence);
+        assertTrue(g.getBoard().getBoardPosition(8,2) instanceof CircleOfInfluence);
+        assertTrue(g.getBoard().getBoardPosition(8,4) instanceof CircleOfInfluence);
+        assertTrue(g.getBoard().getBoardPosition(9,2) instanceof CircleOfInfluence);
+        assertTrue(g.getBoard().getBoardPosition(9,3) instanceof CircleOfInfluence);
+    }
+
+    @Test
+    void testOnAtomPlace3() {
+        Game g = new Game();
+        GUIGameScreen gb = new GUIGameScreen(g);
+
+        gb.getListener().onAtomPlaced(2, 5);
+
+        assertTrue(g.getBoard().getBoardPosition(2,5) instanceof Atom);
+        assertTrue(g.getBoard().getBoardPosition(3,4) instanceof CircleOfInfluence);
+        assertTrue(g.getBoard().getBoardPosition(3,5) instanceof CircleOfInfluence);
+        assertTrue(g.getBoard().getBoardPosition(2,4) instanceof CircleOfInfluence);
+        assertTrue(g.getBoard().getBoardPosition(2,6) instanceof CircleOfInfluence);
+        assertTrue(g.getBoard().getBoardPosition(1,5) instanceof CircleOfInfluence);
+        assertTrue(g.getBoard().getBoardPosition(1,6) instanceof CircleOfInfluence);
+    }
+
 //    @Test
 //    void testOnSendRay() {
 //        Game g = new Game();
