@@ -1,6 +1,7 @@
 package game_tests.model;
 import controller.Game;
 import model.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import view.TUIBoard;
 
@@ -8,28 +9,6 @@ import view.TUIBoard;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestRay {
-
-//    @Test
-//    void testPlaceRayMarker() {
-//        Board b = new Board();
-//
-//        assertThrows(IllegalArgumentException.class, () -> b.placeRayMarker(4, 0));
-//
-//        assertThrows(IllegalArgumentException.class, () -> b.placeRayMarker(6, 4));
-//
-//        assertThrows(IllegalArgumentException.class, () -> b.placeRayMarker(3, 1));
-//
-//        assertThrows(IllegalArgumentException.class, () -> b.placeRayMarker(2, 9));
-//
-//        assertThrows(IllegalArgumentException.class, () -> b.placeRayMarker(10, 6));
-//
-//        assertThrows(IllegalArgumentException.class, () -> b.placeRayMarker(1, 3));
-//
-//        assertThrows(IllegalArgumentException.class, () -> b.placeRayMarker(2, 0));
-//
-//        assertThrows(IllegalArgumentException.class, () -> b.placeRayMarker(7, 10));
-//    }
-
 
     @Test
     void testNoAtomDetected() {
@@ -565,5 +544,14 @@ public class TestRay {
         assertEquals(ray6.getOutput(), 17);
 
         view.printEntireBoard();
+    }
+
+    //wrapper assertEquals to flip actual and expected arguements
+    private static void assertEquals(int actual, int expected) {
+        Assertions.assertEquals(expected, actual);
+    }
+
+    private static void assertEquals(String actual, String expected) {
+        Assertions.assertEquals(expected, actual);
     }
 }

@@ -23,7 +23,7 @@ public class Game implements GUIInputListener {
     private Board guessingBoard; // Board to handle experimenter guesses to avoid overwriting original board
 
     // GUIGameScreen which is central to the view of the software
-    private final GUIGameScreen guiView;
+    public final GUIGameScreen guiView;
 
     private final GameStateManager stateManager; // Class which solely handles game state and progressing through a game
     private final PlayerManager playerManager; // Class to handle all actions concerning players

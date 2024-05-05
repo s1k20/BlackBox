@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_INJECTED_CODE" value="false" />
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Software-Engineering-Project-2:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c4ce90f9-2e3a-4526-acd3-804981b42309" name="Changes" comment="New way of updating experimenter score for ray marker">
-      <change beforePath="$PROJECT_DIR$/game_tests/controller/TestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_tests/controller/TestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_tests/model/TestAtom.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_tests/model/TestAtom.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_tests/model/TestCircleOfInfluences.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_tests/model/TestCircleOfInfluences.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/game_tests/controller/TestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/game_tests/controller/TestController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/game_tests/model/TestAtom.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/game_tests/model/TestAtom.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/game_tests/model/TestCircleOfInfluences.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/game_tests/model/TestCircleOfInfluences.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIMenu$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Software-Engineering-Project-2/view/GUIMenu$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/GUIMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/view/GUIMenu.java" afterDir="false" />
+    <list default="true" id="4576e0cc-369a-4145-900a-290dc17a3fc7" name="Changes" comment="fixed some errors">
+      <change beforePath="$PROJECT_DIR$/game_tests/model/TestScore.java" beforeDir="false" afterPath="$PROJECT_DIR$/game_tests/model/TestScore.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +24,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -30,90 +32,114 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Further-Ray-Development" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;lloydwillis&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="b90c4b93-0b1f-4231-9567-645236ea9c9f" />
-        <option name="url" value="https://github.com/cian-boyle/Software-Engineering-Project-2.git" />
-      </UrlAndAccount>
-    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 5
+  &quot;associatedIndex&quot;: 3
 }</component>
-  <component name="ProjectId" id="2bUIc5bWqOsEMphsYg16iEePnxN" />
+  <component name="ProjectId" id="2c7rpZ9xARC6jrKjGe5cqbNrbIN" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "gui-development",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "project.propCompiler"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;gui-development&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/cianboyle/IdeaProjects/Software-Engineering-Project-2/controller/sfx&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.29616308&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/controller/sfx" />
+      <recent name="$PROJECT_DIR$/view" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\lloyd\IdeaProjects\Software-Engineering-Project-2\.idea" />
+      <recent name="$PROJECT_DIR$/controller/gamemusic" />
+      <recent name="$PROJECT_DIR$/view/images" />
+      <recent name="$PROJECT_DIR$/controller/sfx" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.game_tests in Software-Engineering-Project-2">
-    <configuration name="TestCircleOfInfluences.testCircleOfInfluencePlace" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager">
+    <configuration name="RunGame" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="Software-Engineering-Project-2" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="META-INF in Software-Engineering-Project-2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Software-Engineering-Project-2" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="game_tests.model.*" />
+          <option name="PATTERN" value="META-INF.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="game_tests.model" />
-      <option name="MAIN_CLASS_NAME" value="game_tests.model.TestCircleOfInfluences" />
-      <option name="METHOD_NAME" value="testCircleOfInfluencePlace" />
+      <option name="PACKAGE_NAME" value="META-INF" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestController.testOnAtomPlace" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Software-Engineering-Project-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="game_tests.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="game_tests.controller" />
+      <option name="MAIN_CLASS_NAME" value="game_tests.controller.TestController" />
+      <option name="METHOD_NAME" value="testOnAtomPlace" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestCircleOfInfluences.testCircleOfInfluencePlace2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestController.testOnSendRay" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Software-Engineering-Project-2" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="game_tests.model.*" />
+          <option name="PATTERN" value="game_tests.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="game_tests.model" />
-      <option name="MAIN_CLASS_NAME" value="game_tests.model.TestCircleOfInfluences" />
-      <option name="METHOD_NAME" value="testCircleOfInfluencePlace2" />
+      <option name="PACKAGE_NAME" value="game_tests.controller" />
+      <option name="MAIN_CLASS_NAME" value="game_tests.controller.TestController" />
+      <option name="METHOD_NAME" value="testOnSendRay" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestCircleOfInfluences.testOrientation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestRay.testRayMarkerColour" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Software-Engineering-Project-2" />
       <extension name="coverage">
         <pattern>
@@ -122,24 +148,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="game_tests.model" />
-      <option name="MAIN_CLASS_NAME" value="game_tests.model.TestCircleOfInfluences" />
-      <option name="METHOD_NAME" value="testOrientation" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestCircleOfInfluences.testOrientation3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Software-Engineering-Project-2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="game_tests.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="game_tests.model" />
-      <option name="MAIN_CLASS_NAME" value="game_tests.model.TestCircleOfInfluences" />
-      <option name="METHOD_NAME" value="testOrientation3" />
+      <option name="MAIN_CLASS_NAME" value="game_tests.model.TestRay" />
+      <option name="METHOD_NAME" value="testRayMarkerColour" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -159,171 +169,458 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.RunGame" />
+      <item itemvalue="JUnit.META-INF in Software-Engineering-Project-2" />
+      <item itemvalue="JUnit.TestRay.testRayMarkerColour" />
+      <item itemvalue="JUnit.TestController.testOnAtomPlace" />
+      <item itemvalue="JUnit.TestController.testOnSendRay" />
+      <item itemvalue="JUnit.game_tests in Software-Engineering-Project-2" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.game_tests in Software-Engineering-Project-2" />
-        <item itemvalue="JUnit.TestCircleOfInfluences.testOrientation3" />
-        <item itemvalue="JUnit.TestCircleOfInfluences.testCircleOfInfluencePlace2" />
-        <item itemvalue="JUnit.TestCircleOfInfluences.testCircleOfInfluencePlace" />
-        <item itemvalue="JUnit.TestCircleOfInfluences.testOrientation" />
+        <item itemvalue="JUnit.META-INF in Software-Engineering-Project-2" />
+        <item itemvalue="JUnit.TestRay.testRayMarkerColour" />
+        <item itemvalue="JUnit.TestController.testOnSendRay" />
+        <item itemvalue="JUnit.TestController.testOnAtomPlace" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="c4ce90f9-2e3a-4526-acd3-804981b42309" name="Changes" comment="" />
-      <created>1706263307522</created>
+      <changelist id="4576e0cc-369a-4145-900a-290dc17a3fc7" name="Changes" comment="" />
+      <created>1707473641261</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1706263307522</updated>
+      <updated>1707473641261</updated>
+      <workItem from="1707473642331" duration="1036000" />
+      <workItem from="1707474883704" duration="13029000" />
+      <workItem from="1707574705045" duration="6000" />
+      <workItem from="1707593608954" duration="15190000" />
+      <workItem from="1707657400112" duration="1295000" />
+      <workItem from="1707728769404" duration="987000" />
+      <workItem from="1707749844969" duration="11674000" />
+      <workItem from="1707816167463" duration="24840000" />
+      <workItem from="1707912935365" duration="1238000" />
+      <workItem from="1707918333784" duration="893000" />
+      <workItem from="1707922676343" duration="114000" />
+      <workItem from="1707922849730" duration="361000" />
+      <workItem from="1707930982609" duration="1080000" />
+      <workItem from="1708000640048" duration="2564000" />
+      <workItem from="1708088538846" duration="236000" />
+      <workItem from="1708180168226" duration="10555000" />
+      <workItem from="1708195380841" duration="1223000" />
+      <workItem from="1708205870053" duration="937000" />
+      <workItem from="1708219125989" duration="561000" />
+      <workItem from="1708219693902" duration="5000" />
+      <workItem from="1708286423621" duration="2673000" />
+      <workItem from="1708337672563" duration="2603000" />
+      <workItem from="1708434362911" duration="2544000" />
+      <workItem from="1708439184008" duration="2057000" />
+      <workItem from="1708472805684" duration="249000" />
+      <workItem from="1708474017858" duration="89000" />
+      <workItem from="1708525416239" duration="106000" />
+      <workItem from="1708525533581" duration="2090000" />
+      <workItem from="1708530261945" duration="8016000" />
+      <workItem from="1708540632475" duration="4064000" />
+      <workItem from="1708604621045" duration="9905000" />
+      <workItem from="1708622796779" duration="4072000" />
+      <workItem from="1708634375163" duration="75000" />
+      <workItem from="1708634454026" duration="1000" />
+      <workItem from="1708634465873" duration="1451000" />
+      <workItem from="1708640965705" duration="3206000" />
+      <workItem from="1708682734095" duration="2442000" />
+      <workItem from="1708685498319" duration="700000" />
+      <workItem from="1708791331513" duration="36000" />
+      <workItem from="1708791372434" duration="6279000" />
+      <workItem from="1709049542370" duration="4000" />
+      <workItem from="1709129331790" duration="1000" />
+      <workItem from="1709398037896" duration="18000" />
+      <workItem from="1709398083035" duration="1832000" />
+      <workItem from="1709472310148" duration="6000" />
+      <workItem from="1709472324584" duration="4099000" />
+      <workItem from="1709554830887" duration="5303000" />
+      <workItem from="1709578153623" duration="2185000" />
+      <workItem from="1709643535560" duration="2186000" />
+      <workItem from="1709651494496" duration="5000" />
+      <workItem from="1709651838475" duration="3905000" />
+      <workItem from="1709744483796" duration="787000" />
+      <workItem from="1709828280085" duration="1988000" />
+      <workItem from="1709830279290" duration="9597000" />
+      <workItem from="1711804768514" duration="13655000" />
+      <workItem from="1711994693488" duration="22470000" />
+      <workItem from="1712153170920" duration="4000" />
+      <workItem from="1712182822669" duration="633000" />
+      <workItem from="1712234297745" duration="49797000" />
+      <workItem from="1712579696968" duration="303000" />
+      <workItem from="1712584296221" duration="537000" />
+      <workItem from="1712589741113" duration="1168000" />
+      <workItem from="1712662395202" duration="407000" />
+      <workItem from="1712663109290" duration="69000" />
+      <workItem from="1712663444835" duration="18948000" />
+      <workItem from="1712851669988" duration="8538000" />
+      <workItem from="1712875425770" duration="512000" />
+      <workItem from="1712918946737" duration="2441000" />
+      <workItem from="1712931080200" duration="700000" />
+      <workItem from="1712932924239" duration="126000" />
+      <workItem from="1712949543657" duration="3259000" />
+      <workItem from="1712961717359" duration="5274000" />
+      <workItem from="1713006807557" duration="23749000" />
+      <workItem from="1713101215152" duration="123000" />
+      <workItem from="1713109525139" duration="3186000" />
+      <workItem from="1713121799300" duration="215000" />
+      <workItem from="1713124962992" duration="5254000" />
+      <workItem from="1713188164683" duration="4117000" />
+      <workItem from="1713196626175" duration="7054000" />
+      <workItem from="1713257479878" duration="13569000" />
+      <workItem from="1713297360180" duration="37000" />
+      <workItem from="1713297475836" duration="1248000" />
+      <workItem from="1713346617330" duration="21375000" />
+      <workItem from="1713436651531" duration="17098000" />
+      <workItem from="1713520919515" duration="18464000" />
+      <workItem from="1713722385684" duration="3850000" />
+      <workItem from="1713780992531" duration="7160000" />
+      <workItem from="1713794416670" duration="386000" />
+      <workItem from="1713965210548" duration="1142000" />
+      <workItem from="1714221261967" duration="8577000" />
+      <workItem from="1714411706810" duration="93833000" />
+      <workItem from="1714909705785" duration="48000" />
     </task>
-    <task id="LOCAL-00001" summary="Test 3.0">
+    <task id="LOCAL-00001" summary="fixed bug">
       <option name="closed" value="true" />
-      <created>1706263570407</created>
+      <created>1707474141974</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1706263570407</updated>
+      <updated>1707474141974</updated>
     </task>
-    <task id="LOCAL-00002" summary="...">
+    <task id="LOCAL-00002" summary="fixed x-y issue">
       <option name="closed" value="true" />
-      <created>1707481016668</created>
+      <created>1707479972638</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1707481016668</updated>
+      <updated>1707479972638</updated>
     </task>
-    <task id="LOCAL-00003" summary="player class">
+    <task id="LOCAL-00003" summary="start ray marker (worked together in lab)">
       <option name="closed" value="true" />
-      <created>1707597207330</created>
+      <created>1707490479986</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1707597207330</updated>
+      <updated>1707490479986</updated>
     </task>
-    <task id="LOCAL-00004" summary="player class">
+    <task id="LOCAL-00004" summary="fixed small things">
       <option name="closed" value="true" />
-      <created>1707597303358</created>
+      <created>1707597019582</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1707597303358</updated>
+      <updated>1707597019582</updated>
     </task>
-    <task id="LOCAL-00005" summary="player class added method">
+    <task id="LOCAL-00005" summary="comments added">
       <option name="closed" value="true" />
-      <created>1707598591199</created>
+      <created>1708538452641</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1707598591199</updated>
+      <updated>1708538452641</updated>
     </task>
-    <task id="LOCAL-00006" summary="player class added method">
+    <task id="LOCAL-00006" summary="refactored into packages">
       <option name="closed" value="true" />
-      <created>1707598684159</created>
+      <created>1708541017140</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1707598684159</updated>
+      <updated>1708541017140</updated>
     </task>
-    <task id="LOCAL-00007" summary="added validation and unit testing">
+    <task id="LOCAL-00007" summary="minor refactoring">
       <option name="closed" value="true" />
-      <created>1708530957665</created>
+      <created>1708598647976</created>
       <option name="number" value="00007" />
       <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1708530957665</updated>
+      <updated>1708598647976</updated>
     </task>
-    <task id="LOCAL-00008" summary="added unit testing">
+    <task id="LOCAL-00008" summary="added file">
       <option name="closed" value="true" />
-      <created>1708538723239</created>
+      <created>1708599196424</created>
       <option name="number" value="00008" />
       <option name="presentableId" value="LOCAL-00008" />
       <option name="project" value="LOCAL" />
-      <updated>1708538723240</updated>
+      <updated>1708599196424</updated>
     </task>
-    <task id="LOCAL-00009" summary="added additional unit tests">
+    <task id="LOCAL-00009" summary="tidy project structure and seperated constants into separate class">
       <option name="closed" value="true" />
-      <created>1708541456458</created>
+      <created>1708614193495</created>
       <option name="number" value="00009" />
       <option name="presentableId" value="LOCAL-00009" />
       <option name="project" value="LOCAL" />
-      <updated>1708541456458</updated>
+      <updated>1708614193495</updated>
     </task>
-    <task id="LOCAL-00010" summary="Created Ray class :)">
+    <task id="LOCAL-00010" summary="added some extra tests">
       <option name="closed" value="true" />
-      <created>1709476891939</created>
+      <created>1708627391435</created>
       <option name="number" value="00010" />
       <option name="presentableId" value="LOCAL-00010" />
       <option name="project" value="LOCAL" />
-      <updated>1709476891939</updated>
+      <updated>1708627391435</updated>
     </task>
-    <task id="LOCAL-00011" summary="Added tests for rays">
+    <task id="LOCAL-00011" summary="worked on rays and deflections handled">
       <option name="closed" value="true" />
-      <created>1709893422459</created>
+      <created>1709565777359</created>
       <option name="number" value="00011" />
       <option name="presentableId" value="LOCAL-00011" />
       <option name="project" value="LOCAL" />
-      <updated>1709893422459</updated>
+      <updated>1709565777359</updated>
     </task>
-    <task id="LOCAL-00012" summary="Added more tests">
+    <task id="LOCAL-00012" summary="worked on rays and deflections handled">
       <option name="closed" value="true" />
-      <created>1709895010502</created>
+      <created>1709894560393</created>
       <option name="number" value="00012" />
       <option name="presentableId" value="LOCAL-00012" />
       <option name="project" value="LOCAL" />
-      <updated>1709895010502</updated>
+      <updated>1709894560393</updated>
     </task>
-    <task id="LOCAL-00013" summary="Small changes">
+    <task id="LOCAL-00013" summary="added getter for ray graphic">
       <option name="closed" value="true" />
-      <created>1712243780289</created>
+      <created>1709894746618</created>
       <option name="number" value="00013" />
       <option name="presentableId" value="LOCAL-00013" />
       <option name="project" value="LOCAL" />
-      <updated>1712243780289</updated>
+      <updated>1709894746618</updated>
     </task>
-    <task id="LOCAL-00014" summary="Additional tests ;)">
+    <task id="LOCAL-00014" summary="added invalid input for ray">
       <option name="closed" value="true" />
-      <created>1712258187336</created>
+      <created>1709897202560</created>
       <option name="number" value="00014" />
       <option name="presentableId" value="LOCAL-00014" />
       <option name="project" value="LOCAL" />
-      <updated>1712258187336</updated>
+      <updated>1709897202560</updated>
     </task>
-    <task id="LOCAL-00015" summary="More tests :)">
+    <task id="LOCAL-00015" summary="small changes to file">
       <option name="closed" value="true" />
-      <created>1712311030151</created>
+      <created>1709898074342</created>
       <option name="number" value="00015" />
       <option name="presentableId" value="LOCAL-00015" />
       <option name="project" value="LOCAL" />
-      <updated>1712311030151</updated>
+      <updated>1709898074342</updated>
     </task>
-    <task id="LOCAL-00016" summary="Additional tests :)">
+    <task id="LOCAL-00016" summary="game says if ray is absorbed">
       <option name="closed" value="true" />
-      <created>1712322562164</created>
+      <created>1709899155395</created>
       <option name="number" value="00016" />
       <option name="presentableId" value="LOCAL-00016" />
       <option name="project" value="LOCAL" />
-      <updated>1712322562164</updated>
+      <updated>1709899155395</updated>
     </task>
-    <task id="LOCAL-00017" summary="Print test">
+    <task id="LOCAL-00017" summary="complex ray development and &quot;game&quot; developed together on call/in lab">
       <option name="closed" value="true" />
-      <created>1712325337361</created>
+      <created>1712062360213</created>
       <option name="number" value="00017" />
       <option name="presentableId" value="LOCAL-00017" />
       <option name="project" value="LOCAL" />
-      <updated>1712325337361</updated>
+      <updated>1712062360214</updated>
     </task>
-    <task id="LOCAL-00018" summary="New way of updating experimenter score for ray marker">
+    <task id="LOCAL-00018" summary="updated constants class">
       <option name="closed" value="true" />
-      <created>1713478595145</created>
+      <created>1712063138451</created>
       <option name="number" value="00018" />
       <option name="presentableId" value="LOCAL-00018" />
       <option name="project" value="LOCAL" />
-      <updated>1713478595145</updated>
+      <updated>1712063138451</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="fixed minor details">
+      <option name="closed" value="true" />
+      <created>1712073976712</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1712073976712</updated>
+    </task>
+    <task id="LOCAL-00020" summary="optimised some methods and finished single player mode">
+      <option name="closed" value="true" />
+      <created>1712257419535</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1712257419535</updated>
+    </task>
+    <task id="LOCAL-00021" summary="updated some classes">
+      <option name="closed" value="true" />
+      <created>1712321644231</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1712321644231</updated>
+    </task>
+    <task id="LOCAL-00022" summary="added previously guessed atoms list">
+      <option name="closed" value="true" />
+      <created>1712325249458</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1712325249458</updated>
+    </task>
+    <task id="LOCAL-00023" summary="added previously guessed atoms list">
+      <option name="closed" value="true" />
+      <created>1712325304496</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1712325304496</updated>
+    </task>
+    <task id="LOCAL-00024" summary="hexagon board gui in works and started working on ai player for single player mode">
+      <option name="closed" value="true" />
+      <created>1712424262927</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1712424262927</updated>
+    </task>
+    <task id="LOCAL-00025" summary="added distinct game states integrated states into gui view/controller  and added input listener to adhere to mvc architecture">
+      <option name="closed" value="true" />
+      <created>1712683260356</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1712683260356</updated>
+    </task>
+    <task id="LOCAL-00026" summary="worked on single player w/ gui">
+      <option name="closed" value="true" />
+      <created>1712919469835</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1712919469835</updated>
+    </task>
+    <task id="LOCAL-00027" summary="worked on single player w/ gui">
+      <option name="closed" value="true" />
+      <created>1712919478435</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1712919478435</updated>
+    </task>
+    <task id="LOCAL-00028" summary="developed ai (single player mode) and incorporated full board screen">
+      <option name="closed" value="true" />
+      <created>1713030137353</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1713030137353</updated>
+    </task>
+    <task id="LOCAL-00029" summary="(some things didnt push from last push)">
+      <option name="closed" value="true" />
+      <created>1713051815918</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1713051815918</updated>
+    </task>
+    <task id="LOCAL-00030" summary="added some banger music/sound effects">
+      <option name="closed" value="true" />
+      <created>1713263586519</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1713263586519</updated>
+    </task>
+    <task id="LOCAL-00031" summary="refactored packages and added seperation in classes">
+      <option name="closed" value="true" />
+      <created>1713450054241</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1713450054241</updated>
+    </task>
+    <task id="LOCAL-00032" summary="fixed some bugs and got rid of print statements to terminal">
+      <option name="closed" value="true" />
+      <created>1713467254883</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1713467254883</updated>
+    </task>
+    <task id="LOCAL-00033" summary="fixed some text stuff">
+      <option name="closed" value="true" />
+      <created>1713522674625</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1713522674625</updated>
+    </task>
+    <task id="LOCAL-00034" summary="fixed some text stuff">
+      <option name="closed" value="true" />
+      <created>1713522706652</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1713522706652</updated>
+    </task>
+    <task id="LOCAL-00035" summary="fixed issue with ray counts">
+      <option name="closed" value="true" />
+      <created>1713536363737</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1713536363737</updated>
+    </task>
+    <task id="LOCAL-00036" summary="fixed image loading">
+      <option name="closed" value="true" />
+      <created>1713538058055</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1713538058055</updated>
+    </task>
+    <task id="LOCAL-00037" summary="merged sending and guessing into one step, so you can guess an atom, send a ray then guess another">
+      <option name="closed" value="true" />
+      <created>1713550614449</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1713550614449</updated>
+    </task>
+    <task id="LOCAL-00038" summary="refactored and fixed up code format to use best practices">
+      <option name="closed" value="true" />
+      <created>1714758627054</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1714758627054</updated>
+    </task>
+    <task id="LOCAL-00039" summary="refactored and fixed up code format to use best practices">
+      <option name="closed" value="true" />
+      <created>1714758643739</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1714758643739</updated>
+    </task>
+    <task id="LOCAL-00040" summary="added javadoc comments">
+      <option name="closed" value="true" />
+      <created>1714907696952</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1714907696952</updated>
+    </task>
+    <task id="LOCAL-00041" summary="fixed some errors">
+      <option name="closed" value="true" />
+      <created>1714908373001</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1714908373001</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -337,37 +634,36 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Test 3.0" />
-    <MESSAGE value="..." />
-    <MESSAGE value="player class" />
-    <MESSAGE value="player class added method" />
-    <MESSAGE value="added validation and unit testing" />
-    <MESSAGE value="added unit testing" />
-    <MESSAGE value="added additional unit tests" />
-    <MESSAGE value="Created Ray class :)" />
-    <MESSAGE value="Added tests for rays" />
-    <MESSAGE value="Added more tests" />
-    <MESSAGE value="Small changes" />
-    <MESSAGE value="Additional tests ;)" />
-    <MESSAGE value="More tests :)" />
-    <MESSAGE value="Additional tests :)" />
-    <MESSAGE value="Print test" />
-    <MESSAGE value="New way of updating experimenter score for ray marker" />
-    <option name="LAST_COMMIT_MESSAGE" value="New way of updating experimenter score for ray marker" />
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="added invalid input for ray" />
+    <MESSAGE value="small changes to file" />
+    <MESSAGE value="game says if ray is absorbed" />
+    <MESSAGE value="complex ray development and &quot;game&quot; developed together on call/in lab" />
+    <MESSAGE value="updated constants class" />
+    <MESSAGE value="fixed minor details" />
+    <MESSAGE value="optimised some methods and finished single player mode" />
+    <MESSAGE value="updated some classes" />
+    <MESSAGE value="added previously guessed atoms list" />
+    <MESSAGE value="hexagon board gui in works and started working on ai player for single player mode" />
+    <MESSAGE value="added distinct game states integrated states into gui view/controller" />
+    <MESSAGE value="added distinct game states integrated states into gui view/controller  and added input listener to adhere to mvc architecture" />
+    <MESSAGE value="worked on single player w/ gui" />
+    <MESSAGE value="developed ai (single player mode) and incorporated full board screen" />
+    <MESSAGE value="(some things didnt push from last push)" />
+    <MESSAGE value="added some banger music/sound effects" />
+    <MESSAGE value="refactored packages and added seperation in classes" />
+    <MESSAGE value="fixed some bugs and got rid of print statements to terminal" />
+    <MESSAGE value="fixed some text stuff" />
+    <MESSAGE value="fixed issue with ray counts" />
+    <MESSAGE value="fixed image loading" />
+    <MESSAGE value="merged sending and guessing into one step, so you can guess an atom, send a ray then guess another" />
+    <MESSAGE value="refactored and fixed up code format to use best practices" />
+    <MESSAGE value="added javadoc comments" />
+    <MESSAGE value="fixed some errors" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed some errors" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/game_tests/model/TestCircleOfInfluences.java</url>
-          <line>133</line>
-          <properties class="game_tests.model.TestCircleOfInfluences" method="testOrientation3">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
