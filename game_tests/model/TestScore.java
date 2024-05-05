@@ -3,6 +3,8 @@ import controller.Game;
 import model.AiPlayer;
 import model.Player;
 import org.junit.jupiter.api.Test;
+import view.TUIBoard;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestScore {
