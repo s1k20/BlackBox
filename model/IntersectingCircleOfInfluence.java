@@ -1,52 +1,16 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
-public class IntersectingCircleOfInfluence {
-
-    //TODO change this so that it also contains atoms which might be intersected
-    //TODO but will only show atom if atom is contained in array list
-    //TODO  (more so for gui)
+public class IntersectingCircleOfInfluence extends HexagonPosition {
     private final ArrayList<CircleOfInfluence> circleOfInfluences;
-    private final ArrayList<Integer> orientations;
+    private final HashSet<Integer> orientations; //hashset which includes circle of influences orientation for efficiency
 
-    public IntersectingCircleOfInfluence() {
+    public IntersectingCircleOfInfluence(int xCo_ord, int yCo_ord) {
+        super(xCo_ord, yCo_ord);
         this.circleOfInfluences = new ArrayList<>();
-        this.orientations = new ArrayList<>();
-    }
-
-    public void addPart(CircleOfInfluence c){
-        circleOfInfluences.add(c);
-        orientations.add(c.getOrientation());
-    }
-
-    public ArrayList<Integer> getOrientations(){
-        return this.orientations;
-    }
-
-    private boolean containsOrientation(int orientation){
-        for(CircleOfInfluence c : circleOfInfluences){
-            if(c.getOrientation() == orientation){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean horizontalReflection(){
-        for(int i = 0; i < circleOfInfluences.size() - 1; i++){
-            for(int j = i + 1; j < circleOfInfluences.size(); j++){
-                if(circleOfInfluences.get(i).getOrientation() + circleOfInfluences.get(j).getOrientation() == 360){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean diagonalReflection(){
-        return (orientations.contains(270) && (orientations.contains(300) || orientations.contains(60)))
-                || (orientations.contains(90) && (orientations.contains(240) || orientations.contains(120)));
+        this.orientations = new HashSet<>();
     }
 
     public CircleOfInfluence getCircleOfInfluence(int i){
@@ -57,4 +21,34 @@ public class IntersectingCircleOfInfluence {
         return this.circleOfInfluences;
     }
 
+    public HashSet<Integer> getOrientations(){
+        return this.orientations;
+    }
+
+    public void addPart(CircleOfInfluence c){
+        circleOfInfluences.add(c);
+        orientations.add(c.getOrientation());
+    }
+
+    public void removePart(int orientation) {
+        circleOfInfluences.removeIf(c -> c.getOrientation() == orientation);
+        orientations.remove(orientation);
+    }
+
+    // method to return if a horizontal reflection can take places by comparing orientations in hashset
+    public boolean horizontalReflection(){
+        for (Integer orientation : orientations) {
+            if (orientations.contains(360 - orientation)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // method to return if a diagonal reflection can take place given whether certain
+    // combinations orientations are present in hashset
+    public boolean diagonalReflection(){
+        return (orientations.contains(270) && (orientations.contains(300) || orientations.contains(60)))
+                || (orientations.contains(90) && (orientations.contains(240) || orientations.contains(120)));
+    }
 }
