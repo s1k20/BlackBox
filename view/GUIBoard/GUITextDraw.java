@@ -46,7 +46,13 @@ public class GUITextDraw {
                 String playerName = getCurrentPlayer();
                 String action = getCurrentAction();
 
-                displayString.append(playerName).append(" - ").append(action).append(" ").append(6 - numAtomsPlaced).append(" more atoms");
+                displayString.append(playerName).append(" - ").append(action).append(" ").append(6 - numAtomsPlaced).append(" more ");
+                if (6 - numAtomsPlaced == 1) {
+                    displayString.append("atom");
+                }
+                else {
+                    displayString.append("atoms");
+                }
 
                 if (guiGameScreen.getCurrentState() == GameState.GUESSING_ATOMS) {
                     displayString.append(" or send a ray");
