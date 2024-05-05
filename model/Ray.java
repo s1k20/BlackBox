@@ -191,7 +191,7 @@ public class Ray {
     public boolean deflectionLogic_IntersectingCircleOfInfluence(IntersectingCircleOfInfluence intersectingCircleOfInfluence) {
         if (isEdgeReflection_IntersectingCircleOfInfluence(intersectingCircleOfInfluence)) flipOrientation();
 
-        //if ray is going straight across, conditions for reflecting is that it incounters intersecting
+        //if ray is going straight across, conditions for reflecting is that it encounters intersecting
         //circle of influences which are like / and \
         else if (this.getOrientation() == 0 || this.getOrientation() == 180) {
             //horizontal reflection

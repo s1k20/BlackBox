@@ -14,8 +14,6 @@ public class BoardConstants {
     public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_PINK = "\u001B[38;5;206m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_WHITE = "\u001B[37m";
 
     public static final Color PINK = new Color(191, 0, 255);
     public static final Color YELLOW = new Color(255, 234, 0);

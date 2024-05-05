@@ -434,9 +434,7 @@ public class GUIGameScreen extends JPanel {
      * Method to properly encapsulate Swings' disposing window
      */
     public void disposeBoard() {
-        SwingUtilities.invokeLater(() -> {
-            frame.dispose();
-        });
+        SwingUtilities.invokeLater(() -> frame.dispose());
     }
 
     /**

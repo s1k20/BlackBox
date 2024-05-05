@@ -59,7 +59,7 @@ public class Game implements GUIInputListener {
         guessingBoard = new Board();
         guiView = new GUIGameScreen(this);
         stateManager = new GameStateManager(this);
-        playerManager.setupPlayer("Test1", 1);
+        playerManager.setupPlayer(player.getPlayerName(), 1);
         playerManager.setupPlayer("Test2", 2);
     }
 

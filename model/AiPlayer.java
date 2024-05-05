@@ -106,12 +106,12 @@ public class AiPlayer extends Player {
      * @return a list of points where the AI guesses atoms are located
      */
     public ArrayList<Point> ai_guessAtoms(int numAtoms) {
-        switch (difficulty) {
-            case 1: return guessAtoms_hard(numAtoms);
-            case 2: return guessAtoms_medium(numAtoms);
-            case 3: return guessAtoms_easy(numAtoms);
-            default: throw new IllegalArgumentException("Invalid difficulty");
-        }
+        return switch (difficulty) {
+            case 1 -> guessAtoms_hard(numAtoms);
+            case 2 -> guessAtoms_medium(numAtoms);
+            case 3 -> guessAtoms_easy(numAtoms);
+            default -> throw new IllegalArgumentException("Invalid difficulty");
+        };
     }
 
     /**

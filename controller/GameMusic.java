@@ -15,6 +15,7 @@ public class GameMusic {
         try {
             // Obtain an audio input stream from the audio file
             URL url = this.getClass().getResource("gamemusic/blackboxgamemusic.wav");
+            assert url != null;
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
 
             // Get a sound clip resource
@@ -26,13 +27,10 @@ public class GameMusic {
 
         } catch (UnsupportedAudioFileException e) {
             System.out.println("Audio file format not supported.");
-            e.printStackTrace();
         } catch (IOException e) {
             System.out.println("Error reading the audio file.");
-            e.printStackTrace();
         } catch (LineUnavailableException e) {
             System.out.println("Audio line unavailable.");
-            e.printStackTrace();
         }
     }
 
@@ -44,6 +42,7 @@ public class GameMusic {
         try {
             // Obtain an audio input stream from the audio file
             URL url = this.getClass().getResource(filePath);
+            assert url != null;
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
 
             // Get a sound clip resource
@@ -55,13 +54,10 @@ public class GameMusic {
 
         } catch (UnsupportedAudioFileException e) {
             System.out.println("Audio file format not supported.");
-            e.printStackTrace();
         } catch (IOException e) {
             System.out.println("Error reading the audio file.");
-            e.printStackTrace();
         } catch (LineUnavailableException e) {
             System.out.println("Audio line unavailable.");
-            e.printStackTrace();
         }
 
     }
