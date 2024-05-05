@@ -82,7 +82,8 @@ public class GameStateManager {
      * Resets the state for a new game or round.
      */
     public void resetForNewGame() {
-        currentState = GameState.SETTING_ATOMS;
+        initState();
+        nextState = false;
     }
 
     /**
@@ -113,31 +114,32 @@ public class GameStateManager {
         switch (currentState) {
             case SETTING_ATOMS -> {
                 if (nextState) {
+                    nextState = false;
                     if (isSinglePlayer) currentState = GameState.SENDING_RAYS;
                     else currentState = GameState.GUESSING_ATOMS;
-                    nextState = false;
                 }
             }
             case SENDING_RAYS, AI_HAS_SENT_RAYS -> {
                 if (nextState) {
-                    currentState = GameState.GUESSING_ATOMS;
                     nextState = false;
+                    currentState = GameState.GUESSING_ATOMS;
                 }
             }
             case GUESSING_ATOMS, AI_GUESSING_ATOMS -> {
                 if (nextState) {
-                    currentState = GameState.IDLE;
                     nextState = false;
+                    currentState = GameState.IDLE;
                 }
             }
             case IDLE -> {
+                nextState = false;
                 currentState = GameState.GAME_OVER;
                 game.refreshBoard(); // call a refresh on the board to show full game picture
             }
             case GAME_OVER -> {
                 if (nextState) {
-                    currentState = GameState.NEXT_ROUND;
                     nextState = false;
+                    currentState = GameState.NEXT_ROUND;
                 }
             }
             case NEXT_ROUND -> {
@@ -146,8 +148,7 @@ public class GameStateManager {
     }
 
     /**
-     * Checks if the game can advance state by checking if it can advance from any
-     * of the substates
+     * Checks if the game can advance state by checking if criteria to advance is met
      * @return true if can advance
      */
     public boolean canAdvanceState() {
