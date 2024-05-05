@@ -9,4 +9,5 @@ public class RayInputMap {
         return this.x == r.x && this.y == r.y && (this.orientation == r.orientation ||
                 (this.orientation == r.orientation + 180) || (this.orientation == r.orientation - 180));
     }
+
 }

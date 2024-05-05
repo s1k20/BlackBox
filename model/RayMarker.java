@@ -2,35 +2,17 @@ package model;
 
 import java.awt.*;
 
-public class RayMarker {
+import static model.BoardConstants.*;
+import static model.BoardConstants.ANSI_RED;
 
-    //ray marker co-ords on board
-    private final int xCo_ord;
-    private final int yCo_ord;
-
+public class RayMarker extends HexagonPosition {
     private final int number;
-
-    //string which will hold ansi code for text-based interface to show colour
-    //TODO will be developed when working on gui
     private String colour;
     private Color guiColour;
 
-    //constructor to create ray marker
-    public RayMarker(int x, int y, int number, String colour, Color guiColour){
-        this.xCo_ord = x;
-        this.yCo_ord = y;
+    public RayMarker(int x, int y, int number){
+        super(x, y);
         this.number = number;
-        this.colour = colour;
-        this.guiColour = guiColour;
-    }
-
-    //accessors to get private variables
-    public int getXCo_ord(){
-        return this.xCo_ord;
-    }
-
-    public int getYCo_ord(){
-        return this.yCo_ord;
     }
 
     public int getNumber() {
@@ -45,12 +27,45 @@ public class RayMarker {
         return this.guiColour;
     }
 
-    public void setColour(String colour){
-        this.colour = colour;
+    public void setColour(int deflectionType){
+        this.colour = getDeflectionANSI_Color(deflectionType);
+        this.guiColour = getDeflectionColor(deflectionType);
     }
 
-    public void setGuiColour(Color colour) {
-        this.guiColour = colour;
+    private Color getDeflectionColor(int deflection) {
+        if (deflection == -1) {
+            return Color.green;
+        }
+        else if (deflection == 180) {
+            return PINK;
+        }
+        else if(deflection == 120){
+            return YELLOW;
+        }
+        else if(deflection == 60){
+            return BLUE;
+        }
+        else {
+            return RED;
+        }
+    }
+
+    private String getDeflectionANSI_Color(int deflection) {
+        if (deflection == -1) {
+            return ANSI_GREEN;
+        }
+        else if (deflection == 180) {
+            return ANSI_PINK;
+        }
+        else if(deflection == 120){
+            return ANSI_YELLOW;
+        }
+        else if(deflection == 60){
+            return ANSI_BLUE;
+        }
+        else {
+            return ANSI_RED;
+        }
     }
 
 }

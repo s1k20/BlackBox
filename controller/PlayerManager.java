@@ -131,6 +131,10 @@ public class PlayerManager {
         return this.getExperimenter().getPlayerName();
     }
 
+    public void raySent() {
+        getExperimenter().raySent();
+    }
+
     /**
      * Sets up a player with the provided name and assigns a role based on the player number.
      * @param name the name of the player

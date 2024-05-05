@@ -47,8 +47,8 @@ public class GUIBoardDraw {
 
         // isFirst refers to which number comes first in a given hexagon.
         // Hexagon contains 2, 3 then 2 isFirst == true or hexagon contains 35, 36 then 35 isFirst == true
-        String num2 = String.valueOf(currentBoard.numberOut.get(new RayOutputPoint(col, row, false)));
-        String num1 = String.valueOf(currentBoard.numberOut.get(new RayOutputPoint(col, row, true)));
+        String num2 = String.valueOf(currentBoard.getNumberOut().get(new RayOutputPoint(col, row, false)));
+        String num1 = String.valueOf(currentBoard.getNumberOut().get(new RayOutputPoint(col, row, true)));
 
         drawInputNumber(g, num2, col, row, false);
 

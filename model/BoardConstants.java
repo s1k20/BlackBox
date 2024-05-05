@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.*;
+
 public class BoardConstants {
     //board is 9x9 but + 2 for allowing for ray marker positions
     public static final int WIDTH = 11;
@@ -14,4 +16,9 @@ public class BoardConstants {
     public static final String ANSI_PINK = "\u001B[38;5;206m";
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_WHITE = "\u001B[37m";
+
+    public static final Color PINK = new Color(191, 0, 255);
+    public static final Color YELLOW = new Color(255, 234, 0);
+    public static final Color BLUE = new Color(0, 13, 255);
+    public static final Color RED = new Color(255, 0, 0);
 }

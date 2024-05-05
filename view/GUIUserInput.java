@@ -83,7 +83,7 @@ public class GUIUserInput {
     public static int getAIDifficulty() {
         BufferedImage background;
         try {
-            background = ImageIO.read(Objects.requireNonNull(GUIUserInput.class.getResource("images/background.jpg")));
+            background = ImageIO.read(Objects.requireNonNull(GUIUserInput.class.getResource("GUIBoard/images/background.jpg")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

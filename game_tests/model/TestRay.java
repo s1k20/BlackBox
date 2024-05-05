@@ -200,19 +200,18 @@ public class TestRay {
         Board b2 = new Board();
         b2.placeAtom(6,4);
         b2.sendRay(32);
-        String yellow = "\u001B[33m";
+        String yellow = "\u001B[34m";
         RayMarker r3 = (RayMarker) b2.getBoardPosition(10,1);
-        assertEquals(yellow,r3.getColour());
+//        System.out.println(r3);
+        assertEquals(yellow, r3.getColour());
 
         Board b3 = new Board();
         b3.placeAtom(4,5);
         b3.placeAtom(5,5);
         b3.sendRay(19);
-        String pink = "\033[35m";
+        String pink = "\033[33m";
         RayMarker r4 = (RayMarker) b3.getBoardPosition(4,10);
         assertEquals(pink,r4.getColour());
-
-      //  b3.placeAtom();
     }
 
     @Test

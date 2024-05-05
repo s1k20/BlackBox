@@ -1,18 +1,17 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
-public class IntersectingCircleOfInfluence {
+public class IntersectingCircleOfInfluence extends HexagonPosition {
 
-    //TODO change this so that it also contains atoms which might be intersected
-    //TODO but will only show atom if atom is contained in array list
-    //TODO  (more so for gui)
     private final ArrayList<CircleOfInfluence> circleOfInfluences;
-    private final ArrayList<Integer> orientations;
+    private final HashSet<Integer> orientations;
 
-    public IntersectingCircleOfInfluence() {
+    public IntersectingCircleOfInfluence(int xCo_ord, int yCo_ord) {
+        super(xCo_ord, yCo_ord);
         this.circleOfInfluences = new ArrayList<>();
-        this.orientations = new ArrayList<>();
+        this.orientations = new HashSet<>();
     }
 
     public void addPart(CircleOfInfluence c){
@@ -22,27 +21,17 @@ public class IntersectingCircleOfInfluence {
 
     public void removePart(int orientation) {
         circleOfInfluences.removeIf(c -> c.getOrientation() == orientation);
+        orientations.remove(orientation);
     }
 
-    public ArrayList<Integer> getOrientations(){
+    public HashSet<Integer> getOrientations(){
         return this.orientations;
     }
 
-    private boolean containsOrientation(int orientation){
-        for(CircleOfInfluence c : circleOfInfluences){
-            if(c.getOrientation() == orientation){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean horizontalReflection(){
-        for(int i = 0; i < circleOfInfluences.size() - 1; i++){
-            for(int j = i + 1; j < circleOfInfluences.size(); j++){
-                if(circleOfInfluences.get(i).getOrientation() + circleOfInfluences.get(j).getOrientation() == 360){
-                    return true;
-                }
+        for (Integer orientation : orientations) {
+            if (orientations.contains(360 - orientation)) {
+                return true;
             }
         }
         return false;

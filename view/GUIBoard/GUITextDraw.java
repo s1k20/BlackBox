@@ -13,99 +13,65 @@ public class GUITextDraw {
         this.guiGameScreen = guiGameScreen;
     }
 
-    //TODO finish fixing this class
     protected void drawGameStateText(Graphics g, Board currentBoard) {
         FontMetrics metrics = g.getFontMetrics();
         g.setColor(Color.WHITE);
         g.setFont(new Font("Monospaced", Font.BOLD, 20));
 
-        if(guiGameScreen.getCurrentState() == GameState.SETTING_ATOMS || guiGameScreen.getCurrentState() == GameState.GUESSING_ATOMS){
-            if(guiGameScreen.hoveredNumberArea != null && guiGameScreen.getCurrentState() == GameState.GUESSING_ATOMS){
-                String displayString = "Send ray at: " + guiGameScreen.hoveredNumberArea.number;
-                int textWidth = metrics.stringWidth(displayString);
-                int x = ((guiGameScreen.getWidth() - metrics.stringWidth(displayString)) / 2) - 115;
+        StringBuilder displayString = new StringBuilder(); // Initialize the display string
 
-                g.drawString(displayString.toUpperCase(), x, 60);
-
-            }
-            else{
-                String playerName;
-                String action;
-                if (guiGameScreen.getCurrentState() == GameState.SETTING_ATOMS) {
-                    playerName = guiGameScreen.getSetterName();
-                    action = "PLACE";
+        // Determine what text to display based on the game state
+        if (guiGameScreen.getCurrentState() == GameState.SETTING_ATOMS || guiGameScreen.getCurrentState() == GameState.GUESSING_ATOMS) {
+            if (guiGameScreen.hoveredNumberArea != null && guiGameScreen.getCurrentState() == GameState.GUESSING_ATOMS) {
+                displayString.append("Send ray at: ").append(guiGameScreen.hoveredNumberArea.number);
+            } else {
+                String playerName = (guiGameScreen.getCurrentState() == GameState.SETTING_ATOMS) ? guiGameScreen.getSetterName() : guiGameScreen.getExperimenterName();
+                String action = (guiGameScreen.getCurrentState() == GameState.SETTING_ATOMS) ? "PLACE" : "GUESS";
+                displayString.append(playerName).append(" - ").append(action).append(" ").append(6 - currentBoard.getNumAtomsPlaced()).append(" more atoms");
+                if (guiGameScreen.getCurrentState() == GameState.GUESSING_ATOMS) {
+                    displayString.append(" or send a ray");
                 }
-                else {
-                    playerName = guiGameScreen.getExperimenterName();
-                    action = "GUESS";
-                }
-                String displayString = playerName + " - " + action + " " + (6 - currentBoard.getNumAtomsPlaced())
-                        + " more atoms";
-                if (guiGameScreen.getCurrentState()== GameState.GUESSING_ATOMS) {
-                    displayString += " or send a ray";
-                }
-                int textWidth = metrics.stringWidth(displayString);
-
-                g.drawString(displayString, 180, 60);
             }
-
-        }
-        else if (guiGameScreen.getCurrentState() == GameState.AI_HAS_SENT_RAYS) {
-            g.setFont(new Font("Monospaced", Font.BOLD, 20));
-            String displayString = "Click 'Continue'";
-            int textWidth = metrics.stringWidth(displayString);
-            g.drawString(displayString.toUpperCase(), 300, 60);
-        }
-        else if (guiGameScreen.getCurrentState() == GameState.AI_GUESSING_ATOMS && currentBoard.getNumAtomsPlaced() == 6) {
-            g.setFont(new Font("Monospaced", Font.BOLD, 20));
-            String displayString = "Click 'Finish'";
-            int textWidth = metrics.stringWidth(displayString);
-            g.drawString(displayString.toUpperCase(), 300, 60);
-        }
-        else if (guiGameScreen.getCurrentState() != GameState.GAME_OVER){
-            if(guiGameScreen.hoveredNumberArea != null){
-                // Example hover effect: draw a highlighted border around the NumberArea
-                String displayString = "Send ray at: " + guiGameScreen.hoveredNumberArea.number;
-                int textWidth = metrics.stringWidth(displayString);
-                int x = ((guiGameScreen.getWidth() - metrics.stringWidth(displayString)) / 2) - 115;
-
-                g.drawString(displayString.toUpperCase(), x, 60);
-
-            }
-            else{
-                g.setFont(new Font("Monospaced", Font.BOLD, 20));
-                String displayString = guiGameScreen.getExperimenterName() + " - Click a number to send a ray";
-                g.drawString(displayString.toUpperCase(), 195, 60);
+        } else if (guiGameScreen.getCurrentState() == GameState.AI_HAS_SENT_RAYS) {
+            displayString.append("Click 'Continue'");
+        } else if (guiGameScreen.getCurrentState() == GameState.AI_GUESSING_ATOMS && currentBoard.getNumAtomsPlaced() == 6) {
+            displayString.append("Click 'Finish'");
+        } else if (guiGameScreen.getCurrentState() == GameState.GAME_OVER) {
+            displayString.append("Full Game Picture");
+        } else {
+            if (guiGameScreen.hoveredNumberArea != null) {
+                displayString.append("Send ray at: ").append(guiGameScreen.hoveredNumberArea.number);
+            } else {
+                displayString.append(guiGameScreen.getExperimenterName()).append(" - Click a number to send a ray");
             }
         }
-        else {
-            String displayString = "Full Game Picture";
-            g.drawString(displayString.toUpperCase(), 300, 60);
-        }
+
+        // Calculate the width of the text and determine the x coordinate for centering
+        int textWidth = metrics.stringWidth(String.valueOf(displayString));
+        int x = ((guiGameScreen.getWidth() - textWidth) / 2) - 25;
+        if (guiGameScreen.getCurrentState() == GameState.GUESSING_ATOMS) x -= 25;
+        int y = 60;  // Fixed vertical position; adjust if necessary
+
+        // Draw the string using the calculated x coordinate and fixed y coordinate
+        g.drawString(displayString.toString().toUpperCase(), x, y);
     }
 
+
     protected void drawCurrentRayInfo(Graphics g) {
-        FontMetrics metrics = g.getFontMetrics();
-        if(guiGameScreen.getCurrentRay().getInput() != -1 && guiGameScreen.getCurrentState() != GameState.GAME_OVER){
+        if(isCurrentRay()){
+            FontMetrics metrics = g.getFontMetrics();
             g.setFont(new Font("Monospaced", Font.BOLD, 20));
-            String displayString;
-
-            if(guiGameScreen.getCurrentRay().getOutput() == -1){
-                displayString = "Ray " + guiGameScreen.getNumRaysSent() + ": Entered at " + guiGameScreen.getCurrentRay().getInput() +
-                        " -> Absorbed!";
-            }
-            else if (guiGameScreen.getCurrentRay().getDeflectionType() == 180) {
-                displayString = "Ray " + guiGameScreen.getNumRaysSent() + ": Entered at " + guiGameScreen.getCurrentRay().getInput() +
-                        " -> Reflected!";
-            }
-            else{
-                displayString = "Ray " + guiGameScreen.getNumRaysSent() + ": Entered at " + guiGameScreen.getCurrentRay().getInput() +
-                        " -> Exited at " + guiGameScreen.getCurrentRay().getOutput();
-            }
-
-            int textWidth = metrics.stringWidth(displayString);
             g.setColor(Color.WHITE);
-            g.drawString(displayString.toUpperCase(), ((guiGameScreen.getWidth() - textWidth) / 2) - 60 , guiGameScreen.getHeight() - 40);
+
+            StringBuilder displayString = new StringBuilder();
+
+            displayString.append("Ray ").append(guiGameScreen.getNumRaysSent()).append(" Entered at ").append(guiGameScreen.getCurrentRay().getInput());
+            displayString.append(getPrefix());
+
+            int textWidth = metrics.stringWidth(displayString.toString());
+            int x = (guiGameScreen.getWidth() - textWidth) / 2;
+            int y = guiGameScreen.getHeight() - 40;
+            g.drawString(displayString.toString().toUpperCase(), x, y);
         }
     }
 
@@ -115,14 +81,14 @@ public class GUITextDraw {
         int buttonHeight = 30;
         int xB = guiGameScreen.getWidth() - buttonWidth - 5;
         int yB = guiGameScreen.getHeight() - buttonHeight - 30;
-        guiGameScreen.printButtonBounds = new Rectangle(xB, yB, buttonWidth + 10 , buttonHeight);
+        guiGameScreen.advanceButton = new Rectangle(xB, yB, buttonWidth + 10 , buttonHeight);
         String text = "";
 
         if (guiGameScreen.canAdvanceState()) {
             text = "Advance";
         }
 
-        if (!text.isEmpty()) printButton(guiGameScreen.printButtonBounds, text, g2);
+        if (!text.isEmpty()) printButton(guiGameScreen.advanceButton, text, g2);
 
         guiGameScreen.backToMenuButton = new Rectangle(0, yB, buttonWidth - 60, buttonHeight);
 
@@ -141,5 +107,21 @@ public class GUITextDraw {
         if (text.equals("Menu")) centre += 4;
 
         g2.drawString(text, rectangle.x + 16 + centre, rectangle.y + 22);
+    }
+
+    private String getPrefix() {
+        if(guiGameScreen.getCurrentRay().getOutput() == -1){
+            return " -> Absorbed!";
+        }
+        else if (guiGameScreen.getCurrentRay().getDeflectionType() == 180) {
+            return " -> Reflected!";
+        }
+        else{
+            return " -> Exited at " + guiGameScreen.getCurrentRay().getOutput();
+        }
+    }
+
+    public boolean isCurrentRay() {
+        return guiGameScreen.getCurrentRay() != null && guiGameScreen.getCurrentState() != GameState.GAME_OVER;
     }
 }

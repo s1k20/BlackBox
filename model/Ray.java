@@ -1,8 +1,5 @@
 package model;
 
-import java.awt.*;
-import java.util.ArrayList;
-
 public class Ray {
 
     private final int input;
@@ -11,7 +8,6 @@ public class Ray {
     private int currYCo_ord;
     private int orientation;
     private int deflectionType;
-//    private ArrayList<Point> visitedHex;
 
     public Ray(int input) {
         this.input = input;
@@ -62,6 +58,18 @@ public class Ray {
         this.deflectionType = deflectionType;
     }
 
+    public void moveRay() {
+        switch (getOrientation()) {
+            case 0 -> move0();
+            case 60 -> move60();
+            case 120 -> move120();
+            case 180 -> move180();
+            case 240 -> move240();
+            case 300 -> move300();
+            default -> System.out.println("invalid ray movement");
+        }
+    }
+
 
     public void move0() {
         this.setCurrXCo_ord(this.getCurrXCo_ord() + 1);
@@ -97,12 +105,17 @@ public class Ray {
         this.setDeflectionType(180);
     }
 
+    public void isReflection(int x, int y, int orientation) {
+        if (currXCo_ord == x && currYCo_ord == y && orientation == Math.abs(this.orientation - 180)) {
+            this.setDeflectionType(180);
+            output = input;
+        }
+    }
+
     public boolean deflectionLogic_CircleOfInfluence(int coiOrientation){
         if(isAbsorption(coiOrientation)) return true;
         else if (isEdgeReflection(coiOrientation)) flipOrientation();
-
         else{
-            //TODO tidy this up
             if(coiOrientation != 270 && coiOrientation != 240 && coiOrientation != 120){
                 if(this.getOrientation() == 0 && coiOrientation == 300){
                     this.setOrientation(360);
@@ -118,8 +131,7 @@ public class Ray {
                 }
             }
             else if(coiOrientation == 240){
-                if (this.orientation == 0 || this.orientation == coiOrientation) flipOrientation();
-                else if(this.getOrientation() == 60){
+                if(this.getOrientation() == 60){
                     this.setOrientation(this.getOrientation() - 60);
                 }
                 else{
@@ -127,8 +139,7 @@ public class Ray {
                 }
             }
             else if(coiOrientation == 120){
-                if (this.orientation == 0 || this.orientation == coiOrientation) flipOrientation();
-                else if(this.getOrientation() == 180){
+                if(this.getOrientation() == 180){
                     this.setOrientation(this.getOrientation() - 60);
                 }
                 else{
@@ -139,8 +150,7 @@ public class Ray {
                 }
             }
             else{
-                if (this.orientation == 60 || this.orientation == 300) flipOrientation();
-                else if(this.getOrientation() == 120){
+                if(this.getOrientation() == 120){
                     this.setOrientation(this.getOrientation() - 60);
                 }
                 else{
@@ -191,7 +201,6 @@ public class Ray {
 
             //horizontal 120
             else {
-
                 if (this.getOrientation() == 180 && intersectingCircleOfInfluence.getOrientations().contains(120)) {
                     minus120();
                 } else if (this.getOrientation() == 180 && intersectingCircleOfInfluence.getOrientations().contains(240)) {
@@ -202,7 +211,6 @@ public class Ray {
                     minus120();
                 }
                 this.setDeflectionType(120);
-
             }
         }
         //if ray is going NOT straight across, conditions for reflecting is that it encounters intersecting
@@ -223,7 +231,6 @@ public class Ray {
                     }
 
                 } else {
-
                     if (this.getOrientation() == 120) {
                         minus120();
                     } else if (this.getOrientation() == 60) {
@@ -233,7 +240,6 @@ public class Ray {
                     } else if (this.getOrientation() == 240) {
                         plus120();
                     }
-
                 }
                 this.setDeflectionType(120);
             }

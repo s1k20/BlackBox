@@ -1,212 +1,163 @@
 package model;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
 import static model.BoardConstants.*;
 
+/**
+ * Represents the game board for managing game elements such as atoms, rays, and markers.
+ */
 public class Board {
 
-    //object array which is the board of the game
     private final Object[][] board = new Object[HEIGHT][WIDTH];
-
-    //mapping of numbers from 1 to 54 to valid ray coordinates and orientation
     private final HashMap<Integer, RayInputMap> inputMapping = new HashMap<>();
-    public final HashMap<RayOutputPoint, Integer> numberOut = new HashMap<>();
-
+    private final HashMap<RayOutputPoint, Integer> numberOut = new HashMap<>();
     private final ArrayList<Ray> sentRays = new ArrayList<>();
     private final ArrayList<Atom> placedAtoms = new ArrayList<>();
     private final ArrayList<RayMarker> rayMarkers = new ArrayList<>();
     private final HashSet<Integer> rayMarkerNumbers = new HashSet<>();
-
-    public Ray currentRay;
-
+    private Ray currentRay;
     private int numAtomsPlaced;
-    public int numRaysSent;
+    private int numRaysSent;
 
-
+    /**
+     * Constructs a new Board and initializes it along with the input mappings.
+     */
     public Board(){
-        //initialise board
         initBoard();
         setInputMapping();
         numAtomsPlaced = 0;
         numRaysSent = 0;
-        currentRay = new Ray(-1);
+        currentRay = null;
     }
 
-    //function to init board and place empty ray markers in correct position and null hex in others
+    /**
+     * Returns contents of board at a given coordinate
+     *
+     * @param x X-coordinate (column index)
+     * @param y Y-coordinate (row index)
+     * @return an object of which is in specified board position eg. atom, circle of influence etc.
+     */
+    public Object getBoardPosition(int x, int y){
+        return this.board[y][x];
+    }
+
+    /**
+     * Returns board 2d object array which is the main game board
+     *
+     * @return a 2d object array
+     */
+    public Object[][] getBoard(){
+        return this.board;
+    }
+
+    /**
+     * Gets the number of atoms which are on the board
+     *
+     * @return integer number
+     */
+    public int getNumAtomsPlaced() {
+        return this.numAtomsPlaced;
+    }
+
+    /**
+     * Gets an arraylist of rays which have been sent into the board
+     *
+     * @return an arraylist of type ray
+     */
+    public ArrayList<Ray> getSentRays(){
+        return this.sentRays;
+    }
+
+    /**
+     * Gets an arraylist of atoms which have been placed onto the board
+     *
+     * @return an arraylist of type atom
+     */
+    public ArrayList<Atom> getPlacedAtoms() {
+        return this.placedAtoms;
+    }
+
+    /**
+     * Gets an arraylist of ray markers which have been placed
+     * as a result of sending rays
+     *
+     * @return an arraylist of type RayMarker
+     */
+    public ArrayList<RayMarker> getRayMarkers() {
+        return this.rayMarkers;
+    }
+
+    /**
+     * Returns a hashset of all numbers on the board which have a RayMarker placed on them
+     *
+     * @return a hashset of integers
+     */
+    public HashSet<Integer> getRayMarkerNumbers() {
+        return this.rayMarkerNumbers;
+    }
+
+    /**
+     * Returns the most recently sent ray into the board
+     *
+     * @return Ray object
+     */
+    public Ray getCurrentRay() {
+        return this.currentRay;
+    }
+
+    /**
+     * Returns a hashmap which maps output points to the numbers which surround the board
+     *
+     * @return hashmap mapping RayOutputPoint to an integer
+     */
+    public HashMap<RayOutputPoint, Integer> getNumberOut() {
+        return this.numberOut;
+    }
+
+    /**
+     * Returns the number of rays sent into the board by the experimenter
+     *
+     * @return an integer of the number of rays
+     */
+    public int getNumRaysSent() {
+        return this.numRaysSent;
+    }
+
+    /**
+     * Initializes the board with empty markers and null hexes based on their positions.
+     */
     private void initBoard() {
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
-
-                //conditions if i and j are at an index which could contain a ray marker
                 if (checkRayMarker(i, j)) {
                     board[i][j] = new EmptyMarker();
-                }
-
-                //conditions if i and j are at indexes which are not part of the board
-                //but present in order to represent the board
-                else if (i + j <= 4 || i + j > 15) {
+                } else if (i + j <= 4 || i + j > 15) {
                     board[i][j] = new NullHex();
                 }
             }
         }
     }
 
-    //getter for certain position on board
-    public Object getBoardPosition(int x, int y){
-        return this.board[y][x];
-    }
-
-    public Object[][] getBoard(){
-        return this.board;
-    }
-
-    public int getNumAtomsPlaced() {
-        return this.numAtomsPlaced;
-    }
-
-    public ArrayList<Ray> getSentRays(){
-        return this.sentRays;
-    }
-
-    public ArrayList<Atom> getPlacedAtoms() {
-        return this.placedAtoms;
-    }
-
-    public ArrayList<RayMarker> getRayMarkers() {
-        return this.rayMarkers;
-    }
-
-    public HashSet<Integer> getRayMarkerNumbers() {
-        return this.rayMarkerNumbers;
+    /**
+     * Checks if position on the board is a position in which a ray marker could be placed
+     *
+     * @param i Row index
+     * @param j Column index
+     * @return true if position should be reserved for ray marker
+     */
+    private boolean checkRayMarker(int i, int j){
+        return i + j == 5 || i + j == 15 || (i == 0 && j >= 5) ||
+                (j == 10 && i < 6) || (i == 10 && j <= 5) || (j == 0 && i >= 5);
     }
 
 
-    public void placeAtom(int x, int y){
-        if(checkInvalidInput(y, x)){
-            throw new IllegalArgumentException("Invalid position for atom");
-        }
-
-        Atom newAtom = new Atom(x, y);
-        placedAtoms.add(newAtom);
-
-        //places atom into the board
-        //y and x inverted as x = j and y = i
-        board[y][x] = newAtom;
-
-        //calls function which takes the new atom as argument and places its circle of
-        //influence around atom which has been worked out when atom was created
-        placeCircleOfInfluence(newAtom);
-
-        numAtomsPlaced++;
-    }
-
-    public void removeAtom(int x, int y) {
-        Atom atom = (Atom) board[y][x];
-        board[y][x] = null;
-        placedAtoms.remove(atom);
-
-        removeCircleOfInfluence(atom);
-        replaceAtom();
-
-        numAtomsPlaced--;
-    }
-
-    public void replaceAtom() {
-        for (Atom a : placedAtoms) {
-            placeCircleOfInfluence(a);
-        }
-    }
-
-    private void removeCircleOfInfluence(Atom atom) {
-        for (CircleOfInfluence c : atom.getCircleOfInfluence()) {
-            int cX = c.getXCo_ord();
-            int cY = c.getYCo_ord();
-
-            if (board[cY][cX] instanceof CircleOfInfluence) {
-                board[cY][cX] = null;
-            }
-            else if (board[cY][cX] instanceof IntersectingCircleOfInfluence i) {
-                if (i.getCircleOfInfluences().size() >= 3) {
-                    i.removePart(c.getOrientation());
-                }
-                else {
-                    i.removePart(c.getOrientation());
-                    if (i.getCircleOfInfluences().isEmpty()) {
-                        board[cY][cX] = null;
-                    }
-                    else {
-                        CircleOfInfluence circleOfInfluence =  i.getCircleOfInfluence(0);
-                        board[cY][cX] = circleOfInfluence;
-                    }
-
-                }
-            }
-        }
-    }
-
-
-    public void placeCircleOfInfluence(Atom a){
-        //loop through all atom "a" circle of influence
-        for(CircleOfInfluence c : a.getCircleOfInfluence()){
-
-            //check to make sure atom is not getting overridden and not placing outside of main board
-            if(!(board[c.getYCo_ord()][c.getXCo_ord()] instanceof Atom) && !(board[c.getYCo_ord()][c.getXCo_ord()] instanceof EmptyMarker)) {
-
-                //in the case where one part of circle of influence intersects another part;
-                if(board[c.getYCo_ord()][c.getXCo_ord()] instanceof CircleOfInfluence i && c.getOrientation() != i.getOrientation()){
-
-                    //create new intersecting circ. object to place previous and new circle of influence
-                    IntersectingCircleOfInfluence s = new IntersectingCircleOfInfluence();
-
-                    //add both parts to new object
-                    s.addPart(i);
-                    s.addPart(c);
-
-                    //place new object in place of intersecting circle of influences
-                    board[c.getYCo_ord()][c.getXCo_ord()] = s;
-                }
-
-                //in the case where one part of a circle of influence intersects and intersection of influences
-                else if(board[c.getYCo_ord()][c.getXCo_ord()] instanceof IntersectingCircleOfInfluence s && !s.getCircleOfInfluences().contains(c)){
-
-                    //just add new part to old array list
-                    s.addPart(c);
-                }
-                else{
-                    //blank hex then just add the circle of influence
-                    board[c.getYCo_ord()][c.getXCo_ord()] = c;
-                }
-            }
-        }
-    }
-
-    private static boolean checkRayMarker(int i, int j){
-            return i + j == 5 || i + j == 15 || (i == 0 && j >= 5) ||
-                    (j == 10 && i < 6) || (i == 10 && j <= 5) || (j == 0 && i >= 5);
-    }
-
-    private static boolean checkEdgeOfBoard(int i, int j) {
-        return i + j == 6 || i + j == 14 || (i == 1 && j >= 5) ||
-                (j == 9 && i < 6) || (i == 9 && j <= 5) || (j == 1 && i >= 5);
-    }
-
-    //classes which have no functionality other than representing a position on board
-    //null hex is a position in the object array which cants be accessed in the game
-    //empty ray marker is the perimeter of the board; position which will hold ray markers for rays
-    public static class NullHex{
-    }
-    public static class EmptyMarker{
-    }
-
-    public boolean checkInvalidInput(int i, int j){
-        return i + j <= 5 || i + j >= 15 || i <= 0 || j <= 0 || i >= 10 || j >= 10;
-    }
-
-    //function to map each number between 1 - 54 (ray input positions) to a hexagon and orientation
+    /**
+     * Traverses around the edge of the board and correctly maps numbers 1 - 54 with
+     * what each input x coordinate, input y coordinate and initial orientation should be
+     */
     public void setInputMapping(){
         int NUM_RAY_INPUTS = 54;
 
@@ -267,10 +218,6 @@ public class Board {
             }
 
             else if(i <= 45){
-//                if(i == 29){
-//                    x++;
-//                    y--;
-//                }
                 r.x = x;
                 r.y = y;
                 //28 - 36
@@ -320,125 +267,250 @@ public class Board {
         }
     }
 
-    public void sendRay(int input){
-//        System.out.println("Ray entered at " + input);
-        RayInputMap rMap = inputMapping.get(input);
+    /**
+     * Places an atom into board object and calls method to place its circle of influence around it
+     * and updates all necessary class variables/datastructures
+     *
+     * @param x X-coordinate of the atom
+     * @param y Y-coordinate of the atom
+     */
+    public void placeAtom(int x, int y){
+        if (!checkInvalidInput(y, x)) {
+            Atom newAtom = new Atom(x, y);
+            placedAtoms.add(newAtom);
+            board[y][x] = newAtom;
+            placeCircleOfInfluence(newAtom);
+            numAtomsPlaced++;
+        } else {
+            throw new IllegalArgumentException("Invalid atom position");
+        }
+    }
 
+    /**
+     * Iterates over an atoms circle of influences and determines whether to place it or not.
+     * If possible to place then checks contents of position it is trying to place it into
+     *
+     * @param a Atom object whose circle of influence is being places
+     */
+    private void placeCircleOfInfluence(Atom a){
+        for(CircleOfInfluence c : a.getCircleOfInfluence()){
+            if(canPlaceCircleOfInfluence(c.getXCo_ord(), c.getYCo_ord())) {
+                if(isCircleOfInfluence(c)){
+                    //create new intersecting circ. object to place previous and new circle of influence
+                    IntersectingCircleOfInfluence s = new IntersectingCircleOfInfluence(c.getXCo_ord(), c.getYCo_ord());
+
+                    //get circle of influence in current board position
+                    CircleOfInfluence c1 = (CircleOfInfluence) board[c.getYCo_ord()][c.getXCo_ord()];
+                    //add both parts to new object
+                    s.addPart(c);
+                    s.addPart(c1);
+
+                    //place new object in place of intersecting circle of influences
+                    board[c.getYCo_ord()][c.getXCo_ord()] = s;
+                }
+                else if(isIntersectingCircleOfInfluence(c)){
+                    IntersectingCircleOfInfluence s = (IntersectingCircleOfInfluence) board[c.getYCo_ord()][c.getXCo_ord()];
+                    s.addPart(c);
+                }
+                else{
+                    board[c.getYCo_ord()][c.getXCo_ord()] = c;
+                }
+            }
+        }
+    }
+
+    /**
+     * Checks board coordinates to validate placing a circle of influence in a given position
+     *
+     * @param x X-coordinate of the position being checked
+     * @param y Y-coordinate of the position being checked
+     * @return true if the position is valid to place a circle of influence into false otherwise
+     */
+    private boolean canPlaceCircleOfInfluence(int x, int y) {
+        return !(board[y][x] instanceof Atom) && !(board[y][x] instanceof EmptyMarker);
+    }
+
+    /**
+     * Checks board coordinate if a circle of influence is already in the position
+     *
+     * @param c The circle of influence which is getting placed
+     * @return true if a circle of influence is in the position false otherwise
+     */
+    private boolean isCircleOfInfluence(CircleOfInfluence c) {
+        return board[c.getYCo_ord()][c.getXCo_ord()] instanceof CircleOfInfluence i && c.getOrientation() != i.getOrientation();
+    }
+
+    /**
+     * Checks board coordinate for if there is an intersecting circle of influence in that position
+     *
+     * @param c Circle of influence which is getting placed
+     * @return true if intersecting circle of influence is in the position
+     */
+    private boolean isIntersectingCircleOfInfluence(CircleOfInfluence c) {
+        return board[c.getYCo_ord()][c.getXCo_ord()] instanceof IntersectingCircleOfInfluence s &&
+                !s.getCircleOfInfluences().contains(c);
+    }
+
+
+    /**
+     * Removes atom from the board by setting position to null and calls method to also remove circle of influence
+     * and updates all necessary class variables/datastructures
+     *
+     * @param x X-coordinate of atom
+     * @param y Y-coordinate of atom
+     */
+    public void removeAtom(int x, int y) {
+        if (!checkInvalidInput(y, x)) {
+            Atom atom = (Atom) board[y][x];
+            board[y][x] = null;
+            placedAtoms.remove(atom);
+            removeCircleOfInfluence(atom);
+            replaceAtom();
+            numAtomsPlaced--;
+        } else {
+            throw new IllegalArgumentException("Invalid atom position");
+        }
+    }
+
+    /**
+     * Removes an atoms circle of influence from the board
+     * Must check if board position holds an intersecting circle of influence
+     * if so, remove the singular circle of influence from the intersecting circle of influence array list
+     *
+     * @param atom Atoms whose circle of influence is getting removed
+     */
+    private void removeCircleOfInfluence(Atom atom) {
+        for (CircleOfInfluence c : atom.getCircleOfInfluence()) {
+            int cX = c.getXCo_ord();
+            int cY = c.getYCo_ord();
+
+            if (board[cY][cX] instanceof CircleOfInfluence) {
+                board[cY][cX] = null;
+            }
+            else if (board[cY][cX] instanceof IntersectingCircleOfInfluence i) {
+                if (i.getCircleOfInfluences().size() >= 3) {
+                    i.removePart(c.getOrientation());
+                }
+                else {
+                    i.removePart(c.getOrientation());
+                    if (i.getCircleOfInfluences().isEmpty()) {
+                        board[cY][cX] = null;
+                    }
+                    else {
+                        CircleOfInfluence circleOfInfluence =  i.getCircleOfInfluence(0);
+                        board[cY][cX] = circleOfInfluence;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Replaces all atoms circle of influence correctly following a removed atom
+     */
+    private void replaceAtom() {
+        for (Atom a : placedAtoms) {
+            placeCircleOfInfluence(a);
+        }
+    }
+
+    /**
+     * Checks if given x and y coordinates are not included in the board
+     *
+     * @param i x (Column) coordinate/index
+     * @param j y (Row) coordinate/index
+     * @return true if position is invalid false otherwise
+     */
+    protected boolean checkInvalidInput(int i, int j){
+        return i + j <= 5 || i + j >= 15 || i <= 0 || j <= 0 || i >= 10 || j >= 10;
+    }
+
+    /**
+     * Creates a ray to be sent based on the input number and lets the ray traverse the board
+     * through a loop which will continue until the ray has either been absorbed or exited the board
+     *
+     * @param input integer which will be turned into a valid ray position and orientation through input mapping
+     */
+    public void sendRay(int input){
+        Ray ray = setupRay(input);
+        RayMarker startMarker = createRayMarker(ray.getCurrXCo_ord(), ray.getCurrYCo_ord(), input);
+
+        do {
+            ray.moveRay();
+
+            if(placeRay(ray) || isAtom(ray.getCurrXCo_ord(), ray.getCurrYCo_ord())){
+                handleAbsorption(ray, startMarker);
+                return;
+            }
+
+        } while (!checkRayMarker(ray.getCurrXCo_ord(), ray.getCurrYCo_ord()));
+
+        finishRay(ray, startMarker);
+    }
+
+
+    /**
+     * Creates ray object based on x, y and orientation variable given by ray input mapping
+     *
+     * @param input number in which ray will originate, passed to input mapping to get correct x, y and orientation
+     * @return Ray which is going to traverse board
+     */
+    private Ray setupRay(int input) {
         Ray r = new Ray(input);
         numRaysSent++;
-        currentRay = r;
         sentRays.add(r);
+        currentRay = r;
 
+        RayInputMap rMap = inputMapping.get(input);
         r.setCurrXCo_ord(rMap.x);
         r.setCurrYCo_ord(rMap.y);
         r.setOrientation(rMap.orientation);
-
-        boolean absorbed = false;
-
-        String colour = "";
-        Color guiColour = Color.WHITE;
-
-        RayMarker start = new RayMarker(rMap.x, rMap.y, input, colour, guiColour);
-        rayMarkers.add(start);
-        rayMarkerNumbers.add(start.getNumber());
-        board[rMap.y][rMap.x] = start;
-
-        while(!(board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] instanceof EmptyMarker) && !absorbed){
-            if(board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] instanceof Atom) {
-                start.setColour(ANSI_GREEN);
-                start.setGuiColour(Color.green);
-                r.setOutput(-1);
-//                System.out.println("Ray absorbed!");
-                return;
-            }
-
-            switch (r.getOrientation()) {
-                case 0 -> r.move0();
-                case 60 -> r.move60();
-                case 120 -> r.move120();
-                case 180 -> r.move180();
-                case 240 -> r.move240();
-                case 300 -> r.move300();
-                default -> System.out.println("invalid ray movement");
-            }
-
-            //exit loop if when ray has moved it has met a pre-placed ray marker
-            if(board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] instanceof RayMarker){
-                break;
-            }
-
-            if(placeRay(r.getCurrXCo_ord(), r.getCurrYCo_ord(), r.getOrientation(), r)){
-                start.setColour(ANSI_GREEN);
-                start.setGuiColour(Color.green);
-                r.setDeflectionType(-1);
-                r.setOutput(-1);
-                return;
-            }
-
-        }
-        if(!absorbed){
-            //if ray is reflected, set colour purple
-            RayInputMap rmap = inputMapping.get(start.getNumber());
-
-//            System.out.println(r.getDeflectionType());
-            if(r.getDeflectionType() == 180 || start.getXCo_ord() == r.getCurrXCo_ord() && start.getYCo_ord() == r.getCurrYCo_ord() && rmap.orientation == Math.abs(r.getOrientation() - 180)) {
-                colour = "\u001B[35m";
-                guiColour = new Color(191, 0, 255);
-                start.setGuiColour(guiColour);
-                start.setColour(colour);
-                r.setDeflectionType(180);
-                r.setOutput(r.getInput());
-                return;
-            }
-            else if(r.getDeflectionType() == 120){
-                colour = "\u001B[35m";
-                guiColour = new Color(255, 234, 0);
-                start.setGuiColour(guiColour);
-                start.setColour(colour);
-            }
-            else if(r.getDeflectionType() == 60){
-                colour = "\u001B[33m";
-                guiColour = new Color(0, 13, 255);
-                start.setGuiColour(guiColour);
-                start.setColour(colour);
-            }
-            else if(r.getDeflectionType() == 0){
-                colour = "\u001B[31m";
-                guiColour = new Color(255, 0, 0);
-                start.setGuiColour(guiColour);
-                start.setColour(colour);
-            }
-
-            RayInputMap m = new RayInputMap();
-            m.x = r.getCurrXCo_ord();
-            m.y = r.getCurrYCo_ord();
-            m.orientation = r.getOrientation() >= 180 ? r.getOrientation() - 180 : r.getOrientation() + 180;
-
-            int exit = findExit(m);
-            r.setOutput(exit);
-            RayMarker end = new RayMarker(r.getCurrXCo_ord(), r.getCurrYCo_ord(), exit, colour, guiColour);
-            rayMarkers.add(end);
-            rayMarkerNumbers.add(end.getNumber());
-
-            board[r.getCurrYCo_ord()][r.getCurrXCo_ord()] = end;
-            return;
-        }
-
-        r.setDeflectionType(-1);
+        return r;
     }
 
-    private int findExit(RayInputMap r){
-        for(int i = 1; i <= 54; i++){
-            RayInputMap m = inputMapping.get(i);
-            if(r.orientation == m.orientation && r.x == m.x && r.y == m.y){
-                return i;
-            }
-        }
-        return -1;
+    /**
+     * Creates a ray marker which will be placed onto the board
+     *
+     * @param x X-coordinate for ray marker
+     * @param y Y-coordinate for ray marker
+     * @param input corresponding input number for the ray marker
+     * @return RayMarker which has been placed onto the board
+     */
+    private RayMarker createRayMarker(int x, int y, int input) {
+        RayMarker rayMarker = new RayMarker(x, y, input);
+        rayMarkers.add(rayMarker);
+        rayMarkerNumbers.add(rayMarker.getNumber());
+        board[y][x] = rayMarker;
+        return rayMarker;
     }
 
-    //will return true if ray is absorbed
-    public boolean placeRay(int x, int y, int orientation, Ray r){
+    /**
+     * Method which makes use of overloading createRayMarker() to optionally
+     * also allow for the colour to be set when creating the RayMarker
+     * if information is known about a rays deflection type
+     *
+     * @param x X-coordinate for ray marker
+     * @param y Y-coordinate for ray marker
+     * @param input corresponding input number for the ray marker
+     * @param deflectionType the deflection type of ray which is turned to a corresponding colour
+     */
+    private void createRayMarker(int x, int y, int input, int deflectionType) {
+        RayMarker rayMarker = createRayMarker(x, y, input);
+        rayMarker.setColour(deflectionType);
+    }
+
+    /**
+     * Method checks the hexagon ray is currently in and will determine if it should be
+     * reflected, deflected, absorbed or no change
+     *
+     * @param r Ray which is traversing the board
+     * @return true if ray has been absorbed false otherwise
+     */
+    public boolean placeRay(Ray r){
+        int x = r.getCurrXCo_ord();
+        int y = r.getCurrYCo_ord();
+        int orientation = r.getOrientation();
+
         if (board[y][x] == null || board[y][x] instanceof RayTrails) {
             if (board[y][x] instanceof RayTrails rt) rt.addRayTrail(orientation);
             else board[y][x] = new RayTrails(orientation);
@@ -453,17 +525,97 @@ public class Board {
         return false;
     }
 
-    public static class RayTrail{
-        private final int orientation;
-        private RayTrail(int orientation){
-            this.orientation = orientation;
-        }
-
-        public int getOrientation() {
-            return this.orientation;
-        }
+    /**
+     * Method updates rays status variables and changes its starting RayMarker to indicate absorption
+     *
+     * @param r Ray which has been absorbed into an atom
+     * @param startMarker Rays starting RayMarker created when it entered the board
+     */
+    private void handleAbsorption(Ray r, RayMarker startMarker) {
+        r.setDeflectionType(-1);
+        r.setOutput(-1);
+        startMarker.setColour(r.getDeflectionType());
     }
 
+
+    /**
+     * Checks rays location and calls method to compare to the starting RayMarker
+     * and determines if the ray has been reflection i.e. returned to the same location as start RayMarker
+     *
+     * @param ray Ray which is traversing the board
+     * @param startMarker Starting RayMarker placed when the ray entered the board
+     */
+    private void checkDeflectionState(Ray ray, RayMarker startMarker) {
+        RayInputMap exitMap = inputMapping.get(startMarker.getNumber());
+        ray.isReflection(startMarker.getXCo_ord(), startMarker.getYCo_ord(), exitMap.orientation);
+        startMarker.setColour(ray.getDeflectionType());
+    }
+
+    /**
+     * Completes a rays traversal by setting output variable and also
+     * creating its corresponding output RayMarker
+     *
+     * @param ray Ray which has finished traversing the board
+     * @param startMarker Starting RayMarker from the rays input to the board
+     */
+    private void finishRay(Ray ray, RayMarker startMarker) {
+        checkDeflectionState(ray, startMarker);
+
+        int exit = findExit(ray);
+        ray.setOutput(exit);
+
+        createRayMarker(ray.getCurrXCo_ord(), ray.getCurrYCo_ord(), exit, ray.getDeflectionType());
+    }
+
+    /**
+     * Traverses all possible input/output numbers and returns corresponding
+     * number based on x,y coordinates and orientation
+     *
+     * @param ray Ray which we want to find its corresponding output numbers
+     * @return corresponding output number for the rays x,y and orientation variables
+     */
+    private int findExit(Ray ray){
+        RayInputMap r = makeInputMap(ray);
+
+        for(int i = 1; i <= 54; i++){
+            RayInputMap m = inputMapping.get(i);
+            if(r.orientation == m.orientation && r.x == m.x && r.y == m.y){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Given a ray which holds x, y and orientation variables,
+     * method creates the corresponding input map for that rays variables
+     *
+     * @param r Ray whose instance variables are used to create RayInputMap
+     * @return RayInputMap created from rays instance variables
+     */
+    private RayInputMap makeInputMap(Ray r) {
+        RayInputMap map = new RayInputMap();
+        map.x = r.getCurrXCo_ord();
+        map.y = r.getCurrYCo_ord();
+        map.orientation = r.getOrientation() >= 180 ? r.getOrientation() - 180 : r.getOrientation() + 180;
+        return map;
+    }
+
+    /**
+     * Method will check if a given location on the board is an atom or not
+     *
+     * @param x X-coordinate (column index)
+     * @param y Y-coordinate (row index)
+     * @return true if location is an atom
+     */
+    private boolean isAtom(int x, int y) {
+        return board[y][x] instanceof Atom;
+    }
+
+    /**
+     * Uses RayTrail class to show all rays which passed
+     * through a given position on the board
+     */
     public static class RayTrails {
         private final ArrayList<RayTrail> rayTrails;
 
@@ -486,5 +638,33 @@ public class Board {
             }
             return false;
         }
+    }
+
+    /**
+     * Represents an object which is placed onto the board to indicate a rays path
+     */
+    public static class RayTrail{
+        private final int orientation;
+        private RayTrail(int orientation){
+            this.orientation = orientation;
+        }
+
+        public int getOrientation() {
+            return this.orientation;
+        }
+    }
+
+    /**
+     * Represents invalid coordinates on board
+     */
+    public static class NullHex{
+
+    }
+
+    /**
+     * Represents a position which can include a ray marker
+     */
+    public static class EmptyMarker{
+
     }
 }
