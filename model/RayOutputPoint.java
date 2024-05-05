@@ -10,6 +10,7 @@ public class RayOutputPoint {
         this.isFirst = isFirst;
     }
 
+    // method to return if two output points are the same
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -18,6 +19,7 @@ public class RayOutputPoint {
         return x == myPoint.x && y == myPoint.y && isFirst == myPoint.isFirst;
     }
 
+    // hash code created as object is stored in a hashmap
     @Override
     public int hashCode() {
         int result = 17;

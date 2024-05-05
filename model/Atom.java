@@ -11,6 +11,7 @@ public class Atom extends HexagonPosition {
         addCircleOfInfluence(xCo_ord, yCo_ord);
     }
 
+    // method to add circle of influence around the atom given its coordinates
     private void addCircleOfInfluence(int xCo_ord, int yCo_ord) {
         circleOfInfluence.add(new CircleOfInfluence(xCo_ord, yCo_ord - 1, 60));
         circleOfInfluence.add(new CircleOfInfluence(xCo_ord, yCo_ord + 1, 240));
@@ -20,6 +21,7 @@ public class Atom extends HexagonPosition {
         circleOfInfluence.add(new CircleOfInfluence(xCo_ord + 1, yCo_ord - 1, 120));
     }
 
+    // gets an atoms circle of influence which is stored in an array list
     public ArrayList<CircleOfInfluence> getCircleOfInfluence(){
         return this.circleOfInfluence;
     }

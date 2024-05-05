@@ -7,8 +7,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-import controller.Game;  // Assuming Game and Player classes are defined appropriately
-import model.Player;     // Make sure the Player class is in the right package
+import controller.Game;
+import model.Player;
 
 public class GUIEndScreen extends JFrame {
     private final Game game;
@@ -17,7 +17,6 @@ public class GUIEndScreen extends JFrame {
         this.game = game;
         initializeUI();
     }
-
 
     private void initializeUI() {
         setTitle("Game Statistics");
@@ -75,22 +74,6 @@ public class GUIEndScreen extends JFrame {
 
         setVisible(true);
     }
-    private void displaySinglePlayerStats(JPanel panel, GridBagConstraints gbc) {
-        Player player = game.getPlayerManager().getPlayer1(); // Ensure getPlayer1() method exists and returns a valid player
-
-        JLabel titleLabel = new JLabel("Final Score and Statistics for " + player.getPlayerName(), SwingConstants.CENTER);
-        styleStatsLabel(titleLabel);
-
-        JLabel scoreLabel = new JLabel("Final Score: " + player.getScore(), SwingConstants.CENTER);
-        styleStatsLabel(scoreLabel);
-
-        JLabel statsLabel = new JLabel("Rays Sent: " + player.getNumSentRays() + ", Correct Atoms: " + player.getNumCorrectAtoms(), SwingConstants.CENTER);
-        styleStatsLabel(statsLabel);
-
-        panel.add(titleLabel, gbc);
-        panel.add(scoreLabel, gbc);
-        panel.add(statsLabel, gbc);
-    }
 
     private void displayMultiplayerStats(JPanel panel, GridBagConstraints gbc) {
         Player player1 = game.getPlayerManager().getPlayer1();
@@ -100,16 +83,27 @@ public class GUIEndScreen extends JFrame {
         JLabel titleLabel = new JLabel("Game Statistics", SwingConstants.CENTER);
         styleStatsLabel(titleLabel);
 
-        JLabel scoreLabel = new JLabel("Scores - " + player1.getPlayerName() + ": " + player1.getScore() + " | " + player2.getPlayerName() + ": " + player2.getScore(), SwingConstants.CENTER);
+        // display each player's score
+        String scores = "Scores - " + player1.getPlayerName() + ": " + player1.getScore() + " | " +
+                player2.getPlayerName() + ": " + player2.getScore();
+        JLabel scoreLabel = new JLabel(scores, SwingConstants.CENTER);
         styleStatsLabel(scoreLabel);
 
-        JLabel winnerLabel = new JLabel(winner != null ? winner.getPlayerName() + " won!" : "Draw!", SwingConstants.CENTER);
+        // display a winner if there wasn't a draw
+        String gameWinner = winner != null ? winner.getPlayerName() + " won!" : "Draw!";
+        JLabel winnerLabel = new JLabel(gameWinner, SwingConstants.CENTER);
         styleStatsLabel(winnerLabel);
 
-        JLabel p1Stats = new JLabel(player1.getPlayerName() + " - Rays Sent: " + player1.getNumSentRays() + ", Correct Atoms: " + player1.getNumCorrectAtoms(), SwingConstants.CENTER);
+        // display player 1s game stats
+        String p1StatString = player1.getPlayerName() + " - Rays Sent: " +
+                player1.getNumSentRays() + ", Correct Atoms: " + player1.getNumCorrectAtoms();
+        JLabel p1Stats = new JLabel(p1StatString, SwingConstants.CENTER);
         styleStatsLabel(p1Stats);
 
-        JLabel p2Stats = new JLabel(player2.getPlayerName() + " - Rays Sent: " + player2.getNumSentRays() + ", Correct Atoms: " + player2.getNumCorrectAtoms(), SwingConstants.CENTER);
+        // display player 2s game stats
+        String p2StatString = player2.getPlayerName() + " - Rays Sent: " +
+                player2.getNumSentRays() + ", Correct Atoms: " + player2.getNumCorrectAtoms();
+        JLabel p2Stats = new JLabel(p2StatString, SwingConstants.CENTER);
         styleStatsLabel(p2Stats);
 
         panel.add(titleLabel, gbc);

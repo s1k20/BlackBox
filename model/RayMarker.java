@@ -5,8 +5,13 @@ import java.awt.*;
 import static model.BoardConstants.*;
 import static model.BoardConstants.ANSI_RED;
 
+/**
+ * Class which represents a ray marker on the board
+ */
 public class RayMarker extends HexagonPosition {
     private final int number;
+    // contains both a gui and ansi colour for printing
+    // to GUI and TUI (for testing purposes) respectively
     private String colour;
     private Color guiColour;
 
@@ -27,7 +32,9 @@ public class RayMarker extends HexagonPosition {
         return this.guiColour;
     }
 
+    // sets the rays colour given an int deflection type belonging to ray
     public void setColour(int deflectionType){
+        // sets both ray markers guiColour and ANSI colour
         this.colour = getDeflectionANSI_Color(deflectionType);
         this.guiColour = getDeflectionColor(deflectionType);
     }

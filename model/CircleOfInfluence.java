@@ -12,6 +12,7 @@ public class CircleOfInfluence extends HexagonPosition {
         this.orientation = orientation;
     }
 
+    // returns the circle of influences orientation
     public int getOrientation(){
         return this.orientation;
     }

@@ -4,8 +4,11 @@ import model.*;
 
 import static model.BoardConstants.*;
 
+/**
+ * Class which prints a text based version of the game board
+ */
 public class TUIBoard {
-    Board board;
+    private final Board board;
 
     public TUIBoard(Board board) {
         this.board = board;

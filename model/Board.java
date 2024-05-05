@@ -537,20 +537,6 @@ public class Board {
         startMarker.setColour(r.getDeflectionType());
     }
 
-
-    /**
-     * Checks rays location and calls method to compare to the starting RayMarker
-     * and determines if the ray has been reflection i.e. returned to the same location as start RayMarker
-     *
-     * @param ray Ray which is traversing the board
-     * @param startMarker Starting RayMarker placed when the ray entered the board
-     */
-    private void checkDeflectionState(Ray ray, RayMarker startMarker) {
-        RayInputMap exitMap = inputMapping.get(startMarker.getNumber());
-        ray.isReflection(startMarker.getXCo_ord(), startMarker.getYCo_ord(), exitMap.orientation);
-        startMarker.setColour(ray.getDeflectionType());
-    }
-
     /**
      * Completes a rays traversal by setting output variable and also
      * creating its corresponding output RayMarker
@@ -559,12 +545,26 @@ public class Board {
      * @param startMarker Starting RayMarker from the rays input to the board
      */
     private void finishRay(Ray ray, RayMarker startMarker) {
-        checkDeflectionState(ray, startMarker);
+        int exit = checkDeflectionState(ray, startMarker);
+        createRayMarker(ray.getCurrXCo_ord(), ray.getCurrYCo_ord(), exit, ray.getDeflectionType());
+    }
 
+    /**
+     * Checks rays location and calls method to compare to the starting RayMarker
+     * and determines if the ray has been reflection i.e. returned to the same location as start RayMarker
+     * will then set output marker accordingly
+     *
+     * @param ray Ray which is traversing the board
+     * @param startMarker Starting RayMarker placed when the ray entered the board
+     * @return exit in which the ray left the board to create endRayMarker
+     */
+    private int checkDeflectionState(Ray ray, RayMarker startMarker) {
+        RayInputMap exitMap = inputMapping.get(startMarker.getNumber());
         int exit = findExit(ray);
         ray.setOutput(exit);
-
-        createRayMarker(ray.getCurrXCo_ord(), ray.getCurrYCo_ord(), exit, ray.getDeflectionType());
+        ray.isReflection(startMarker.getXCo_ord(), startMarker.getYCo_ord(), exitMap.orientation);
+        startMarker.setColour(ray.getDeflectionType());
+        return exit;
     }
 
     /**
@@ -610,6 +610,16 @@ public class Board {
      */
     private boolean isAtom(int x, int y) {
         return board[y][x] instanceof Atom;
+    }
+
+    /**
+     * Class which only holds x, y and orientation for
+     * mapping purposes
+     */
+    public static class RayInputMap {
+        int x;
+        int y;
+        int orientation;
     }
 
     /**

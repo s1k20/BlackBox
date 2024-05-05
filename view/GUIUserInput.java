@@ -22,12 +22,7 @@ public class GUIUserInput {
         }
 
         // Create the dialog
-        JDialog dialog = new JDialog();
-        dialog.setTitle(title);
-        dialog.setModal(true);
-        dialog.setSize(400, 250);
-        dialog.setLocationRelativeTo(null); // Center on screen
-        dialog.setResizable(false);
+        JDialog dialog = createDialog();
 
         // Create a panel with a background image
         JPanel panel = new JPanel(new BorderLayout()) {
@@ -45,18 +40,10 @@ public class GUIUserInput {
         textField.setBackground(Color.LIGHT_GRAY); // Set background of input box to grey
 
         // Submit button
-        JButton submitButton = new JButton("Submit");
-        submitButton.setFont(new Font("Monospaced", Font.BOLD, 25)); // Match font size with input
-        submitButton.setBackground(new Color(255, 215, 0)); // Gold color background
-        submitButton.setForeground(Color.BLACK); // Text color
-        submitButton.setOpaque(true);
-        submitButton.setBorderPainted(false);
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                playerName[0] = textField.getText().trim();
-                dialog.dispose(); // Close dialog after submission
-            }
+        JButton submitButton = createButton();
+        submitButton.addActionListener(e -> {
+            playerName[0] = textField.getText().trim();
+            dialog.dispose(); // Close dialog after submission
         });
 
         // Panel for input field and button, using GridBagLayout for more control
@@ -89,12 +76,7 @@ public class GUIUserInput {
         }
 
         // Create a modal JDialog
-        JDialog dialog = new JDialog();
-        dialog.setTitle("Select Difficulty");
-        dialog.setSize(400, 250);
-        dialog.setLocationRelativeTo(null); // Center on screen
-        dialog.setModal(true); // Set modal to block user interaction with other windows
-        dialog.setResizable(false);
+        JDialog dialog = createDialog();
 
         // Create a panel with an overridden paintComponent method to draw the background image
         JPanel panel = new JPanel(new BorderLayout()) {
@@ -115,18 +97,9 @@ public class GUIUserInput {
         Dimension comboBoxSize = new Dimension(200, 45); // Set preferred size
         comboBox.setPreferredSize(comboBoxSize); // Apply the preferred size
 
-        JButton submitButton = new JButton("Submit");
-        submitButton.setFont(new Font("Monospaced", Font.BOLD, 25));
-        submitButton.setBackground(new Color(255, 215, 0)); // Gold color background
-        submitButton.setForeground(Color.BLACK); // Text color
-        submitButton.setOpaque(true);
-        submitButton.setBorderPainted(false);
-
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose(); // Close the dialog on submit
-            }
+        JButton submitButton = createButton();
+        submitButton.addActionListener(e -> {
+            dialog.dispose(); // Close the dialog on submit
         });
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -141,9 +114,30 @@ public class GUIUserInput {
 
         // Process the selected item after dialog is disposed
         String selectedItem = (String) comboBox.getSelectedItem();
+        assert selectedItem != null;
         if (selectedItem.equals("Hard")) return 1;
         else if (selectedItem.equals("Medium")) return 2;
         else return 3;
+    }
+
+    private static JButton createButton () {
+        JButton submitButton = new JButton("Submit");
+        submitButton.setFont(new Font("Monospaced", Font.BOLD, 25));
+        submitButton.setBackground(new Color(255, 215, 0)); // Gold color background
+        submitButton.setForeground(Color.BLACK); // Text color
+        submitButton.setOpaque(true);
+        submitButton.setBorderPainted(false);
+        return submitButton;
+    }
+
+    private static JDialog createDialog() {
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Select Difficulty");
+        dialog.setSize(400, 250);
+        dialog.setLocationRelativeTo(null); // Center on screen
+        dialog.setModal(true); // Set modal to block user interaction with other windows
+        dialog.setResizable(false);
+        return dialog;
     }
 
 }

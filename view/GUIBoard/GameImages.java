@@ -2,11 +2,11 @@ package view.GUIBoard;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.Objects;
 
 public class GameImages {
 
+    // all images used in the game
     protected BufferedImage atomImage;
     protected BufferedImage background;
     protected BufferedImage circle60;
@@ -24,6 +24,7 @@ public class GameImages {
     }
 
     private void loadImages() {
+        // attempt to load all images to set instance variables
         try {
             atomImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("images/atom.svg.png")));
             background = ImageIO.read(Objects.requireNonNull(getClass().getResource("images/background.jpg")));
@@ -37,8 +38,8 @@ public class GameImages {
             ray60 = ImageIO.read(Objects.requireNonNull(getClass().getResource("images/60_degree_line_thick.png")));
             ray120 = ImageIO.read(Objects.requireNonNull(getClass().getResource("images/120_degree_line_thick.png")));
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        }catch (Exception e) {
+            System.err.println("Failed to load images: " + e.getMessage()); // log error
         }
     }
 }

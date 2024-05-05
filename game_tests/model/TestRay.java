@@ -1,12 +1,8 @@
 package game_tests.model;
-import controller.Game;
 import model.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import view.TUIBoard;
-
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class TestRay {
 
@@ -181,7 +177,6 @@ public class TestRay {
         b2.sendRay(32);
         String yellow = "\u001B[34m";
         RayMarker r3 = (RayMarker) b2.getBoardPosition(10,1);
-//        System.out.println(r3);
         assertEquals(yellow, r3.getColour());
 
         Board b3 = new Board();
@@ -546,7 +541,7 @@ public class TestRay {
         view.printEntireBoard();
     }
 
-    //wrapper assertEquals to flip actual and expected arguements
+    //wrapper assertEquals to flip actual and expected arguments
     private static void assertEquals(int actual, int expected) {
         Assertions.assertEquals(expected, actual);
     }

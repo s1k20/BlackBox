@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * Class which is inherited by other classes which are
+ * objects which can be placed onto the board
+ */
 public class HexagonPosition {
 
     private final int xCo_ord;

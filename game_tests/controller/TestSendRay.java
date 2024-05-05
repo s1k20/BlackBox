@@ -2,13 +2,10 @@ package game_tests.controller;
 
 import controller.Game;
 import controller.GameState;
-import model.Board;
 import model.Ray;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import view.GUIBoard.GUIGameScreen;
-import view.TUIBoard;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestSendRay {
     @Test
@@ -182,6 +179,10 @@ public class TestSendRay {
 
         assertEquals(ray3.getInput(), 30);
         assertEquals(ray3.getOutput(), -1);
+    }
 
+    //wrapper assertEquals to flip actual and expected arguments
+    private static void assertEquals(int actual, int expected) {
+        Assertions.assertEquals(expected, actual);
     }
 }

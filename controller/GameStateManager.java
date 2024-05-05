@@ -32,56 +32,84 @@ public class GameStateManager {
         return currentState;
     }
 
+    /**
+     * Returns current game state
+     * @param state GameState enum the game is currently in
+     */
     public void setCurrentState(GameState state) {
         this.currentState = state;
     }
 
     /**
+     * Move game state to next state
+     */
+    public void setNextState() {
+        this.nextState = true;
+        updateGameState();
+    }
+
+    /**
+     * Return whether the game is currently running
+     * @return true if running false otherwise
+     */
+    public boolean isRunning() {
+        return this.isRunning;
+    }
+
+    /**
+     * Sets whether AI is currently sending rays
+     */
+    public void setAiSending() {
+        this.aiSending = true;
+    }
+
+    /**
+     * Sets AI to not sending rays
+     */
+    public void setAiNotSending() {
+        this.aiSending = false;
+    }
+
+    /**
+     * Returns whether AI is sending rays
+     * @return true if sending rays false otherwise
+     */
+    public boolean isAiSending() {
+        return this.aiSending;
+    }
+
+    /**
+     * Resets the state for a new game or round.
+     */
+    public void resetForNewGame() {
+        currentState = GameState.SETTING_ATOMS;
+    }
+
+    /**
+     * Sets game state to first state which is SETTING_ATOMS
+     */
+    public void initState() {
+        this.setCurrentState(GameState.SETTING_ATOMS);
+    }
+
+    /**
+     * Set the game to a single player game
+     */
+    public void setIsSinglePlayer() {
+        this.isSinglePlayer = true;
+    }
+
+    /**
+     * Stop the game running
+     */
+    public void stop() {
+        this.isRunning = false;
+    }
+
+    /**
      * Manages transitions between game states based on the current state and conditions.
      */
-//    public void updateGameState() {
-//        switch (currentState) {
-//            case SETTING_ATOMS -> {
-//
-//                if (board.getNumAtomsPlaced() >= 6) {
-//                    if (isSinglePlayer) currentState = GameState.SENDING_RAYS;
-//                    else currentState = GameState.GUESSING_ATOMS;
-//                }
-////                if (doneSetting) {
-////                    currentState = GameState.GUESSING_ATOMS;
-////                }
-//            }
-//            case SENDING_RAYS, AI_HAS_SENT_RAYS -> {
-//                if (doneSendingRays) {
-//                    currentState = GameState.GUESSING_ATOMS;
-//                }
-//            }
-//            case GUESSING_ATOMS -> {
-//                if (guessingBoard.getNumAtomsPlaced() >= 6) {
-//                    currentState = GameState.GAME_OVER;
-//                }
-////                if (doneGuessing) {
-////                    currentState = GameState.GAME_OVER;
-////                }
-//            }
-//            case AI_GUESSING_ATOMS -> {
-//                if (endRound) {
-//                    currentState = GameState.IDLE;
-//                }
-//            }
-//            case IDLE -> currentState = GameState.GAME_OVER;
-//            case GAME_OVER -> {
-//                if (nextRound) {
-//                    currentState = GameState.NEXT_ROUND;
-//                }
-//            }
-//            case NEXT_ROUND -> {
-//            }
-//        }
-//    }
-
     public void updateGameState() {
-//        System.out.println(currentState);
         switch (currentState) {
             case SETTING_ATOMS -> {
                 if (nextState) {
@@ -104,7 +132,7 @@ public class GameStateManager {
             }
             case IDLE -> {
                 currentState = GameState.GAME_OVER;
-                game.refreshBoard();
+                game.refreshBoard(); // call a refresh on the board to show full game picture
             }
             case GAME_OVER -> {
                 if (nextState) {
@@ -117,73 +145,37 @@ public class GameStateManager {
         }
     }
 
-    public void setNextState() {
-        this.nextState = true;
-        updateGameState();
-    }
-
-    public boolean isRunning() {
-        return this.isRunning;
-    }
-
-    public void stop() {
-        this.isRunning = false;
-    }
-
-
-    public void setSinglePlayer(boolean b) {
-        this.isSinglePlayer = b;
-    }
-
-    public boolean isSinglePlayer() {
-        return this.isSinglePlayer;
-    }
-
-
     /**
-     * Sets whether AI is currently sending rays.
+     * Checks if the game can advance state by checking if it can advance from any
+     * of the substates
+     * @return true if can advance
      */
-    public void setAiSending() {
-        this.aiSending = true;
-    }
-
-    public void setAiNotSending() {
-        this.aiSending = false;
-    }
-
-    public boolean isAiSending() {
-        return this.aiSending;
-    }
-
-    /**
-     * Resets the state for a new game or round.
-     */
-    public void resetForNewGame() {
-        currentState = GameState.SETTING_ATOMS;
-    }
-
-    public void initState() {
-        this.setCurrentState(GameState.SETTING_ATOMS);
-    }
-
-    public void setIsSinglePlayer() {
-        this.isSinglePlayer = true;
-    }
-
-    public boolean canAdvanceFromGuessing() {
-        return (currentState == GameState.GUESSING_ATOMS || currentState == GameState.AI_GUESSING_ATOMS)
-                && game.getGuessingBoard().getNumAtomsPlaced() >= 6;
-    }
-
-    public boolean canAdvanceFromSetting() {
-        return currentState == GameState.SETTING_ATOMS && game.getBoard().getNumAtomsPlaced() >= 6;
-    }
-
     public boolean canAdvanceState() {
         return canAdvanceFromGuessing() || canAdvanceFromSetting() || currentState == GameState.GAME_OVER
                 || canAdvanceFromRays();
     }
 
+    /**
+     * Checks if game can advance from setting state
+     * @return true if conditions allow game to move state
+     */
+    public boolean canAdvanceFromSetting() {
+        return currentState == GameState.SETTING_ATOMS && game.getBoard().getNumAtomsPlaced() >= 6;
+    }
+
+    /**
+     * Checks if game can advance from guessing state
+     * @return true if conditions allow game to move state
+     */
+    public boolean canAdvanceFromGuessing() {
+        return (currentState == GameState.GUESSING_ATOMS || currentState == GameState.AI_GUESSING_ATOMS)
+                && game.getGuessingBoard().getNumAtomsPlaced() >= 6;
+    }
+
+    /**
+     * Checks if the game can advance from the sending ray state
+     * @return true if game can advance false otherwise
+     */
     public boolean canAdvanceFromRays() {
         return (currentState == GameState.AI_HAS_SENT_RAYS || (currentState == GameState.SENDING_RAYS && !isAiSending()));
     }

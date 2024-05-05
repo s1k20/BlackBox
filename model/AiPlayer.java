@@ -122,6 +122,12 @@ public class AiPlayer extends Player {
         this.board = board;
     }
 
+    /**
+     * Adds 4 correct atoms to the list of atom guesses and takes 2 guesses
+     * from calculatedAtomGuess which has possibility of guessing atom correctly
+     * @param numAtoms number of atoms to be placed onto the board
+     * @return an arraylist of points representing atom guesses
+     */
     private ArrayList<Point> guessAtoms_hard(int numAtoms) {
         ArrayList<Point> atomGuesses = new ArrayList<>();
 
@@ -134,10 +140,14 @@ public class AiPlayer extends Player {
         }
 
         calculatedAtomGuess(atomGuesses, i, numAtoms);
-
         return atomGuesses;
     }
-
+    /**
+     * Adds 2 correct atoms to the list of atom guesses and takes 4 guesses
+     * from calculatedAtomGuess which has possibility of guessing atom correctly
+     * @param numAtoms number of atoms to be placed onto the board
+     * @return an arraylist of points representing atom guesses
+     */
     private ArrayList<Point> guessAtoms_medium(int numAtoms) {
         ArrayList<Point> atomGuesses = new ArrayList<>();
 
@@ -154,6 +164,12 @@ public class AiPlayer extends Player {
         return atomGuesses;
     }
 
+    /**
+     * Adds 1 correct atom to list of guesses and picks random positions
+     * for remaining guesses
+     * @param numAtoms number of atoms to be placed onto the board
+     * @return an arraylist of points representing atom guesses
+     */
     private ArrayList<Point> guessAtoms_easy(int numAtoms) {
         ArrayList<Point> atomGuesses = new ArrayList<>();
         int xAtom = board.getPlacedAtoms().get(0).getXCo_ord();
@@ -168,29 +184,39 @@ public class AiPlayer extends Player {
         return atomGuesses;
     }
 
+    /**
+     * Method adds calculated guesses to atomGuesses by using certain values
+     * to either guess atom correctly or guess right beside it
+     * @param atomGuesses atoms already guess
+     * @param i number of atoms needed to fully guess 6 atoms
+     * @param nAtoms number of atoms to be placed onto the board
+     */
     private void calculatedAtomGuess(ArrayList<Point> atomGuesses, int i, int nAtoms) {
         for (int j = i; j < nAtoms; j++) {
+            // get coordinates of correctly placed atom
             int xAtom = board.getPlacedAtoms().get(i).getXCo_ord();
             int yAtom = board.getPlacedAtoms().get(i).getYCo_ord();
 
+            // initialise variables for creating a random point near on the correct atom
             int addX;
             int addY;
-
-            int bound = 3;
+            int bound = 3; // leading to a 1 in 3 change of guessing 1 coordinate correctly
             int minus = 1;
 
+            // enter loop to ensure of valid guess
             do {
                 addX = random.nextInt(bound) - minus;
                 addY = random.nextInt(bound) - minus;
 
+                // increase bounds if first guess is invalid
                 bound += 2;
                 minus += 1;
 
-            } while (board.checkInvalidInput(xAtom + addX, yAtom + addY) || atomGuesses.contains(new Point(xAtom + addX, yAtom + addY)));
+            } while (board.checkInvalidInput(xAtom + addX, yAtom + addY) ||
+                    atomGuesses.contains(new Point(xAtom + addX, yAtom + addY)));
 
+            // add calculated guess to list of guesses
             atomGuesses.add(new Point(xAtom + addX, yAtom + addY));
         }
     }
-
-
 }
