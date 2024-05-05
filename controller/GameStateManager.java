@@ -113,20 +113,20 @@ public class GameStateManager {
     public void updateGameState() {
         switch (currentState) {
             case SETTING_ATOMS -> {
-                if (nextState) {
+                if (nextState && canAdvanceFromSetting()) {
                     nextState = false;
                     if (isSinglePlayer) currentState = GameState.SENDING_RAYS;
                     else currentState = GameState.GUESSING_ATOMS;
                 }
             }
             case SENDING_RAYS, AI_HAS_SENT_RAYS -> {
-                if (nextState) {
+                if (nextState && canAdvanceFromRays()) {
                     nextState = false;
                     currentState = GameState.GUESSING_ATOMS;
                 }
             }
             case GUESSING_ATOMS, AI_GUESSING_ATOMS -> {
-                if (nextState) {
+                if (nextState && canAdvanceFromGuessing()) {
                     nextState = false;
                     currentState = GameState.IDLE;
                 }

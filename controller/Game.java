@@ -33,7 +33,6 @@ public class Game implements GUIInputListener {
     private final int NUM_GAMES = 2;
     public final int NUM_ATOMS = 6;
 
-
     /**
      * Games constructor which handles initialising all instance variables
      * through creating instances of classes necessary for the game
@@ -116,9 +115,7 @@ public class Game implements GUIInputListener {
         while (gameNum <= NUM_GAMES) {
             guiView.showBoard(playerManager.getSetterName(), playerManager.getExperimenterName(), gameNum);
             waitForGameState(GameState.NEXT_ROUND);
-            if (!stateManager.isRunning()) {
-                return;
-            }
+            if (!stateManager.isRunning()) return;
             concludeRound();
         }
         finishGame();
