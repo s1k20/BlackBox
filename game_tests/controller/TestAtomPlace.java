@@ -1,7 +1,6 @@
 package game_tests.controller;
 
 import controller.Game;
-import controller.GameState;
 import model.*;
 import org.junit.jupiter.api.Test;
 import view.GUIBoard.GUIGameScreen;
@@ -9,7 +8,7 @@ import view.GUIBoard.GUIGameScreen;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class TestController {
+public class TestAtomPlace {
 
     @Test
     void testOnAtomPlace() {
@@ -162,32 +161,5 @@ public class TestController {
         gb.getListener().onAtomRemoved(4,8);
 
         assertTrue(g.getBoard().getBoardPosition(3,8) instanceof CircleOfInfluence);
-    }
-
-    @Test
-    void testOnSendRay() {
-        Game g = new Game();
-        GUIGameScreen gb = new GUIGameScreen(g);
-        g.getStateManager().setCurrentState(GameState.GUESSING_ATOMS);
-        g.getPlayerManager().setupPlayer("Test P1", 1);
-        g.getPlayerManager().setupPlayer("Test P2", 2);
-
-        gb.getListener().onRaySent(10);
-        gb.getListener().onRaySent(19);
-        gb.getListener().onRaySent(45);
-
-
-        Ray ray = g.getBoard().getSentRays().get(0);
-        Ray ray2 = g.getBoard().getSentRays().get(1);
-        Ray ray3 = g.getBoard().getSentRays().get(2);
-
-        assertEquals(ray.getInput(), 10);
-        assertEquals(ray.getOutput(), 37);
-
-        assertEquals(ray2.getInput(), 19);
-        assertEquals(ray2.getOutput(), 46);
-
-        assertEquals(ray3.getInput(), 45);
-        assertEquals(ray3.getOutput(), 2);
     }
 }

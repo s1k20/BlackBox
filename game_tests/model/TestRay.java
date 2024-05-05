@@ -392,9 +392,9 @@ public class TestRay {
         assertEquals(ray3.getOutput(), 35);
         assertEquals(ray3.getDeflectionType(),180);
 
-        Ray ray4 = b.getSentRays().get(0);
-        assertEquals(ray4.getInput(), 12);
-        assertEquals(ray4.getOutput(), 12);
+        Ray ray4 = b.getSentRays().get(3);
+        assertEquals(ray4.getInput(), 41);
+        assertEquals(ray4.getOutput(), 41);
         assertEquals(ray4.getDeflectionType(),180);
 
         view.printEntireBoard();
