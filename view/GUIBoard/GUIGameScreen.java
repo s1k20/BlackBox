@@ -299,8 +299,8 @@ public class GUIGameScreen extends JPanel {
     }
 
     /**
-     * Method cycles through all valid locations on the screen in which if clicked
-     * a ray will be send from that location and compares to see if point is contained
+     * Method cycles through all valid locations on the screen in which is clicked
+     * a ray will be sent from that location and compares to see if point is contained
      *
      * @param clickedPoint Point clicked on the screen
      */

@@ -115,7 +115,7 @@ public class GUIBoardDraw {
      * @param isFirst boolean flag to correctly print each number for a given position as one index includes 2 numbers in most cases
      */
     private void drawInputNumber(Graphics g, String num, int col, int row, boolean isFirst) {
-        // finding corresponding location on screen given row and col nubers
+        // finding corresponding location on screen given row and col numbers
         double[] location = findScreenLocation(col, row);
         double x = location[0];
         double y = location[1];

@@ -3,8 +3,6 @@ package view;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
@@ -22,7 +20,7 @@ public class GUIUserInput {
         }
 
         // Create the dialog
-        JDialog dialog = createDialog();
+        JDialog dialog = createDialog(title);
 
         // Create a panel with a background image
         JPanel panel = new JPanel(new BorderLayout()) {
@@ -76,7 +74,7 @@ public class GUIUserInput {
         }
 
         // Create a modal JDialog
-        JDialog dialog = createDialog();
+        JDialog dialog = createDialog("Select difficulty");
 
         // Create a panel with an overridden paintComponent method to draw the background image
         JPanel panel = new JPanel(new BorderLayout()) {
@@ -130,9 +128,9 @@ public class GUIUserInput {
         return submitButton;
     }
 
-    private static JDialog createDialog() {
+    private static JDialog createDialog(String text) {
         JDialog dialog = new JDialog();
-        dialog.setTitle("Select Difficulty");
+        dialog.setTitle(text);
         dialog.setSize(400, 250);
         dialog.setLocationRelativeTo(null); // Center on screen
         dialog.setModal(true); // Set modal to block user interaction with other windows
